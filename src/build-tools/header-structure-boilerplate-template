@@ -1,0 +1,28 @@
+/* Standard GObject macros */
+#define ${upperSnake}_TYPE \
+        (${lowerSnake}_get_type ())
+#define ${upperSnake}(obj) \
+        (G_TYPE_CHECK_INSTANCE_CAST \
+        ((obj), ${upperSnake}_TYPE, ${upperCamel}))
+#define ${upperSnake}_CLASS(klass) \
+        (G_TYPE_CHECK_CLASS_CAST \
+        ((klass), ${upperSnake}_TYPE, ${upperCamel}Class))
+#define ${namespaceLowerSnake}_IS_${nameLowerSnake}(obj) \
+        (G_TYPE_CHECK_INSTANCE_TYPE \
+        ((obj), ${upperSnake}_TYPE))
+#define ${namespaceLowerSnake}_IS_${nameLowerSnake}_CLASS(klass) \
+        (G_TYPE_CHECK_CLASS_TYPE \
+        ((klass), ${upperSnake}_TYPE))
+
+typedef struct _${upperCamel} ${upperCamel};
+typedef struct _${upperCamel}Class ${upperCamel}Class;
+typedef struct _${upperCamel}Private ${upperCamel}Private;
+
+struct _${upperCamel} {
+        GObject parent;
+        ${upperCamel}Private *priv;
+};
+
+struct _${upperCamel}Class {
+        GObjectClass parent;
+};
