@@ -24,12 +24,17 @@ open_file (const gchar * dir, const gchar *filename)
 gchar *
 get_source_method_comment (Method *method)
 {
-	GList *iter;
+	GList *iter_list;
 	GList *jter;
 	Parameter *para;
 	gchar *anno;
 	gchar *buffer;	
 	gchar *res;
+	gchar *comment_line;
+	gint iter;
+	gint len;
+	gint count;
+	gint cursor;
 	
 	g_return_val_if_fail (method != NULL, NULL);
 	
@@ -37,15 +42,16 @@ get_source_method_comment (Method *method)
 	buffer = g_strconcat (res, "\n * ", method->name, ":", NULL);
 	g_free (res);
 	res = buffer;
+	comment_line = g_new (gchar, BUFFER_SIZE);
 	
 	/* Processing the parameters */
 	if (method->parameters != NULL) {
-		for (iter = g_list_first (method->parameters); iter != NULL; iter = g_list_next (iter)) {
+		for (iter_list = g_list_first (method->parameters); iter_list != NULL; iter_list = g_list_next (iter_list)) {
 			buffer = g_strconcat (res, "\n * @", NULL);
 			g_free (res);
 			res = buffer;
 		
-			para = (Parameter *)iter->data;
+			para = (Parameter *)iter_list->data;
 			buffer = g_strconcat (res, para->name,  NULL);
 			g_free (res);
 			res = buffer;
@@ -71,7 +77,7 @@ get_source_method_comment (Method *method)
 	
 	/* Processing return */
 	if (method->ret != NULL) {
-		buffer = g_strconcat (res, "\n * Returns", NULL);
+		buffer = g_strconcat (res, "\n *\n * Returns", NULL);
 		g_free (res);
 		res = buffer;
 		
@@ -96,10 +102,38 @@ get_source_method_comment (Method *method)
 	
 	/* Processing general comment */
 	if (method->comment != NULL) {
-		buffer = g_strconcat (res, "\n *\n * ", method->comment, "\n *", NULL);
+		len = strlen (method->comment);
+		count = 0;
+		cursor = 0;
+		comment_line[cursor++] = '\n';
+		comment_line[cursor++] = ' ';
+		comment_line[cursor++] = '*';
+		comment_line[cursor++] = '\n';
+		comment_line[cursor++] = ' ';
+		comment_line[cursor++] = '*';
+		comment_line[cursor++] = ' ';
+		for (iter = 0; iter < len; iter++) {
+			if (count >= COMMENT_LINE_LENGTH && method->comment[iter] == ' ') {
+				comment_line[cursor++] = '\n';
+				comment_line[cursor++] = ' ';
+				comment_line[cursor++] = '*';
+				count = -1;
+			} 
+			comment_line[cursor++] = method->comment[iter];
+			count++;
+		}
+		comment_line[cursor] = '\0';
+		
+		buffer = g_strconcat (res, comment_line, NULL);
 		g_free (res);
+		g_free (comment_line);
 		res = buffer;
 	}
+	
+	/* Processing the since */
+	buffer = g_strconcat (res, "\n *\n * Since: ", method->since, "\n *", NULL);
+	g_free (res);
+	res = buffer;
 	
 	buffer = g_strconcat (res, "\n **/",NULL);
 	g_free (res);
@@ -302,11 +336,13 @@ generate_header_method_new_full (FILE *out, Structure *structure)
 	new_full->parameters = g_list_append (new_full->parameters, para);
 	para = NULL;
 	
-	para = parameter_new ();
-	para->type = g_strdup ("GObject *");
-	para->name = g_strdup ("owner");
-	new_full->parameters = g_list_append (new_full->parameters, para);
-	para = NULL;
+	if (structure->isBare == FALSE) {
+		para = parameter_new ();
+		para->type = g_strdup ("GObject *");
+		para->name = g_strdup ("owner");
+		new_full->parameters = g_list_append (new_full->parameters, para);
+		para = NULL;
+	}
 	
 	if (structure->isPossibleGlobal == TRUE) {
 		para = parameter_new ();
@@ -353,11 +389,13 @@ get_source_method_proto_new_full (Structure *structure)
 	new_full->parameters = g_list_append (new_full->parameters, para);
 	para = NULL;
 	
-	para = parameter_new ();
-	para->type = g_strdup ("GObject *");
-	para->name = g_strdup ("owner");
-	new_full->parameters = g_list_append (new_full->parameters, para);
-	para = NULL;
+	if (structure->isBare == FALSE) {
+		para = parameter_new ();
+		para->type = g_strdup ("GObject *");
+		para->name = g_strdup ("owner");
+		new_full->parameters = g_list_append (new_full->parameters, para);
+		para = NULL;
+	}
 	
 	if (structure->isPossibleGlobal == TRUE) {
 		para = parameter_new ();
@@ -401,11 +439,13 @@ gchar *get_source_method_proto_get_native_set_owner (Structure *structure)
 	get_native_set_owner->parameters = g_list_append (get_native_set_owner->parameters, para);
 	para = NULL;
 	
-	para = parameter_new ();
-	para->type = g_strdup ("GObject *");
-	para->name = g_strdup ("owner");
-	get_native_set_owner->parameters = g_list_append (get_native_set_owner->parameters, para);
-	para = NULL;
+	if (structure->isBare == FALSE) {
+		para = parameter_new ();
+		para->type = g_strdup ("GObject *");
+		para->name = g_strdup ("owner");
+		get_native_set_owner->parameters = g_list_append (get_native_set_owner->parameters, para);
+		para = NULL;
+	}
 	
 	res = get_source_method_proto (get_native_set_owner);
 	method_free (get_native_set_owner);
@@ -417,34 +457,36 @@ gchar *get_source_method_proto_get_native_pointer_set_owner (Structure *structur
 	gchar *upperCamel;
 	gchar *lowerSnake;
 	Parameter *para;	
-	Method *get_native_set_owner;
+	Method *get_native_pointer_set_owner;
 	gchar *res;
 	
 	g_return_if_fail (structure != NULL);
 	upperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
 	lowerSnake = get_lower_snake_from_upper_camel (upperCamel);
-	get_native_set_owner = method_new();
+	get_native_pointer_set_owner = method_new();
 	
-	get_native_set_owner->ret = ret_new();
-	get_native_set_owner->ret->type = g_strconcat (structure->native, " *", NULL);
-	get_native_set_owner->name = g_strconcat (lowerSnake, "_get_native_pointer_set_owner", NULL);
+	get_native_pointer_set_owner->ret = ret_new();
+	get_native_pointer_set_owner->ret->type = g_strconcat (structure->native, " *", NULL);
+	get_native_pointer_set_owner->name = g_strconcat (lowerSnake, "_get_native_pointer_set_owner", NULL);
 	g_free (lowerSnake);
 	
 	para = parameter_new ();
 	para->type = g_strconcat (upperCamel, " *", NULL);
 	g_free (upperCamel);
 	para->name = g_strdup ("object");
-	get_native_set_owner->parameters = g_list_append (get_native_set_owner->parameters, para);
+	get_native_pointer_set_owner->parameters = g_list_append (get_native_pointer_set_owner->parameters, para);
 	para = NULL;
 	
-	para = parameter_new ();
-	para->type = g_strdup ("GObject *");
-	para->name = g_strdup ("owner");
-	get_native_set_owner->parameters = g_list_append (get_native_set_owner->parameters, para);
-	para = NULL;
+	if (structure->isBare == FALSE) {
+		para = parameter_new ();
+		para->type = g_strdup ("GObject *");
+		para->name = g_strdup ("owner");
+		get_native_pointer_set_owner->parameters = g_list_append (get_native_pointer_set_owner->parameters, para);
+		para = NULL;
+	}
 	
-	res = get_source_method_proto (get_native_set_owner);
-	method_free (get_native_set_owner);
+	res = get_source_method_proto (get_native_pointer_set_owner);
+	method_free (get_native_pointer_set_owner);
 	return res;
 }
 
@@ -649,7 +691,6 @@ generate_header_method_get_native_set_owner (FILE *out, Structure *structure)
 	upperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
 	lowerSnake = get_lower_snake_from_upper_camel (upperCamel);
 	get_native_set_owner = method_new();
-	get_native_set_owner->name = g_strconcat (lowerSnake, "_get_native_set_owner", NULL);
 	
 	get_native_set_owner->ret = ret_new();
 	if (structure->isBare) {
@@ -667,11 +708,13 @@ generate_header_method_get_native_set_owner (FILE *out, Structure *structure)
 	get_native_set_owner->parameters = g_list_append (get_native_set_owner->parameters, para);
 	para = NULL;
 	
-	para = parameter_new ();
-	para->type = g_strdup ("GObject *");
-	para->name = g_strdup ("owner");
-	get_native_set_owner->parameters = g_list_append (get_native_set_owner->parameters, para);
-	para = NULL;
+	if (structure->isBare == FALSE) {
+		para = parameter_new ();
+		para->type = g_strdup ("GObject *");
+		para->name = g_strdup ("owner");
+		get_native_set_owner->parameters = g_list_append (get_native_set_owner->parameters, para);
+		para = NULL;
+	}
 	
 	generate_header_method_proto (out, get_native_set_owner);
 	method_free (get_native_set_owner);
@@ -681,56 +724,20 @@ void generate_header_method_get_native_remove_owner (FILE *out, Structure *struc
 	gchar *upperCamel;
 	gchar *lowerSnake;
 	Parameter *para;	
-	Method *get_native_set_owner;
-	
-	g_return_if_fail (out != NULL && structure != NULL);
-	upperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
-	lowerSnake = get_lower_snake_from_upper_camel (upperCamel);
-	get_native_set_owner = method_new();
-	get_native_set_owner->name = g_strconcat (lowerSnake, "_get_native_set_owner", NULL);
-	
-	get_native_set_owner->ret = ret_new();
-	if (structure->isBare) {
-		get_native_set_owner->ret->type = g_strdup (structure->native);
-	} else {
-		get_native_set_owner->ret->type = g_strconcat (structure->native, " *", NULL);
-	}
-	get_native_set_owner->name = g_strconcat (lowerSnake, "_get_native_set_owner", NULL);
-	g_free (lowerSnake);
-	
-	para = parameter_new ();
-	para->type = g_strconcat (upperCamel, " *", NULL);
-	g_free (upperCamel);
-	para->name = g_strdup ("object");
-	get_native_set_owner->parameters = g_list_append (get_native_set_owner->parameters, para);
-	para = NULL;
-	
-	para = parameter_new ();
-	para->type = g_strdup ("GObject *");
-	para->name = g_strdup ("owner");
-	get_native_set_owner->parameters = g_list_append (get_native_set_owner->parameters, para);
-	para = NULL;
-	
-	generate_header_method_proto (out, get_native_set_owner);
-	method_free (get_native_set_owner);
-}
-
-void
-generate_header_method_get_native_pointer_set_owner (FILE *out, Structure *structure)
-{
-	gchar *upperCamel;
-	gchar *lowerSnake;
-	Parameter *para;	
 	Method *get_native_remove_owner;
 	
 	g_return_if_fail (out != NULL && structure != NULL);
 	upperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
 	lowerSnake = get_lower_snake_from_upper_camel (upperCamel);
 	get_native_remove_owner = method_new();
-	get_native_remove_owner->name = g_strconcat (lowerSnake, "_get_native_pointer_remove_owner", NULL);
 	
 	get_native_remove_owner->ret = ret_new();
-	get_native_remove_owner->ret->type = g_strconcat (structure->native, " *", NULL);
+	if (structure->isBare) {
+		get_native_remove_owner->ret->type = g_strdup (structure->native);
+	} else {
+		get_native_remove_owner->ret->type = g_strconcat (structure->native, " *", NULL);
+	}
+	get_native_remove_owner->name = g_strconcat (lowerSnake, "_get_native_remove_owner", NULL);
 	g_free (lowerSnake);
 	
 	para = parameter_new ();
@@ -742,6 +749,35 @@ generate_header_method_get_native_pointer_set_owner (FILE *out, Structure *struc
 	
 	generate_header_method_proto (out, get_native_remove_owner);
 	method_free (get_native_remove_owner);
+}
+
+void
+generate_header_method_get_native_pointer_set_owner (FILE *out, Structure *structure)
+{
+	gchar *upperCamel;
+	gchar *lowerSnake;
+	Parameter *para;	
+	Method *get_native_pointer_set_owner;
+	
+	g_return_if_fail (out != NULL && structure != NULL);
+	upperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
+	lowerSnake = get_lower_snake_from_upper_camel (upperCamel);
+	get_native_pointer_set_owner = method_new();
+	get_native_pointer_set_owner->name = g_strconcat (lowerSnake, "_get_native_pointer_set_owner", NULL);
+	
+	get_native_pointer_set_owner->ret = ret_new();
+	get_native_pointer_set_owner->ret->type = g_strconcat (structure->native, " *", NULL);
+	g_free (lowerSnake);
+	
+	para = parameter_new ();
+	para->type = g_strconcat (upperCamel, " *", NULL);
+	g_free (upperCamel);
+	para->name = g_strdup ("object");
+	get_native_pointer_set_owner->parameters = g_list_append (get_native_pointer_set_owner->parameters, para);
+	para = NULL;
+	
+	generate_header_method_proto (out, get_native_pointer_set_owner);
+	method_free (get_native_pointer_set_owner);
 }
 
 void
@@ -898,6 +934,8 @@ generate_header (FILE *out, Structure *structure, GHashTable* table)
 					generate_header_method_protos (out, structure);
 				} else if (g_strcmp0 (buffer, "includes") == 0) {
 					generate_header_includes (out, structure);
+				} else if (g_strcmp0 (buffer, "forward_declaration") == 0) {
+					generate_header_forward_declaration (out, structure);
 				} else if (g_hash_table_contains (table, buffer)) {
 					val = g_hash_table_lookup (table, buffer);
 					fwrite (val, sizeof (gchar), strlen (val), out);
@@ -979,6 +1017,20 @@ generate_header_structure_boilerplate (FILE *out, Structure *structure, GHashTab
 
 void
 generate_header_includes (FILE *out, Structure *structure)
+{	
+	g_return_if_fail (out != NULL && structure != NULL);
+		
+	fwrite ("#include \"", sizeof (gchar), strlen ("#include \""), out);
+	fwrite (COMMON_HEADER, sizeof (gchar), strlen (COMMON_HEADER), out);
+	fwrite (".h\"\n", sizeof (gchar), strlen (".h\"\n"), out);
+	
+	fwrite ("#include \"", sizeof (gchar), strlen ("#include \""), out);
+	fwrite ("i-cal-enums", sizeof (gchar), strlen ("i-cal-enums"), out);
+	fwrite (".h\"\n", sizeof (gchar), strlen (".h\"\n"), out);
+}
+
+void
+generate_source_includes (FILE *out, Structure *structure)
 {
 	gchar *typeName;
 	Structure *parentStructure;
@@ -995,9 +1047,13 @@ generate_header_includes (FILE *out, Structure *structure)
 	
 	includeNames = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
 		
+	upperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
+	lowerTrain = get_lower_train_from_upper_camel (upperCamel);
+	g_free (upperCamel);
 	fwrite ("#include \"", sizeof (gchar), strlen ("#include \""), out);
-	fwrite (COMMON_HEADER, sizeof (gchar), strlen (COMMON_HEADER), out);
+	fwrite (lowerTrain, sizeof (gchar), strlen (lowerTrain), out);
 	fwrite (".h\"\n", sizeof (gchar), strlen (".h\"\n"), out);
+	g_free (lowerTrain);
 		
 	for (g_hash_table_iter_init (&iter_table, structure->dependencies); g_hash_table_iter_next (&iter_table, &key, &value);) {
 		typeName = (gchar *)key;
@@ -1022,6 +1078,63 @@ generate_header_includes (FILE *out, Structure *structure)
 		fwrite ("#include \"", sizeof (gchar), strlen ("#include \""), out);
 		fwrite (includeName, sizeof (gchar), strlen (includeName), out);
 		fwrite (".h\"\n", sizeof (gchar), strlen (".h\"\n"), out);
+	}
+	g_hash_table_destroy (includeNames);
+}
+
+void
+generate_header_forward_declaration (FILE *out, Structure *structure)
+{
+	gchar *typeName;
+	Structure *parentStructure;
+	gchar *lowerTrain;
+	gchar *upperCamel;
+	gchar *ownUpperCamel;
+	gchar *includeName;
+	gchar *typeType;
+	GHashTable *includeNames;
+	GHashTableIter iter_table;
+	gpointer key;
+	gpointer value;
+	
+	g_return_if_fail (out != NULL && structure != NULL);
+	
+	includeNames = g_hash_table_new_full (g_str_hash, g_str_equal, NULL, NULL);
+	
+	/* Temporary solution. To be rewritten */	
+	for (g_hash_table_iter_init (&iter_table, structure->dependencies); g_hash_table_iter_next (&iter_table, &key, &value);) {
+		typeName = (gchar *)key;
+		if (g_hash_table_contains (type2Structure, typeName)) {
+			parentStructure = g_hash_table_lookup (type2Structure, typeName);
+			upperCamel = g_strconcat (parentStructure->nameSpace, parentStructure->name, NULL);
+			ownUpperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
+			if (g_strcmp0 (upperCamel, ownUpperCamel) == 0) {
+				g_free (upperCamel);
+				g_free (ownUpperCamel);
+				continue;
+			}
+			/* Temporary solution. To be rewritten */	
+			if (g_strcmp0 (upperCamel, typeName) == 0) {
+				g_hash_table_insert (includeNames, typeName, "structure");
+			} else {
+				g_hash_table_insert (includeNames, typeName, "enum");
+			}
+			g_free (upperCamel);
+			g_free (ownUpperCamel);
+		}
+	}
+	
+	for (g_hash_table_iter_init (&iter_table, includeNames); g_hash_table_iter_next (&iter_table, &key, &value);) {
+		includeName = (gchar *)key;
+		typeType = (gchar *)value;
+		if (g_strcmp0 (typeType, "structure") == 0) {
+			fwrite ("typedef struct _", sizeof (gchar), strlen ("typedef struct _"), out);
+			fwrite (includeName, sizeof (gchar), strlen (includeName), out);
+			fputc (' ', out);
+			fwrite (includeName, sizeof (gchar), strlen (includeName), out);
+			fputc (';', out);
+			fputc ('\n', out);
+		}
 	}
 	g_hash_table_destroy (includeNames);
 }
@@ -1080,6 +1193,8 @@ generate_source (FILE *out, Structure *structure, GHashTable* table)
 					if (destruction != NULL)
 						fwrite (destruction, sizeof (gchar), strlen (destruction), out);
 					g_free (destruction);
+				} else if (g_strcmp0 (buffer, "includes") == 0) {
+					generate_source_includes (out, structure);
 				} else if (g_hash_table_contains (table, buffer)) {
 					val = g_hash_table_lookup (table, buffer);
 					fwrite (val, sizeof (gchar), strlen (val), out);
@@ -1497,6 +1612,8 @@ get_inline_parameter (Parameter *para)
 	gchar *ret;
 	gchar *translator;
 	GList *iter;
+	Structure *structure;
+	gchar *trueType;
 	
 	buffer = g_new (gchar, BUFFER_SIZE);
 	*buffer = '\0';
@@ -1517,7 +1634,14 @@ get_inline_parameter (Parameter *para)
 				g_stpcpy (buffer + strlen (buffer), (gchar *)iter->data);
 			}
 		} else if (para->translator == NULL) {
-			g_stpcpy (buffer + strlen (buffer), ", NULL");
+			trueType = get_true_type (para->type);
+			if (g_hash_table_contains (type2Structure, trueType)) {
+				structure = g_hash_table_lookup (type2Structure, trueType);
+				if (structure->isBare == FALSE) {
+					g_stpcpy (buffer + strlen (buffer), ", NULL");				
+				}
+			}
+			g_free (trueType);
 		}
 		g_stpcpy (buffer + strlen (buffer), ")");
 		g_free (translator);
@@ -1542,6 +1666,8 @@ get_source_method_body (Method *method, const gchar *nameSpace)
 	GList *iter;
 	gchar *checkers;
 	gchar *translator;
+	gchar *trueType;
+	Structure *structure;
 	
 	buffer  = g_new (gchar, BUFFER_SIZE);
 	buffer[0] = '\0';
@@ -1583,8 +1709,14 @@ get_source_method_body (Method *method, const gchar *nameSpace)
 				g_stpcpy (buffer + strlen (buffer), (gchar *)iter->data);
 			}
 		} else {
-			g_stpcpy (buffer + strlen (buffer), ", ");
-			g_stpcpy (buffer + strlen (buffer), "NULL");
+			trueType = get_true_type (method->ret->type);
+			if (g_hash_table_contains (type2Structure, trueType)) {
+				structure = g_hash_table_lookup (type2Structure, trueType);
+				if (structure->isBare == FALSE) {
+					g_stpcpy (buffer + strlen (buffer), ", NULL");				
+				}
+			}
+			g_free (trueType);
 			/*
 			if (g_strcmp0 (g_hash_table_lookup (allTypes, method->ret->type), "true") == 0) {
 				g_stpcpy (buffer + strlen (buffer), ", ");
@@ -2011,7 +2143,7 @@ get_source_run_time_checkers (Method *method, const gchar *namespace)
 		}
 	}
 	
-	res = g_strdup (buffer);
+	res = g_strconcat (buffer, "\n", NULL);
 	g_free (buffer);
 	return res;
 }

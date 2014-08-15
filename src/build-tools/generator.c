@@ -77,7 +77,7 @@ get_source_method_comment (Method *method)
 	
 	/* Processing return */
 	if (method->ret != NULL) {
-		buffer = g_strconcat (res, "\n * Returns", NULL);
+		buffer = g_strconcat (res, "\n *\n * Returns", NULL);
 		g_free (res);
 		res = buffer;
 		

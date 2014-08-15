@@ -173,6 +173,9 @@ ${lowerSnake}_init (${upperCamel} *self)
 	self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self, ${upperSnake}_TYPE, ${upperCamel}Private);
 }
 
+/**
+ * ${lowerSnake}_new_full: (skip)
+ **/
 ${new_full}
 {
         ${native} *nativeValue;$^${isBare}
@@ -189,6 +192,9 @@ ${new_full}
 			     NULL);
 }
 
+/**
+ * ${lowerSnake}_get_native_set_owner: (skip)
+ **/
 ${get_native_set_owner}
 {
 	${native} $^!${isBare}*^$defaultValue$^!${isBare} = NULL^$;
@@ -199,6 +205,9 @@ ${get_native_set_owner}
 	return $^${isBare}*(^$object->priv->native$^${isBare})^$;
 }$^${isBare}
 
+/**
+ * ${lowerSnake}_get_native_pointer_set_owner: (skip)
+ **/
 ${get_native_pointer_set_owner}
 {
 	${native} *defaultValue = NULL;
@@ -209,6 +218,9 @@ ${get_native_pointer_set_owner}
 	return object->priv->native;
 }^$
 
+/**
+ * ${lowerSnake}_get_native_remove_owner: (skip)
+ **/
 ${native} $^!${isBare}*^$
 ${lowerSnake}_get_native_remove_owner (${upperCamel} *object)
 {
@@ -221,6 +233,9 @@ ${lowerSnake}_get_native_remove_owner (${upperCamel} *object)
 	return $^${isBare}*(^$object->priv->native$^${isBare})^$;
 }
 
+/**
+ * ${lowerSnake}_steal_native: (skip)
+ **/
 static ${native} $^!${isBare}*^$
 ${lowerSnake}_steal_native (${upperCamel} *object)
 {
