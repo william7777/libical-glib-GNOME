@@ -236,7 +236,7 @@ ${lowerSnake}_get_native_remove_owner (${upperCamel} *object)
 /**
  * ${lowerSnake}_steal_native: (skip)
  **/
-static ${native} $^!${isBare}*^$
+${native} $^!${isBare}*^$
 ${lowerSnake}_steal_native (${upperCamel} *object)
 {
 	${native} $^!${isBare}*^$defaultValue;

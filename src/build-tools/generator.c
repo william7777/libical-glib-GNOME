@@ -781,6 +781,39 @@ generate_header_method_get_native_pointer_set_owner (FILE *out, Structure *struc
 }
 
 void
+generate_header_method_steal_native (FILE *out, Structure *structure)
+{
+	gchar *upperCamel;
+	gchar *lowerSnake;
+	Parameter *para;
+	Method *steal_native;
+
+	g_return_if_fail (out != NULL && structure != NULL);
+	upperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
+	lowerSnake = get_lower_snake_from_upper_camel (upperCamel);
+	steal_native = method_new();
+	steal_native->name = g_strconcat (lowerSnake, "_steal_native", NULL);
+
+	steal_native->ret = ret_new();
+	if (structure->isBare == TRUE) {
+		steal_native->ret->type = g_strdup (structure->native);
+	} else {
+		steal_native->ret->type = g_strconcat (structure->native, " *", NULL);
+	}
+	g_free (lowerSnake);
+
+	para = parameter_new ();
+	para->type = g_strconcat (upperCamel, " *", NULL);
+	g_free (upperCamel);
+	para->name = g_strdup ("object");
+	steal_native->parameters = g_list_append (steal_native->parameters, para);
+	para = NULL;
+
+	generate_header_method_proto (out, steal_native);
+	method_free (steal_native);
+}
+
+void
 generate_header_method_protos (FILE *out, Structure *structure)
 {
 	GList *iter;
@@ -791,6 +824,7 @@ generate_header_method_protos (FILE *out, Structure *structure)
 		generate_header_method_get_type (out, structure);
 		generate_header_method_get_native_set_owner (out, structure);
 		generate_header_method_get_native_remove_owner (out, structure);
+		generate_header_method_steal_native (out, structure);
 		if (structure->isBare) {
 			generate_header_method_get_native_pointer_set_owner (out, structure);
 		}
@@ -1087,7 +1121,6 @@ generate_header_forward_declaration (FILE *out, Structure *structure)
 {
 	gchar *typeName;
 	Structure *parentStructure;
-	gchar *lowerTrain;
 	gchar *upperCamel;
 	gchar *ownUpperCamel;
 	gchar *includeName;
@@ -1115,9 +1148,9 @@ generate_header_forward_declaration (FILE *out, Structure *structure)
 			}
 			/* Temporary solution. To be rewritten */	
 			if (g_strcmp0 (upperCamel, typeName) == 0) {
-				g_hash_table_insert (includeNames, typeName, "structure");
+				g_hash_table_insert (includeNames, typeName, (char *)"structure");
 			} else {
-				g_hash_table_insert (includeNames, typeName, "enum");
+				g_hash_table_insert (includeNames, typeName, (char *)"enum");
 			}
 			g_free (upperCamel);
 			g_free (ownUpperCamel);
@@ -1230,13 +1263,6 @@ generate_source_structure_boilerplate (FILE *out, Structure *structure, GHashTab
 	gchar *val;
 	char last;
 	gint count;
-	gchar *set_owner;
-	gchar *set_native;
-	gchar *set_is_global;
-	gchar *set_property;
-	gchar *get_property;
-	gchar *get_native_set_owner;
-	gchar *new_full;
 	
 	in = open_file (templates_dir, SOURCE_STRUCTURE_BOILERPLATE_TEMPLATE);
 	buffer  = g_new (gchar, BUFFER_SIZE);
@@ -1322,7 +1348,7 @@ get_hash_table_from_structure (Structure *structure)
 	g_return_val_if_fail (structure != NULL, NULL);
 	
 	table = g_hash_table_new_full (g_str_hash, g_str_equal, NULL, g_free);
-	g_hash_table_insert (table, "commonHeader", g_strdup (COMMON_HEADER));
+	g_hash_table_insert (table, (char *)"commonHeader", g_strdup (COMMON_HEADER));
 	upperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
 	lowerSnake = get_lower_snake_from_upper_camel (upperCamel);
 	upperSnake = get_upper_snake_from_lower_snake (lowerSnake);
@@ -1330,27 +1356,27 @@ get_hash_table_from_structure (Structure *structure)
 	namespaceLowerSnake = get_upper_snake_from_upper_camel (structure->nameSpace);
 	nameLowerSnake = get_upper_snake_from_upper_camel (structure->name);
 	
-	g_hash_table_insert (table, "upperCamel", upperCamel);
-	g_hash_table_insert (table, "lowerSnake", lowerSnake);
-	g_hash_table_insert (table, "upperSnake", upperSnake);
-	g_hash_table_insert (table, "lowerTrain", lowerTrain);
-	g_hash_table_insert (table, "namespaceLowerSnake", namespaceLowerSnake);
-	g_hash_table_insert (table, "nameLowerSnake", nameLowerSnake);
+	g_hash_table_insert (table, (char *)"upperCamel", upperCamel);
+	g_hash_table_insert (table, (char *)"lowerSnake", lowerSnake);
+	g_hash_table_insert (table, (char *)"upperSnake", upperSnake);
+	g_hash_table_insert (table, (char *)"lowerTrain", lowerTrain);
+	g_hash_table_insert (table, (char *)"namespaceLowerSnake", namespaceLowerSnake);
+	g_hash_table_insert (table, (char *)"nameLowerSnake", nameLowerSnake);
 	
 	if (structure->native != NULL) {
-		g_hash_table_insert (table, "set_owner", get_source_method_proto_set_owner(structure));
-		g_hash_table_insert (table, "set_native", get_source_method_proto_set_native (structure));
-		g_hash_table_insert (table, "set_is_global", get_source_method_proto_set_is_global(structure));
-		g_hash_table_insert (table, "set_property", get_source_method_proto_set_property(structure));
-		g_hash_table_insert (table, "get_property", get_source_method_proto_get_property(structure));
-		g_hash_table_insert (table, "new_full", get_source_method_proto_new_full(structure));
-		g_hash_table_insert (table, "get_native_set_owner", get_source_method_proto_get_native_set_owner(structure));
+		g_hash_table_insert (table, (char *)"set_owner", get_source_method_proto_set_owner(structure));
+		g_hash_table_insert (table, (char *)"set_native", get_source_method_proto_set_native (structure));
+		g_hash_table_insert (table, (char *)"set_is_global", get_source_method_proto_set_is_global(structure));
+		g_hash_table_insert (table, (char *)"set_property", get_source_method_proto_set_property(structure));
+		g_hash_table_insert (table, (char *)"get_property", get_source_method_proto_get_property(structure));
+		g_hash_table_insert (table, (char *)"new_full", get_source_method_proto_new_full(structure));
+		g_hash_table_insert (table, (char *)"get_native_set_owner", get_source_method_proto_get_native_set_owner(structure));
 		if (structure->isBare) {
-			g_hash_table_insert (table, "get_native_pointer_set_owner", get_source_method_proto_get_native_pointer_set_owner(structure));
+			g_hash_table_insert (table, (char *)"get_native_pointer_set_owner", get_source_method_proto_get_native_pointer_set_owner(structure));
 		}
 	}
 
-	g_hash_table_insert (table, "native", g_strdup (structure->native));
+	g_hash_table_insert (table, (char *)"native", g_strdup (structure->native));
 		
 	return table;
 }
@@ -1405,7 +1431,7 @@ generate_conditional (FILE *out, Structure *structure, gchar *statement, GHashTa
 	g_free (condition);
 	
 	g_stpcpy (expression, statement+iter+1);
-	if (isNegate && !isTrue || !isNegate && isTrue) {
+	if ((isNegate && !isTrue) || (!isNegate && isTrue)) {
 		for (iter = 0; iter < strlen (expression); iter++) {
 			if (iter < strlen(expression)-1 && expression[iter] == '$' && expression[iter+1] == '^') {
 				iter += 2;
@@ -1527,7 +1553,14 @@ get_source_method_code (Method *method)
 	
 	buffer = g_new (gchar, BUFFER_SIZE);
 	*buffer = '\0';
-	
+
+	if (method->ret != NULL && method->ret->cloner != NULL) {
+		printf ("HIT\n");
+		fflush (NULL);
+		g_stpcpy (buffer + strlen (buffer), method->ret->cloner);
+		g_stpcpy (buffer + strlen (buffer), " (");
+	}
+
 	g_stpcpy (buffer + strlen (buffer), method->corresponds);
 	g_stpcpy (buffer + strlen (buffer), " ");
 	
@@ -1546,7 +1579,17 @@ get_source_method_code (Method *method)
 		}
 		g_stpcpy (buffer + strlen (buffer), ")");
 	}
-	
+
+	if (method->ret != NULL && method->ret->cloner != NULL) {
+		if (method->ret->clonerArgus != NULL) {
+			for (iter = g_list_first (method->ret->clonerArgus); iter != NULL; iter = g_list_next (iter)) {
+				g_stpcpy (buffer + strlen (buffer), ", ");
+				g_stpcpy (buffer + strlen (buffer), (gchar *)iter->data);
+			}
+		}
+		g_stpcpy (buffer + strlen (buffer), ")");
+	}
+
 	ret = g_malloc (strlen (buffer) + 1);
 	g_stpcpy (ret, buffer);
 	g_free (buffer);
@@ -1557,12 +1600,12 @@ get_source_method_code (Method *method)
 gchar *
 get_translator_for_paramter (Parameter *para)
 {
-	g_return_val_if_fail (para != NULL, NULL);
-	
 	gchar *trueType;
 	gchar *lowerSnake;
 	gchar *res;
 	
+	g_return_val_if_fail (para != NULL, NULL);
+
 	res = NULL;
 
 	if (para->translator != NULL) {
@@ -1671,6 +1714,7 @@ get_source_method_body (Method *method, const gchar *nameSpace)
 	
 	buffer  = g_new (gchar, BUFFER_SIZE);
 	buffer[0] = '\0';
+	translator = NULL;
 	
 	comment = get_source_method_comment (method);	
 	g_stpcpy (buffer + strlen (buffer), comment);
@@ -1885,7 +1929,6 @@ get_source_method_checker (Parameter *para, Ret *ret)
 		g_stpcpy (buffer + strlen (buffer), " != NULL);");
 	}
 	
-	res = g_new (gchar, strlen (res) + 1);
 	res = g_strdup (buffer);
 	g_free (buffer);
 	g_free (lowerSnake);
@@ -2169,7 +2212,6 @@ static gint generate_library (gint count, char **fileNames) {
 	initialize_default_value_table ();
 	structures = NULL;
 	
-	
 	for (iter_general = 0; iter_general < count; iter_general++){
 		path = g_build_filename (apis_dir, fileNames[iter_general], NULL);
 		doc = xmlParseFile (path);
@@ -2201,10 +2243,10 @@ static gint generate_library (gint count, char **fileNames) {
 		xmlFreeDoc (doc);
 		
 	}
-	
+
 	for (iter_list = g_list_first (structures); iter_list != NULL; iter_list = g_list_next (iter_list)) {
 		structure = (Structure *)iter_list->data;
-		generate_header_and_source (structure, "");
+		generate_header_and_source (structure, (char*)"");
 	}
 	
 	g_hash_table_destroy (allStructures);
@@ -2215,6 +2257,7 @@ static gint generate_library (gint count, char **fileNames) {
 		structure_free (structure);
 	}
 	g_free (buffer);
+
 	return 0;
 }
 

@@ -82,61 +82,60 @@ def main ():
 	#Test as_ical_string_r
 	comp = ICalGLib.Component.new_from_string (event_str1);
 	string = comp.as_ical_string_r ();
-	print ("Event: %s" % string);
 
 	#Test new_clone
 	clone = comp.new_clone();
-	string = clone.as_ical_string_r ();
-	print ("Clone: %s" % string);
+	string1 = clone.as_ical_string_r ();
+	assert (string == string1);
 
 	#Test check_restrictions
-	print ("There are %d restrictions" % comp.check_restrictions());
+	assert (comp.check_restrictions() == 0);
 
 	#Test count_errors
-	print ("There are %d errors" % comp.count_errors());
+	assert (comp.count_errors() == 0);
 
 	#Test kind_is_valid
-	print ("Is the kind valid? %d\n" % ICalGLib.Component.kind_is_valid (ICalGLib.ComponentKind.VEVENT_COMPONENT));
+	assert (ICalGLib.Component.kind_is_valid (ICalGLib.ComponentKind.VEVENT_COMPONENT) == True);
 	
 	#Test string_to_kind and kind_to_string
 	kind = ICalGLib.Component.string_to_kind ("VEVENT");
 	string = ICalGLib.Component.kind_to_string (kind);
-	print ("The kind is %s" % string);
+	assert (string == "VEVENT");
 
 	#Test set_summary/get_summary
-	print ("The summary of comp is %s" % comp.get_summary ());
+	assert (comp.get_summary () == "test1");
 	comp.set_summary ("newSummary");
-	print ("The new summary of comp is %s" % comp.get_summary ());
+	assert (comp.get_summary () == "newSummary");
 
 	#Test set_comment/get_comment
-	print ("The comment of comp is %s" % comp.get_comment ());
+	assert (comp.get_comment () == None);
 	comp.set_comment ("newcomment");
-	print ("The new comment of comp is %s" % comp.get_comment ());
+	assert (comp.get_comment () == "newcomment");
 
 	#Test set_uid/get_uid
-	print ("The uid of comp is %s" % comp.get_uid ());
+	assert (comp.get_uid () == "event-uid-123");
 	comp.set_uid ("newuid");
-	print ("The new uid of comp is %s" % comp.get_uid ());
+	assert (comp.get_uid () == "newuid");
 
 	#Test set_relcalid/get_relcalid
-	print ("The relcalid of comp is %s" % comp.get_relcalid ());
+	assert (comp.get_relcalid () == None);
 	comp.set_relcalid ("newrelcalid");
-	print ("The new relcalid of comp is %s" % comp.get_relcalid ());
+	assert (comp.get_relcalid () == "newrelcalid");
 
 	#Test set_description/get_description
-	print ("The description of comp is %s" % comp.get_description ());
+	assert (comp.get_description () == None);
 	comp.set_description ("newdescription");
-	print ("The new description of comp is %s" % comp.get_description ());
+	assert (comp.get_description () == "newdescription");
 
 	#Test set_location/get_location
-	print ("The location of comp is %s" % comp.get_location ());
+	assert (comp.get_location () == "Location");
 	comp.set_location ("newlocation");
-	print ("The new location of comp is %s" % comp.get_location ());
+	assert (comp.get_location () == "newlocation");
 
 	#Test set_sequence/get_sequence
-	print ("The sequence of comp is %s" % comp.get_sequence ());
+	assert (comp.get_sequence () == 0);
 	comp.set_sequence (5);
-	print ("The new sequence of comp is %d" % comp.get_sequence ());
+	assert (comp.get_sequence () == 5);
 
 
 	#Test add_component
@@ -154,37 +153,30 @@ def main ():
 	parent.add_component (comp5);
 
 	real = parent.get_first_real_component();
+	comp1_string = comp1.as_ical_string_r ();
 	real_string = real.as_ical_string_r ();
-	print ("The real is %s\n" % real_string);
+	assert (comp1_string == real_string);
 
 	#Test count_components
-	print ("There are %d components\n" % parent.count_components(ICalGLib.ComponentKind.VEVENT_COMPONENT));
+	assert (parent.count_components(ICalGLib.ComponentKind.VEVENT_COMPONENT) == 3);
 
 	#Test get_first_component and get_next_component
 	comp = parent.get_first_component (ICalGLib.ComponentKind.VEVENT_COMPONENT);
-	while comp is not None:
-		child_string = comp.as_ical_string_r();
-		print ("The child is \n%s\n\n" % child_string);
-		comp = parent.get_next_component (ICalGLib.ComponentKind.VEVENT_COMPONENT);
 
 	#Test get_dtstart and get_dtend
 	comp = parent.get_first_component (ICalGLib.ComponentKind.VEVENT_COMPONENT);
 	dtstart = comp.get_dtstart ();
 	start_string = dtstart.as_ical_string_r();
-	print ("The start is %s\n", start_string);
+	assert (start_string == "20140306T090000");
 	dtend = comp.get_dtend();
 	end_string = dtend.as_ical_string_r();
-	print ("The dtend is %s\n", end_string);
+	assert (end_string == "20140306T093000");
 	
 	#Test merge_component
-	comp4 = ICalGLib.Component.new_from_string (event_str4);
-	print ("The comp4 is \n%s\n" % comp4.as_ical_string_r());
-	comp5 = ICalGLib.Component.new_from_string (event_str5);
-	print ("The comp5 is \n%s\n" % comp5.as_ical_string_r());
+	comp4_string = comp4.as_ical_string_r();
 	comp4.merge_component (comp5);
-	print ("After merge:\n\n");
-	print ("The comp4 is \n%s\n" % comp4.as_ical_string_r());
-	print ("The comp5 is \n%s\n" % comp5.as_ical_string_r());
+	assert (comp4.as_ical_string_r() == comp4_string);
+	assert (comp5.as_ical_string_r() == None);
 
 	
 

@@ -8,7 +8,7 @@
 #ifndef XML_PARSER_H
 #define	XML_PARSER_H
 
-#include <libxml/xmlreader.h>
+#include <libxml2/libxml/xmlreader.h>
 #include <stdio.h>
 #include <glib-2.0/glib.h>
 
@@ -29,6 +29,8 @@ typedef struct Ret {
         gchar *translator;
         GList *translatorArgus;
         gchar *errorReturnValue;
+        gchar *cloner;
+        GList *clonerArgus;
 } Ret;
 
 typedef struct Method {

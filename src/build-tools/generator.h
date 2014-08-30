@@ -11,7 +11,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
-#include <libxml/xmlreader.h>
+#include <libxml2/libxml/xmlreader.h>
 #include <glib-2.0/glib.h>
 #include "xml-parser.h"
 
@@ -86,6 +86,7 @@ void generate_header_method_get_type (FILE *out, Structure *structure);
 void generate_header_method_get_native_set_owner (FILE *out, Structure *structure);
 void generate_header_method_get_native_remove_owner (FILE *out, Structure *structure);
 void generate_header_method_get_native_pointer_set_owner (FILE *out, Structure *structure);
+void generate_header_method_steal_native (FILE *out, Structure *structure);
 void generate_header_enums (FILE *out, Structure *structure);
 void generate_header_enum (FILE *out, Enumeration *enumeration);
 void generate_header_includes (FILE *out, Structure *structure);
