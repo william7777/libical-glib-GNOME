@@ -11,8 +11,8 @@ i-cal-object.h: i-cal-object.h.in
 libical-glib.h: libical-glib.h.in
 	cp $< $@
 
-i-cal-timezone.h i-cal-timezone.c i-cal-enums.h i-cal-enums.c i-cal-property.h i-cal-property.c i-cal-component.h i-cal-component.c i-cal-timetype.h i-cal-timetype.c: 
-	$(top_builddir)/src/build-tools/src-generator "$(top_builddir)/src/build-tools" "$(top_builddir)/src/api" i-cal-timezone.xml i-cal-enums.xml i-cal-property.xml i-cal-component.xml i-cal-timetype.xml
+i-cal-timezone.h i-cal-timezone.c i-cal-enums.h i-cal-enums.c i-cal-property.h i-cal-property.c i-cal-component.h i-cal-component.c i-cal-timetype.h i-cal-timetype.c i-cal-time.h i-cal-time.c: 
+	$(top_builddir)/src/build-tools/src-generator "$(top_builddir)/src/build-tools" "$(top_builddir)/src/api" i-cal-timezone.xml i-cal-enums.xml i-cal-property.xml i-cal-component.xml i-cal-timetype.xml i-cal-time.xml
 
 lib_LTLIBRARIES = libical-glib-1.0.la
 
@@ -45,6 +45,7 @@ libical_glib_1_0_la_SOURCES = \
 	i-cal-component.c \
 	i-cal-property.c \
 	i-cal-timetype.c \
+	i-cal-time.c \
 	$(NULL)
 
 privinclude_HEADERS = \
@@ -55,6 +56,7 @@ privinclude_HEADERS = \
 	i-cal-component.h \
 	i-cal-property.h \
 	i-cal-timetype.h \
+	i-cal-time.h \
 	$(NULL)
 
 BUILT_SOURCES += \

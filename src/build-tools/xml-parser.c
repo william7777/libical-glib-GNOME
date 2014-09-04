@@ -60,6 +60,7 @@ method_new()
 	method->parameters = NULL;
 	method->ret = NULL;
 	method->comment = NULL;
+	method->custom = NULL;
 	return method;
 }
 
@@ -80,6 +81,7 @@ method_free(Method *method)
 	g_free(method->kind);
 	g_free(method->since);
 	g_free(method->comment);
+	g_free (method->custom);
 	ret_free(method->ret);
 
 	method = NULL;
@@ -320,6 +322,18 @@ parse_comment(xmlNode *node, Method *method)
 }
 
 gboolean
+parse_custom(xmlNode *node, Method *method)
+{
+	if (xmlStrcmp(node->name, (xmlChar *) "custom") != 0) {
+		return FALSE;
+	}
+
+	g_free(method->custom);
+	method->custom = (gchar *)xmlNodeGetContent(node);
+	return TRUE;
+}
+
+gboolean
 parse_method(xmlNode *node, Method *method)
 {
 	xmlNode *child;
@@ -347,8 +361,9 @@ parse_method(xmlNode *node, Method *method)
 	for (child = xmlFirstElementChild(node); child != NULL; child = xmlNextElementSibling(child)) {
 		if (parse_parameters(child, method) != TRUE &&
 			parse_return(child, method) != TRUE &&
-			parse_comment(child, method) != TRUE) {
-			printf("The node named %s cannot be parsed\n", child->name);
+			parse_comment(child, method) != TRUE &&
+			parse_custom(child, method) != TRUE) {
+			printf("The node named %s in method cannot be parsed\n", child->name);
 			return FALSE;
 		}
 	}
@@ -398,14 +413,10 @@ parse_structure(xmlNode *node, Structure *structure)
 	gchar *strIsPossibleGlobal;
 	gchar *strIsBare;
 	gchar *includes;
-	GList *iter;
-	gchar *element;
 
 	if (xmlStrcmp(node->name, (xmlChar *) "structure") != 0) {
 		return FALSE;
 	}
-
-	element = NULL;
 
 	for (attr = node->properties; attr != NULL; attr = attr->next) {
 		if (xmlStrcmp(attr->name, (xmlChar *) "namespace") == 0) {
@@ -449,10 +460,6 @@ parse_structure(xmlNode *node, Structure *structure)
 			if (!parse_enumeration (child, enumeration))
 				enumeration_free (enumeration);
 			structure->enumerations = g_list_append (structure->enumerations, enumeration);
-
-			for (iter = g_list_first (enumeration->elements); iter != NULL; iter = g_list_next (iter)) {
-				element = (gchar *)iter->data;
-			}
 			enumeration = NULL;
 		}
 	}

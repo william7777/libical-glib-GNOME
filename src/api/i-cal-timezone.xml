@@ -1,12 +1,12 @@
            <structure namespace="ICal" name="Timezone" native="icaltimezone" is_possible_global="true" includes="icaltimezone, i-cal-array">               
               <method name="i_cal_timezone_new" corresponds="icaltimezone_new" kind="constructor" since="1.0">
-                 <returns type="ICalTimezone *" annotation="transfer-full, allow-none" translator="i_cal_timezone_new_full" translator_argus="NULL, FALSE" comment="The newly created object of the type #ICalTimezone." />
+                 <returns type="ICalTimezone *" annotation="transfer full, allow-none" translator="i_cal_timezone_new_full" translator_argus="NULL, FALSE" comment="The newly created object of the type #ICalTimezone." />
                  <comment xml:space="preserve">The constructor of the type #ICalTimezone</comment>
               </method>
                
                <method name="i_cal_timezone_copy" corresponds="icaltimezone_copy" kind="clone" since="1.0">
-                 <parameter type="ICalTimezone *" name="zone" comment="The #ICalTimezone needs to be cloned."/>
-                 <returns type="ICalTimezone *" annotation="transfer-none" translator="i_cal_timezone_new_full" translator_argus="NULL, FALSE" comment="The newly created #ICalTimezone with the same values as @zone"/>
+                 <parameter type="const ICalTimezone *" name="zone" comment="The #ICalTimezone needs to be cloned."/>
+                 <returns type="ICalTimezone *" annotation="transfer none" translator="i_cal_timezone_new_full" translator_argus="NULL, FALSE" comment="The newly created #ICalTimezone with the same values as @zone"/>
                  <comment xml:space="preserve">The clone method for #ICalTimezone</comment>
               </method>
                
@@ -50,38 +50,38 @@
                </method>
                
                <method name ="i_cal_timezone_get_tzid" corresponds ="icaltimezone_get_tzid" kind ="get" since="1.0">
-                   <parameter type="ICalTimezone *" name="zone" comment="The #ICalTimezone to be queried"/>
+                   <parameter type="const ICalTimezone *" name="zone" comment="The #ICalTimezone to be queried"/>
                    <returns type="const gchar *" comment="The timezone id"/>
                    <comment xml:space="preserve">Returns the TZID of a timezone.</comment>
                </method>
                
                <method name ="i_cal_timezone_get_location" corresponds ="icaltimezone_get_location" kind ="get" since="1.0">
-                   <parameter type="ICalTimezone *" name="zone" comment="The #ICalTimezone to be queried"/>
+                   <parameter type="const ICalTimezone *" name="zone" comment="The #ICalTimezone to be queried"/>
                    <returns type="const gchar *" comment="The location of the #ICalTimezone"/>
                    <comment xml:space="preserve">Returns the city name of a timezone.</comment>
                </method>
                
                <method name ="i_cal_timezone_get_tznames" corresponds ="icaltimezone_get_tznames" kind ="get" since="1.0">
-                   <parameter type="ICalTimezone *" name="zone" comment="The #ICalTimezone to be queried"/>
+                   <parameter type="const ICalTimezone *" name="zone" comment="The #ICalTimezone to be queried"/>
                    <returns type="const gchar *" comment="The timezone name"/>
                    <comment xml:space="preserve">Returns the TZNAME properties used in the latest STANDARD and DAYLIGHT components. If they are the same it will return just one, e.g. "LMT". If they are different it will format them like "EST/EDT". Note that this may also return NULL.</comment>
                </method>
                
                <method name ="i_cal_timezone_get_latitude" corresponds ="icaltimezone_get_latitude" kind ="get" since="1.0">
-                   <parameter type="ICalTimezone *" name="zone" comment="The #ICalTimezone to be queried"/>
+                   <parameter type="const ICalTimezone *" name="zone" comment="The #ICalTimezone to be queried"/>
                    <returns type="gdouble" comment="The latitude of the #ICalTimezone"/>
                    <comment xml:space="preserve">Returns the latitude of a builtin timezone.</comment>
                </method>
                
                <method name ="i_cal_timezone_get_longitude" corresponds ="icaltimezone_get_longitude" kind ="get" since="1.0">
-                   <parameter type="ICalTimezone *" name="zone" comment="The #ICalTimezone to be queried"/>
+                   <parameter type="const ICalTimezone *" name="zone" comment="The #ICalTimezone to be queried"/>
                    <returns type="gdouble" comment="The longitude of the #ICalTimezone."/>
                    <comment xml:space="preserve">Returns the longitude of a builtin timezone.</comment>
                </method>
                
                <method name ="i_cal_timezone_get_component" corresponds ="icaltimezone_get_component" kind ="get" since="1.0">
-                   <parameter type="ICalTimezone *" name="zone" comment="The #ICalTimezone to be queried"/>
-                   <returns type="ICalComponent *" translator="i_cal_component_new_full" translator_argus="(GObject *)zone" comment="the VTIMEZONE component of the @zone."/>
+                   <parameter type="const ICalTimezone *" name="zone" comment="The #ICalTimezone to be queried"/>
+                   <returns type="ICalComponent *" translator="i_cal_component_new_full" annotation="transfer full" translator_argus="(GObject *)zone" comment="the VTIMEZONE component of the @zone."/>
                    <comment xml:space="preserve">Returns the VTIMEZONE component of a timezone.</comment>
                </method>
                
@@ -93,7 +93,7 @@
                </method>
                
                <method name ="i_cal_timezone_get_display_name" corresponds ="icaltimezone_get_display_name" kind ="get" since="1.0">
-                   <parameter type="ICalTimezone *" name="zone" comment="The #ICalTimezone to be queried"/>
+                   <parameter type="const ICalTimezone *" name="zone" comment="The #ICalTimezone to be queried"/>
                    <returns type="const gchar *" comment="The display name of @zone"/>
                    <comment xml:space="preserve">Get the display name of the @zone.</comment>
                </method>

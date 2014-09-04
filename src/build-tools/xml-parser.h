@@ -41,6 +41,7 @@ typedef struct Method {
 	GList *parameters;
 	Ret *ret;
 	gchar *comment;
+	gchar *custom;
 } Method;
 
 typedef struct Structure {
@@ -82,6 +83,7 @@ gboolean parse_comment (xmlNode *node, Method *method);
 gboolean parse_method (xmlNode *node, Method *method);
 gboolean parse_structure (xmlNode *node, Structure *structure);
 gboolean parse_enumeration (xmlNode *node, Enumeration *enumeration);
+gboolean parse_custom(xmlNode *node, Method *method);
 
 #endif	/* XML_PARSER_H */
 

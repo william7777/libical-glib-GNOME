@@ -166,10 +166,10 @@ def main ():
 	#Test get_dtstart and get_dtend
 	comp = parent.get_first_component (ICalGLib.ComponentKind.VEVENT_COMPONENT);
 	dtstart = comp.get_dtstart ();
-	start_string = dtstart.as_ical_string_r();
+	start_string = ICalGLib.time_as_ical_string_r (dtstart);
 	assert (start_string == "20140306T090000");
 	dtend = comp.get_dtend();
-	end_string = dtend.as_ical_string_r();
+	end_string = ICalGLib.time_as_ical_string_r (dtend);
 	assert (end_string == "20140306T093000");
 	
 	#Test merge_component

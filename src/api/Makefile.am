@@ -1,6 +1,7 @@
 NULL =
 
 EXTRA_DIST =  \
+	i-cal-time.xml \
 	i-cal-array.xml \
 	i-cal-attach.xml \
 	i-cal-duration-type.xml \

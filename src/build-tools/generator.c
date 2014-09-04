@@ -433,7 +433,7 @@ gchar *get_source_method_proto_get_native_set_owner (Structure *structure)
 	g_free (lowerSnake);
 	
 	para = parameter_new ();
-	para->type = g_strconcat (upperCamel, " *", NULL);
+	para->type = g_strconcat ("const ", upperCamel, " *", NULL);
 	g_free (upperCamel);
 	para->name = g_strdup ("object");
 	get_native_set_owner->parameters = g_list_append (get_native_set_owner->parameters, para);
@@ -507,7 +507,7 @@ gchar *get_source_method_proto_set_owner (Structure *structure)
 	g_free (lowerSnake);
 	
 	para = parameter_new ();
-	para->type = g_strconcat (upperCamel, " *", NULL);
+	para->type = g_strconcat ("const ", upperCamel, " *", NULL);
 	g_free (upperCamel);
 	para->name = g_strdup ("object");
 	set_owner->parameters = g_list_append (set_owner->parameters, para);
@@ -702,7 +702,7 @@ generate_header_method_get_native_set_owner (FILE *out, Structure *structure)
 	g_free (lowerSnake);
 	
 	para = parameter_new ();
-	para->type = g_strconcat (upperCamel, " *", NULL);
+	para->type = g_strconcat ("const ", upperCamel, " *", NULL);
 	g_free (upperCamel);
 	para->name = g_strdup ("object");
 	get_native_set_owner->parameters = g_list_append (get_native_set_owner->parameters, para);
@@ -1609,7 +1609,8 @@ get_translator_for_paramter (Parameter *para)
 	res = NULL;
 
 	if (para->translator != NULL) {
-		res = g_strdup (para->translator);
+		if (g_strcmp0 (para->translator, (gchar *)"NONE") != 0)
+			res = g_strdup (para->translator);
 	} else {
 		trueType = get_true_type (para->type);
 		if (g_hash_table_contains (allStructures, trueType)) {
@@ -1634,7 +1635,8 @@ get_translator_for_return (Ret *ret)
 	res = NULL;
 
 	if (ret->translator != NULL) {
-		res = g_strdup (ret->translator);
+		if (g_strcmp0 (ret->translator, (gchar *)"NONE") != 0)
+			res = g_strdup (ret->translator);
 	} else {
 		trueType = get_true_type (ret->type);
 		if (g_hash_table_contains (allStructures, trueType)) {
@@ -1728,50 +1730,56 @@ get_source_method_body (Method *method, const gchar *nameSpace)
 	
 	g_stpcpy (buffer + strlen (buffer), "\n{\n");
 	
-	checkers = get_source_run_time_checkers (method, nameSpace);
-	g_stpcpy (buffer + strlen (buffer), checkers);
-	g_free (checkers);
-	
-	g_stpcpy (buffer + strlen (buffer), "\t");
-	if (method->ret != NULL) {
-		g_stpcpy (buffer + strlen (buffer), "return ");
-		translator = get_translator_for_return (method->ret);
-		if (translator != NULL) {
-			g_stpcpy (buffer + strlen (buffer), translator);
-			g_stpcpy (buffer + strlen (buffer), " (");
-		}			
-	}
-	
-	body = get_source_method_code (method);
-	g_stpcpy (buffer + strlen (buffer), body);
-	g_free (body);
-	
-	if (method->ret != NULL && translator != NULL) {
-		if (method->ret->translatorArgus != NULL) {
-			for (iter = g_list_first (method->ret->translatorArgus); iter != NULL; iter = g_list_next (iter)) {
-				g_stpcpy (buffer + strlen (buffer), ", ");
-				g_stpcpy (buffer + strlen (buffer), (gchar *)iter->data);
+	if (g_strcmp0 (method->corresponds, (gchar *)"CUSTOM") != 0) {
+		checkers = get_source_run_time_checkers (method, nameSpace);
+		g_stpcpy (buffer + strlen (buffer), checkers);
+		g_free (checkers);
+
+		g_stpcpy (buffer + strlen (buffer), "\t");
+		if (method->ret != NULL) {
+			g_stpcpy (buffer + strlen (buffer), "return ");
+			translator = get_translator_for_return (method->ret);
+			if (translator != NULL) {
+				g_stpcpy (buffer + strlen (buffer), translator);
+				g_stpcpy (buffer + strlen (buffer), " (");
 			}
-		} else {
-			trueType = get_true_type (method->ret->type);
-			if (g_hash_table_contains (type2Structure, trueType)) {
-				structure = g_hash_table_lookup (type2Structure, trueType);
-				if (structure->isBare == FALSE) {
-					g_stpcpy (buffer + strlen (buffer), ", NULL");				
-				}
-			}
-			g_free (trueType);
-			/*
-			if (g_strcmp0 (g_hash_table_lookup (allTypes, method->ret->type), "true") == 0) {
-				g_stpcpy (buffer + strlen (buffer), ", ");
-				g_stpcpy (buffer + strlen (buffer), "FALSE");
-			}
-			 * */
 		}
-		g_stpcpy (buffer + strlen (buffer), ") ");
-		g_free (translator);
+
+		body = get_source_method_code (method);
+		g_stpcpy (buffer + strlen (buffer), body);
+		g_free (body);
+
+		if (method->ret != NULL && translator != NULL) {
+			if (method->ret->translatorArgus != NULL) {
+				for (iter = g_list_first (method->ret->translatorArgus); iter != NULL; iter = g_list_next (iter)) {
+					g_stpcpy (buffer + strlen (buffer), ", ");
+					g_stpcpy (buffer + strlen (buffer), (gchar *)iter->data);
+				}
+			} else {
+				trueType = get_true_type (method->ret->type);
+				if (g_hash_table_contains (type2Structure, trueType)) {
+					structure = g_hash_table_lookup (type2Structure, trueType);
+					if (structure->isBare == FALSE) {
+						g_stpcpy (buffer + strlen (buffer), ", NULL");
+					}
+				}
+				g_free (trueType);
+				/*
+				if (g_strcmp0 (g_hash_table_lookup (allTypes, method->ret->type), "true") == 0) {
+					g_stpcpy (buffer + strlen (buffer), ", ");
+					g_stpcpy (buffer + strlen (buffer), "FALSE");
+				}
+				 * */
+			}
+			g_stpcpy (buffer + strlen (buffer), ") ");
+			g_free (translator);
+		}
+		g_stpcpy (buffer + strlen (buffer), ";");
+	} else if (method->custom != NULL) {
+		g_stpcpy (buffer + strlen (buffer), method->custom);
+	} else {
+		printf ("WARNING: No function body for the method: %s\n", method->name);
 	}
-	g_stpcpy (buffer + strlen (buffer), ";");
 	g_stpcpy (buffer + strlen (buffer), "\n}\n");
 	
 	ret = g_new (gchar, strlen (buffer) + 1);

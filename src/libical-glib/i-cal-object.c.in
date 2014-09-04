@@ -260,7 +260,7 @@ i_cal_object_construct (ICalObject *iobject,
 }
 
 /**
- * i_cal_object_get_native:
+ * i_cal_object_get_native: (skip)
  * @iobject: an #ICalObject
  *
  * Obtain native libical structure pointer associated with this @iobject.
@@ -432,15 +432,15 @@ i_cal_object_set_owner (ICalObject *iobject,
 }
 
 /**
- * i_cal_object_get_owner:
+ * i_cal_object_ref_owner:
  * @iobject: an #ICalObject
- *
- * Returns: (transfer full) (allow-none): Current owner of the libical
- *    native structure. returns #NULL, when there is no owner.
  *
  * Obtain current owner of the native libical structure. The returned pointer,
  * if not #NULL, is referenced for thread safety. Unref it with g_object_unref()
  * when done with it.
+ *
+ * Returns: (transfer full) (allow-none): Current owner of the libical
+ *    native structure. returns #NULL, when there is no owner.
  *
  * Since: 1.0
  **/

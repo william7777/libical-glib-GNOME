@@ -3,7 +3,7 @@ NULL =
 @GNOME_CODE_COVERAGE_RULES@
 
 TESTS =  \
-	test-component.py \
+	component.py \
 	$(NULL)
 
 TESTS_ENVIRONMENT = . $(abs_top_srcdir)/tests/tests-env.sh "$(abs_top_builddir)/src/libical-glib/" "$(abs_top_builddir)/src/libical-glib/.libs/";
