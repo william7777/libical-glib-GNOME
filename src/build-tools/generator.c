@@ -1371,8 +1371,17 @@ get_hash_table_from_structure (Structure *structure)
 		g_hash_table_insert (table, (char *)"get_property", get_source_method_proto_get_property(structure));
 		g_hash_table_insert (table, (char *)"new_full", get_source_method_proto_new_full(structure));
 		g_hash_table_insert (table, (char *)"get_native_set_owner", get_source_method_proto_get_native_set_owner(structure));
+		if (structure->destroyFunc != NULL) {
+			g_hash_table_insert (table, (char *)"destroyFunc", g_strdup (structure->destroyFunc));
+		} else {
+			g_hash_table_insert (table, (char *)"destroyFunc", g_strdup ((gchar *)"g_free"));
+		}
+		if (structure->cloneFunc != NULL) {
+			g_hash_table_insert (table, (gchar *)"cloneFunc", g_strdup (structure->cloneFunc));
+		}
 		if (structure->isBare) {
 			g_hash_table_insert (table, (char *)"get_native_pointer_set_owner", get_source_method_proto_get_native_pointer_set_owner(structure));
+			g_hash_table_insert (table, (gchar *)"defaultNative", g_strdup (structure->defaultNative));
 		}
 	}
 
@@ -1555,8 +1564,6 @@ get_source_method_code (Method *method)
 	*buffer = '\0';
 
 	if (method->ret != NULL && method->ret->cloner != NULL) {
-		printf ("HIT\n");
-		fflush (NULL);
 		g_stpcpy (buffer + strlen (buffer), method->ret->cloner);
 		g_stpcpy (buffer + strlen (buffer), " (");
 	}

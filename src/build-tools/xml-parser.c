@@ -14,6 +14,9 @@ structure_new()
 	structure->isBare = FALSE;
 	structure->isPossibleGlobal = FALSE;
 	structure->enumerations = NULL;
+	structure->destroyFunc = NULL;
+	structure->cloneFunc = NULL;
+	structure->defaultNative = NULL;
 	structure->dependencies = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
 	return structure;
 }
@@ -42,6 +45,9 @@ structure_free(Structure *structure)
 	g_free(structure->name);
 	g_free(structure->native);
 	g_free(structure->parentType);
+	g_free (structure->destroyFunc);
+	g_free (structure->cloneFunc);
+	g_free (structure->defaultNative);
 	g_hash_table_destroy (structure->dependencies);
 
 	structure = NULL;
@@ -437,6 +443,12 @@ parse_structure(xmlNode *node, Structure *structure)
 				structure->isPossibleGlobal = TRUE;
 			}
 			g_free(strIsPossibleGlobal);
+		} else if (xmlStrcmp(attr->name, (xmlChar *)"destroy_func") == 0) {
+			structure->destroyFunc = (gchar *)xmlNodeListGetString(attr->doc, attr->children, 1);
+		} else if (xmlStrcmp(attr->name, (xmlChar *)"clone_func") == 0) {
+			structure->cloneFunc = (gchar *)xmlNodeListGetString(attr->doc, attr->children, 1);
+		} else if (xmlStrcmp(attr->name, (xmlChar *)"default_native") == 0) {
+			structure->defaultNative = (gchar *)xmlNodeListGetString(attr->doc, attr->children, 1);
 		} else if (xmlStrcmp(attr->name, (xmlChar *)"is_bare") == 0) {
 			strIsBare = (gchar *)xmlNodeListGetString(attr->doc, attr->children, 1);
 			if (g_strcmp0(strIsBare, "true") == 0) {

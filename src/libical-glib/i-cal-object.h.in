@@ -74,6 +74,7 @@ void		i_cal_object_set_native_destroy_func
 void		i_cal_object_set_owner		(ICalObject *iobject,
 						 GObject *owner);
 GObject *	i_cal_object_ref_owner		(ICalObject *iobject);
+void	i_cal_object_remove_owner		(ICalObject *iobject);
 void		i_cal_object_add_depender	(ICalObject *iobject,
 						 GObject *depender);
 void		i_cal_object_remove_depender	(ICalObject *iobject,

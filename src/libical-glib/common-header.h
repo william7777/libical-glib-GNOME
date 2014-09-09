@@ -12,6 +12,7 @@
 #include <glib-object.h>
 #include <libical/ical.h>
 #include <gobject/gobject.h>
+#include "i-cal-object.h"
 
 #endif	/* COMMON_HEADER_H */
 

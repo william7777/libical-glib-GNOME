@@ -16,13 +16,15 @@
 
 typedef struct _${upperCamel} ${upperCamel};
 typedef struct _${upperCamel}Class ${upperCamel}Class;
-typedef struct _${upperCamel}Private ${upperCamel}Private;
+//typedef struct _${upperCamel}Private ${upperCamel}Private;
 
 struct _${upperCamel} {
-        GObject parent;
-        ${upperCamel}Private *priv;
+//        GObject parent;
+//        ${upperCamel}Private *priv;
+		ICalObject parent;
 };
 
 struct _${upperCamel}Class {
-        GObjectClass parent;
+//        GObjectClass parent;
+		ICalObjectClass parent;
 };

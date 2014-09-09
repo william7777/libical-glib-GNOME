@@ -463,6 +463,32 @@ i_cal_object_ref_owner (ICalObject *iobject)
 }
 
 /**
+ * i_cal_object_remove_owner:
+ * @iobject: an #ICalObject
+ *
+ * Unref and remove the owner. 
+ *
+ * Since: 1.0
+ **/
+void
+i_cal_object_remove_owner (ICalObject *iobject)
+{
+	GObject *owner;
+
+	g_return_val_if_fail (I_CAL_IS_OBJECT (iobject), NULL);
+
+	LOCK_PROPS (iobject);
+
+	owner = iobject->priv->owner;
+	if (owner) {
+		g_object_unref (owner);
+		iobject->priv->owner = NULL;
+	}
+
+	UNLOCK_PROPS (iobject);
+}
+
+/**
  * i_cal_object_add_depender:
  * @iobject: an #ICalObject
  * @depender: a #GObject depender

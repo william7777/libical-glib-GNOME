@@ -56,6 +56,9 @@ typedef struct Structure {
         gboolean isPossibleGlobal;
         GList *enumerations;
         GHashTable *dependencies;
+        gchar *destroyFunc;
+        gchar *cloneFunc;
+        gchar *defaultNative;
 } Structure;
 
 typedef struct Enumeration {
