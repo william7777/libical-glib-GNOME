@@ -1,4 +1,4 @@
-<structure namespace="ICal" name="Component" native="icalcomponent">
+<structure namespace="ICal" name="Component" native="icalcomponent" destroy_func="icalcomponent_free">
     <method name="i_cal_component_new" corresponds="icalcomponent_new" kind="constructor" since="1.0">
         <parameter type="ICalComponentKind" name="kind" comment="The #ICalComponentKind."/>
         <returns type="ICalComponent *" annotation="transfer full" comment="The newly created #ICalComponent."/>

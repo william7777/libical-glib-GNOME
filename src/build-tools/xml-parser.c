@@ -67,6 +67,7 @@ method_new()
 	method->ret = NULL;
 	method->comment = NULL;
 	method->custom = NULL;
+	method->annotations = NULL;
 	return method;
 }
 
@@ -81,7 +82,11 @@ method_free(Method *method)
 	for (list = method->parameters; list != NULL; list = list->next) {
 		parameter_free((Parameter *) list->data);
 	}
+	for (list = method->annotations; list != NULL; list = list->next) {
+		g_free(list->data);
+	}
 	g_list_free(method->parameters);
+	g_list_free (method->annotations);
 	g_free(method->name);
 	g_free(method->corresponds);
 	g_free(method->kind);
@@ -344,6 +349,7 @@ parse_method(xmlNode *node, Method *method)
 {
 	xmlNode *child;
 	xmlAttr *attr;
+	gchar *anno;
 
 	if (xmlStrcmp(node->name, (xmlChar *) "method") != 0) {
 		return FALSE;
@@ -358,6 +364,10 @@ parse_method(xmlNode *node, Method *method)
 			method->kind = (gchar *)xmlNodeListGetString(attr->doc, attr->children, 1);
 		} else if (xmlStrcmp(attr->name, (xmlChar *)"since") == 0) {
 			method->since = (gchar *)xmlNodeListGetString(attr->doc, attr->children, 1);
+		} else if (xmlStrcmp(attr->name, (xmlChar *)"annotation") == 0) {
+			anno = (gchar *)xmlNodeListGetString(attr->doc, attr->children, 1);
+			method->annotations = get_list_from_string(anno);
+			xmlFree(anno);
 		} else {
 			printf("The attribute %s in method %s cannot be parsed", attr->name, node->name);
 			return TRUE;

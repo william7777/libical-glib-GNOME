@@ -1,5 +1,5 @@
 <structure namespace="ICal" name="Timetype" native="icaltimetype" is_bare="true" default_native="i_cal_timetype_new()">
-	<method name="i_cal_timetype_new" corresponds="CUSTOM" kind="constructor" since="1.0">
+	<method name="i_cal_timetype_new" corresponds="CUSTOM" annotation="skip" kind="constructor" since="1.0">
 		<returns type="icaltimetype" comment="The newly created #ICalTimetype. It is the epoch time (19700-1-1 00:00:00 utc)" />
         <comment xml:space="preserve">Create a new #ICalTimetype.</comment>
         <custom>	icaltimetype timetype;
@@ -12,7 +12,8 @@
 	timetype.is_utc = 1;
 	timetype.is_date = 0;
 	timetype.is_daylight = 0;
-	timetype.zone = NULL;</custom>
+	timetype.zone = NULL;
+	return timetype;</custom>
     </method>
 	<method name="i_cal_timetype_get_year" corresponds="CUSTOM" kind="get" since="1.0">
 		<parameter type="ICalTimetype *" name="timetype" comment="The #ICalTimetype to be queried."/>
@@ -82,6 +83,6 @@
         <returns type="const ICalTimezone *" translator="i_cal_timezone_new_full" translator_argus="NULL, TRUE" comment="The timezone." />
         <comment xml:space="preserve">Get the is_daylight of #ICalTimetype.</comment>
         <custom>	g_return_val_if_fail (timetype == NULL, 0);
-	return i_cal_timezone_new_full (i_cal_timetype_get_native_pointer_set_owner (timetype)->zone, NULL, TRUE);</custom>
+	return i_cal_timezone_new_full ((void *)i_cal_timetype_get_native_pointer_set_owner (timetype)->zone, NULL, TRUE);</custom>
     </method>
 </structure>

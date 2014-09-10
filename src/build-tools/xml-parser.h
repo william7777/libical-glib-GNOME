@@ -42,6 +42,7 @@ typedef struct Method {
 	Ret *ret;
 	gchar *comment;
 	gchar *custom;
+	GList *annotations;
 } Method;
 
 typedef struct Structure {

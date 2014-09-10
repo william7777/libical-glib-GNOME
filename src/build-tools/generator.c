@@ -42,6 +42,18 @@ get_source_method_comment (Method *method)
 	buffer = g_strconcat (res, "\n * ", method->name, ":", NULL);
 	g_free (res);
 	res = buffer;
+
+	for (iter_list = g_list_first (method->annotations); iter_list != NULL; iter_list = g_list_next (iter_list)) {
+		anno = (gchar *)iter_list->data;
+		if (iter_list == g_list_first (method->annotations)) {
+			buffer = g_strconcat (res, " (", anno, ")", NULL);
+		} else {
+			buffer = g_strconcat (res, ", (", anno, ")", NULL);
+		}
+		g_free (res);
+		res = buffer;
+	}
+
 	comment_line = g_new (gchar, BUFFER_SIZE);
 	
 	/* Processing the parameters */

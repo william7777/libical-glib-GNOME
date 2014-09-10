@@ -1,0 +1,101 @@
+#!/usr/bin/python3
+#GI_TYPELIB_PATH=$PREFIX/lib/girepository-1.0/ ./test-cal.py
+
+from gi.repository import ICalGLib
+
+event_str1 = \
+    "BEGIN:VEVENT\n"                                \
+    "UID:event-uid-123\n"                           \
+    "SUMMARY;LANGUAGE=en-US:test1\n"                 \
+    "DTSTART;TZID=Europe/Prague:20140306T090000\n"  \
+    "DTEND;TZID=Europe/Berlin:20140306T093000\n"    \
+    "CLASS:PUBLIC\n"                                \
+    "PRIORITY:5\n"                                  \
+    "DTSTAMP:20140207T020756Z\n"                    \
+    "TRANSP:OPAQUE\n"                               \
+    "STATUS:CONFIRMED\n"                            \
+    "SEQUENCE:0\n"                                  \
+    "LOCATION;LANGUAGE=en-US:Location\n"            \
+    "END:VEVENT\n"
+
+event_str2 = \
+    "BEGIN:VEVENT\n"                                \
+    "UID:event-uid-123\n"                           \
+    "SUMMARY;LANGUAGE=en-US:test2\n"                 \
+    "DTSTART;TZID=Europe/Prague:20140306T090000\n"  \
+    "DTEND;TZID=Europe/Berlin:20140306T093000\n"    \
+    "CLASS:PUBLIC\n"                                \
+    "PRIORITY:5\n"                                  \
+    "DTSTAMP:20140207T020756Z\n"                    \
+    "TRANSP:OPAQUE\n"                               \
+    "STATUS:CONFIRMED\n"                            \
+    "SEQUENCE:0\n"                                  \
+    "LOCATION;LANGUAGE=en-US:Location\n"            \
+    "END:VEVENT\n"
+
+event_str3 = \
+    "BEGIN:VEVENT\n"                                \
+    "UID:event-uid-123\n"                           \
+    "SUMMARY;LANGUAGE=en-US:test3\n"                 \
+    "DTSTART;TZID=Europe/Prague:20140306T090000\n"  \
+    "DTEND;TZID=Europe/Berlin:20140306T093000\n"    \
+    "CLASS:PUBLIC\n"                                \
+    "PRIORITY:5\n"                                  \
+    "DTSTAMP:20140207T020756Z\n"                    \
+    "TRANSP:OPAQUE\n"                               \
+    "STATUS:CONFIRMED\n"                            \
+    "SEQUENCE:0\n"                                  \
+    "LOCATION;LANGUAGE=en-US:Location\n"            \
+    "END:VEVENT\n"
+
+event_str4 = \
+    "BEGIN:VCALENDAR\n"                                \
+    "UID:event-uid-123\n"                           \
+    "SUMMARY;LANGUAGE=en-US:test4\n"                 \
+    "DTSTART;TZID=Europe/Prague:20140306T090000\n"  \
+    "DTEND;TZID=Europe/Berlin:20140306T093000\n"    \
+    "CLASS:PUBLIC\n"                                \
+    "PRIORITY:5\n"                                  \
+    "DTSTAMP:20140207T020756Z\n"                    \
+    "TRANSP:OPAQUE\n"                               \
+    "STATUS:CONFIRMED\n"                            \
+    "SEQUENCE:0\n"                                  \
+    "LOCATION;LANGUAGE=en-US:Location\n"            \
+    "END:VCALENDAR\n"
+
+event_str5 = \
+    "BEGIN:VCALENDAR\n"                                \
+    "UID:event-uid-123\n"                           \
+    "SUMMARY;LANGUAGE=en-US:test5\n"                 \
+    "DTSTART;TZID=Europe/Prague:20140306T090000\n"  \
+    "DTEND;TZID=Europe/Berlin:20140306T093000\n"    \
+    "CLASS:PUBLIC\n"                                \
+    "PRIORITY:5\n"                                  \
+    "DTSTAMP:20140207T020756Z\n"                    \
+    "TRANSP:OPAQUE\n"                               \
+    "STATUS:CONFIRMED\n"                            \
+    "SEQUENCE:0\n"                                  \
+    "LOCATION;LANGUAGE=en-US:Location\n"            \
+    "END:VCALENDAR\n"
+
+def main ():
+	
+
+
+	#Test add_component
+	parent = ICalGLib.Component.new_from_string (event_str1);
+	comp1 = ICalGLib.Component.new_from_string (event_str2);
+
+	parent.add_component (comp1);
+
+	real = parent.get_first_real_component();
+	comp1_string = comp1.as_ical_string_r ();
+	real_string = real.as_ical_string_r ();
+
+	
+	print ("Finish");
+
+	
+
+if __name__=="__main__":
+    main ()

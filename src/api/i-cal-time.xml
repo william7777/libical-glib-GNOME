@@ -56,7 +56,7 @@
         <returns type="gchar *" annotation="transfer full" comment="The string representation" />
         <comment xml:space="preserve">Return a string represention of the time, in RFC2445 format.</comment>
     </method>
-    <method name="i_cal_time_get_timezone" corresponds="icaltime_get_timezone" kind="get" since="1.0">
+    <method name="i_cal_time_get_timezone" corresponds="(void *)icaltime_get_timezone" kind="get" since="1.0">
         <parameter type="ICalTimetype *" name="tt" annotation="in, transfer none" comment="The #ICalTimetype to be queried"/>
         <returns type="const ICalTimezone *" annotation="transfer full" translator="i_cal_timezone_new_full" translator_argus="(GObject *)tt, TRUE" comment="The timezone information" />
         <comment xml:space="preserve">Return the timezone</comment>

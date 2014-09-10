@@ -1,28 +1,6 @@
 G_DEFINE_TYPE (${upperCamel}, ${lowerSnake}, I_CAL_TYPE_OBJECT)
 
 static void
-${lowerSnake}_constructed (GObject *object)
-{
-	GObjectClass *parent_class = G_OBJECT_CLASS (${lowerSnake}_parent_class);
-    
-	if (parent_class->constructed != NULL)
-		parent_class->constructed (object);
-}
-
-static void
-${lowerSnake}_dispose (GObject *object)
-{	
-	G_OBJECT_CLASS (${lowerSnake}_parent_class)->dispose (object);
-}
-
-static void
-${lowerSnake}_finalize (GObject *object)
-{
-	/* Chain up to parent's method. */
-	G_OBJECT_CLASS (${lowerSnake}_parent_class)->finalize (object);
-}
-
-static void
 ${lowerSnake}_class_init (${upperCamel}Class *klass)
 {	
 	g_type_class_add_private (klass, sizeof (${upperCamel}));
@@ -40,14 +18,14 @@ ${new_full}
 {
 	${upperCamel} *object;$^${isBare}
 	${native} *clone;^$
-	object = g_new (${upperCamel}, 1);$^${isBare}
+	object = g_object_new (${upperSnake}_TYPE, NULL);$^${isBare}
 	clone = g_new (${native}, 1);
 	*clone = native;^$
 	i_cal_object_construct ((ICalObject *)object,
-        						$^!${isBare}(gpointer) native^$$^${isBare}(gpointer) clone^$,
-    							${destroyFunc},
-    							$^${isPossibleGlobal}is_global_memory^$$^!${isPossibleGlobal}FALSE^$,
-    							$^!${isBare}owner^$$^${isBare}NULL^$);
+		        	$^!${isBare}(gpointer) native^$$^${isBare}(gpointer) clone^$,
+		        	(GDestroyNotify) ${destroyFunc},
+		        	$^${isPossibleGlobal}is_global_memory^$$^!${isPossibleGlobal}FALSE^$,
+		        	$^!${isBare}owner^$$^${isBare}NULL^$);
     							
 	return object;
 }
@@ -57,8 +35,9 @@ ${new_full}
  **/
 ${get_native_set_owner}
 {
-	${native} *native_pointer;	
-	$^!${isBare}i_cal_object_set_owner ((ICalObject *)object, owner);^$
+	${native} *native_pointer;$^!${isBare}	
+	if (owner != NULL)
+		i_cal_object_set_owner ((ICalObject *)object, owner);^$
 	native_pointer = i_cal_object_get_native ((ICalObject *)object);
 	$^!${isBare}return native_pointer;^$$^${isBare}
 	if (native_pointer) {
@@ -73,7 +52,8 @@ ${get_native_set_owner}
  **/
 ${get_native_pointer_set_owner}
 {$^!${isBare}
-	i_cal_object_set_owner ((ICalObject *)object, owner);^$
+	if (owner != NULL)
+		i_cal_object_set_owner ((ICalObject *)object, owner);^$
 	return i_cal_object_get_native ((ICalObject *)object);
 }^$
 

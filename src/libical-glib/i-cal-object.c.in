@@ -116,15 +116,15 @@ i_cal_object_get_property (GObject *object,
 static void
 i_cal_object_finalize (GObject *object)
 {
+	/* todo: Need to devise a way to check destroy_func and native */		
 	ICalObject *iobject = I_CAL_OBJECT (object);
 
-	if (iobject->priv->native &&
-	    iobject->priv->native_destroy_func &&
-	    !iobject->priv->owner &&
+	if (!iobject->priv->owner &&
 	    !iobject->priv->is_global_memory)
 		iobject->priv->native_destroy_func (iobject->priv->native);
 
-	g_clear_object (&iobject->priv->owner);
+	if (iobject->priv->owner)
+		g_object_unref (iobject->priv->owner);
 	g_slist_free_full (iobject->priv->dependers, g_object_unref);
 
 	g_mutex_clear (&iobject->priv->props_lock);
@@ -247,7 +247,7 @@ i_cal_object_construct (ICalObject *iobject,
 	if (owner)
 		g_return_if_fail (G_IS_OBJECT (owner));
 
-	LOCK_PROPS (iobject);
+	//LOCK_PROPS (iobject);
 
 	g_warn_if_fail (iobject->priv->native == NULL);
 
@@ -256,7 +256,7 @@ i_cal_object_construct (ICalObject *iobject,
 	iobject->priv->is_global_memory = is_global_memory;
 	i_cal_object_set_owner (iobject, owner);
 
-	UNLOCK_PROPS (iobject);
+	//UNLOCK_PROPS (iobject);
 }
 
 /**

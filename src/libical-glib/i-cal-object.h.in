@@ -21,6 +21,8 @@
 #define I_CAL_OBJECT_H
 
 #include <glib-object.h>
+#include <stdio.h>
+#include <libical/ical.h>
 
 /* Standard GObject macros */
 #define I_CAL_TYPE_OBJECT \
