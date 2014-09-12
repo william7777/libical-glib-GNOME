@@ -20,7 +20,7 @@
 #ifndef ${upperSnake}_H
 #define ${upperSnake}_H
 
-${includes}
+${headerIncludes}
 
 G_BEGIN_DECLS
 

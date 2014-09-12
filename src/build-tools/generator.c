@@ -280,7 +280,8 @@ get_lower_train_from_lower_snake (const gchar *lowerSnake)
 	return ret;
 }
 
-gchar *get_lower_train_from_upper_camel (const gchar *upperCamel)
+gchar *
+get_lower_train_from_upper_camel (const gchar *upperCamel)
 {
 	int i;
 	gchar *ret;
@@ -422,7 +423,8 @@ get_source_method_proto_new_full (Structure *structure)
 	return res;
 }
 
-gchar *get_source_method_proto_get_native_set_owner (Structure *structure)
+gchar *
+get_source_method_proto_get_native_set_owner (Structure *structure)
 {
 	gchar *upperCamel;
 	gchar *lowerSnake;
@@ -464,7 +466,8 @@ gchar *get_source_method_proto_get_native_set_owner (Structure *structure)
 	return res;
 }
 
-gchar *get_source_method_proto_get_native_pointer_set_owner (Structure *structure)
+gchar *
+get_source_method_proto_get_native_pointer_set_owner (Structure *structure)
 {
 	gchar *upperCamel;
 	gchar *lowerSnake;
@@ -502,7 +505,8 @@ gchar *get_source_method_proto_get_native_pointer_set_owner (Structure *structur
 	return res;
 }
 
-gchar *get_source_method_proto_set_owner (Structure *structure)
+gchar *
+get_source_method_proto_set_owner (Structure *structure)
 {
 	gchar *upperCamel;
 	gchar *lowerSnake;
@@ -569,7 +573,8 @@ get_source_method_proto_set_native (Structure *structure)
 	method_free (set_native);
 	return res;
 }
-gchar *get_source_method_proto_set_is_global (Structure *structure)
+gchar *
+get_source_method_proto_set_is_global (Structure *structure)
 {
 	gchar *upperCamel;
 	gchar *lowerSnake;
@@ -601,7 +606,8 @@ gchar *get_source_method_proto_set_is_global (Structure *structure)
 	method_free (set_is_global);
 	return res;
 }
-gchar *get_source_method_proto_set_property (Structure *structure)
+gchar *
+get_source_method_proto_set_property (Structure *structure)
 {
 	gchar *upperCamel;
 	gchar *lowerSnake;
@@ -646,7 +652,8 @@ gchar *get_source_method_proto_set_property (Structure *structure)
 	return res;
 }
 
-gchar *get_source_method_proto_get_property (Structure *structure)
+gchar *
+get_source_method_proto_get_property (Structure *structure)
 {
 	gchar *upperCamel;
 	gchar *lowerSnake;
@@ -732,7 +739,8 @@ generate_header_method_get_native_set_owner (FILE *out, Structure *structure)
 	method_free (get_native_set_owner);
 }
 
-void generate_header_method_get_native_remove_owner (FILE *out, Structure *structure) {
+void
+generate_header_method_get_native_remove_owner (FILE *out, Structure *structure) {
 	gchar *upperCamel;
 	gchar *lowerSnake;
 	Parameter *para;	
@@ -937,49 +945,71 @@ generate_header_method_proto (FILE *out, Method *method)
 }
 
 void
-generate_header (FILE *out, Structure *structure, GHashTable* table)
+generate_code_from_template (FILE *in, FILE *out, Structure *structure, GHashTable *table)
 {
-	FILE *in;
-	gchar *buffer;
-	guint len = 0;
 	gchar c;
-	gchar *val;
+	gchar *buffer;
+	gint count;
 	gchar last;
-	
-	in = open_file (templates_dir, HEADER_TEMPLATE);
+	gint len;
+	GList *iter;
+	gchar *method;
+	gchar *val;
+
+	g_return_if_fail (in != NULL && out != NULL && structure != NULL && table != NULL);
+
 	buffer = g_new (gchar, BUFFER_SIZE);
 	*buffer = '\0';
-	
+
 	while ((c = fgetc (in)) != EOF) {
 		if (c == '$') {
 			if ((c = fgetc (in)) != '{' && c != '^') {
 				printf ("The following char is not {");
 				return;
 			}
-			
+
 			if (c == '^') {
+				count = 1;
 				last = '\0';
-				while (!((c = fgetc (in)) == '$' && last == '^')) {
+				while (!((c = fgetc (in)) == '$' && last == '^' && count == 1)) {
+					if (c == '^' && last == '$') {
+						++count;
+						last = '\0';
+					}else if (c == '$' && last == '^') {
+						--count;
+						last = '\0';
+					} else {
+						last = c;
+					}
 					len = strlen (buffer);
 					buffer[len] = c;
 					buffer[len+1] = '\0';
-					last = c;
 				}
 				if (strlen (buffer) > 0)
 					buffer[strlen(buffer)-1] = '\0';
-				generate_conditional (out, structure, buffer, 0);
+				generate_conditional (out, structure, buffer, table);
 			} else {
 				while ((c = fgetc (in)) != '}') {
 					len = strlen (buffer);
 					buffer[len] = c;
 					buffer[len+1] = '\0';
 				}
-				if (g_strcmp0 (buffer, "enums") == 0) {
+
+				if (g_strcmp0 (buffer, "source") == 0) {
+					for (iter = g_list_first (structure->methods); iter != NULL; iter = g_list_next (iter)) {
+						method = get_source_method_body ((Method *)iter->data, structure->nameSpace);
+						fwrite (method, sizeof (gchar), strlen (method), out);
+						fwrite ("\n", sizeof (gchar), strlen ("\n"), out);
+						g_free (method);
+					}
+				} else if (g_strcmp0 (buffer, "enums") == 0) {
 					generate_header_enums (out, structure);
 				} else if (g_strcmp0 (buffer, "protos") == 0) {
 					generate_header_method_protos (out, structure);
-				} else if (g_strcmp0 (buffer, "includes") == 0) {
+				} else if (g_strcmp0 (buffer, "headerIncludes") == 0) {
 					generate_header_includes (out, structure);
+				} else if (g_strcmp0 (buffer, "sourceIncludes") == 0) {
+					generate_source_includes (out, structure);
 				} else if (g_strcmp0 (buffer, "forward_declaration") == 0) {
 					generate_header_forward_declaration (out, structure);
 				} else if (g_hash_table_contains (table, buffer)) {
@@ -989,8 +1019,16 @@ generate_header (FILE *out, Structure *structure, GHashTable* table)
 				} else if (g_strcmp0 (buffer, "structure_boilerplate") == 0) {
 					if (structure->native != NULL)
 						generate_header_structure_boilerplate (out, structure, table);
+				} else if (g_hash_table_contains (table, buffer)) {
+					val = g_hash_table_lookup (table, buffer);
+					fwrite (val, sizeof (gchar), strlen (val), out);
+					val = NULL;
+				} else if (g_strcmp0 (buffer, "source_boilerplate") == 0) {
+					if (structure->native != NULL)
+						generate_source_structure_boilerplate (out, structure, table);
 				} else {
 					printf ("The string %s is not recognized, please check the template\n", buffer);
+					fflush (NULL);
 					return;
 				}
 			}
@@ -999,7 +1037,21 @@ generate_header (FILE *out, Structure *structure, GHashTable* table)
 			fputc (c, out);
 		}
 	}
+
 	g_free (buffer);
+}
+
+void
+generate_header (FILE *out, Structure *structure, GHashTable* table)
+{
+	FILE *in;
+	
+	g_return_if_fail (out != NULL && structure != NULL && table != NULL);
+
+	in = open_file (templates_dir, HEADER_TEMPLATE);
+	
+	generate_code_from_template (in, out, structure, table);
+
 	fclose (in);
 }
 
@@ -1007,57 +1059,13 @@ void
 generate_header_structure_boilerplate (FILE *out, Structure *structure, GHashTable* table)
 {
 	FILE *in;
-	gchar *buffer;
-	guint len;
-	gchar c;
-	gchar *val;
-	gchar last;
 	
 	g_return_if_fail (out != NULL && structure != NULL && table != NULL);
 	
 	in = open_file (templates_dir, HEADER_STRUCTURE_BOILERPLATE_TEMPLATE);
-	buffer = g_new (gchar, BUFFER_SIZE);
-	*buffer = '\0';
 	
-	while ((c = fgetc (in)) != EOF) {
-		if (c == '$') {
-			if ((c = fgetc (in)) != '{' && c != '^') {
-				printf ("The following char is not {");
-				return;
-			}
-			
-			if (c == '^') {
-				last = '\0';
-				while (!((c = fgetc (in)) == '$' && last == '^')) {
-					len = strlen (buffer);
-					buffer[len] = c;
-					buffer[len+1] = '\0';
-					last = c;
-				}
-				if (strlen (buffer) > 0)
-					buffer[strlen(buffer)-1] = '\0';
-				generate_conditional (out, structure, buffer, 0);
-			} else {
-				while ((c = fgetc (in)) != '}') {
-					len = strlen (buffer);
-					buffer[len] = c;
-					buffer[len+1] = '\0';
-				}
-				if (g_hash_table_contains (table, buffer)) {
-					val = g_hash_table_lookup (table, buffer);
-					fwrite (val, sizeof (gchar), strlen (val), out);
-					val = NULL;
-				} else {
-					printf ("The string %s is not recognized, please check the structure boilerplate template\n", buffer);
-					return;
-				}
-			}
-			buffer[0] = '\0';
-		} else {
-			fputc (c, out);
-		}
-	}
-	g_free (buffer);
+	generate_code_from_template (in, out, structure, table);
+
 	fclose (in);
 }
 
@@ -1188,77 +1196,13 @@ void
 generate_source (FILE *out, Structure *structure, GHashTable* table)
 {
 	FILE *in;
-	gchar *buffer;
-	guint len;
-	gchar c;
-	GList *iter;
-	gchar *destruction;
-	gchar *method;
-	gchar *val;
-	char last;
 	
-	in = open_file (templates_dir, SOURCE_TEMPLATE);
-	buffer  = g_new (gchar, BUFFER_SIZE);
-	*buffer = '\0';
-		
-	while ((c = fgetc (in)) != EOF) {
-		if (c == '$') {
-			if ((c = fgetc (in)) != '{' && c != '^') {
-				printf ("The following char is not {");
-				return;
-			}
-			
-			if (c == '^') {
-				last = '\0';
-				while (!((c = fgetc (in)) == '$' && last == '^')) {
-					len = strlen (buffer);
-					buffer[len] = c;
-					buffer[len+1] = '\0';
-					last = c;
-				}
-				if (strlen (buffer) > 0)
-					buffer[strlen(buffer)-1] = '\0';
-				generate_conditional (out, structure, buffer, 0);
-			} else {
-				while ((c = fgetc (in)) != '}') {
-					len = strlen (buffer);
-					buffer[len] = c;
-					buffer[len+1] = '\0';
-				}
+	g_return_if_fail (out != NULL && structure != NULL && table != NULL);
 
-				if (g_strcmp0 (buffer, "source") == 0) {
-					for (iter = g_list_first (structure->methods); iter != NULL; iter = g_list_next (iter)) {
-						method = get_source_method_body ((Method *)iter->data, structure->nameSpace);
-						fwrite (method, sizeof (gchar), strlen (method), out);
-						fwrite ("\n", sizeof (gchar), strlen ("\n"), out);
-						g_free (method);
-					}				
-				} else if (g_strcmp0 (buffer, "destruction") == 0) {
-					destruction = get_source_destruction (structure);
-					if (destruction != NULL)
-						fwrite (destruction, sizeof (gchar), strlen (destruction), out);
-					g_free (destruction);
-				} else if (g_strcmp0 (buffer, "includes") == 0) {
-					generate_source_includes (out, structure);
-				} else if (g_hash_table_contains (table, buffer)) {
-					val = g_hash_table_lookup (table, buffer);
-					fwrite (val, sizeof (gchar), strlen (val), out);
-					val = NULL;
-				} else if (g_strcmp0 (buffer, "source_boilerplate") == 0) {
-					if (structure->native != NULL)
-						generate_source_structure_boilerplate (out, structure, table);
-				} else {
-					printf ("The string %s is not recognized, please check the template\n", buffer);
-					return;
-				}
-			}
-			buffer[0] = '\0';
-		} else {
-			fputc (c, out);
-		}
-	}
-		
-	g_free (buffer);
+	in = open_file (templates_dir, SOURCE_TEMPLATE);
+
+	generate_code_from_template (in, out, structure, table);
+
 	fclose (in);
 }
 
@@ -1266,82 +1210,13 @@ void
 generate_source_structure_boilerplate (FILE *out, Structure *structure, GHashTable* table)
 {
 	FILE *in;
-	gchar *buffer;
-	guint len;
-	gchar c;
-	GList *iter;
-	gchar *destruction;
-	gchar *method;
-	gchar *val;
-	char last;
-	gint count;
 	
-	in = open_file (templates_dir, SOURCE_STRUCTURE_BOILERPLATE_TEMPLATE);
-	buffer  = g_new (gchar, BUFFER_SIZE);
-	buffer[0] = '\0';
-		
-	while ((c = fgetc (in)) != EOF) {
-		if (c == '$') {
-			if ((c = fgetc (in)) != '{' && c != '^') {
-				printf ("The following char is not {");
-				return;
-			}
-			
-			if (c == '^') {
-				count = 1;
-				last = '\0';
-				while (!((c = fgetc (in)) == '$' && last == '^' && count == 1)) {
-					if (c == '^' && last == '$') {
-						++count;
-						last = '\0';
-					}else if (c == '$' && last == '^') {
-						--count;
-						last = '\0';
-					} else {
-						last = c;
-					}
-					len = strlen (buffer);
-					buffer[len] = c;
-					buffer[len+1] = '\0';
-				}
-				if (strlen (buffer) > 0)
-					buffer[strlen(buffer)-1] = '\0';
-				generate_conditional (out, structure, buffer, table);
-			} else {
-				while ((c = fgetc (in)) != '}') {
-					len = strlen (buffer);
-					buffer[len] = c;
-					buffer[len+1] = '\0';
-				}
+	g_return_if_fail (out != NULL && structure != NULL && table != NULL);
 
-				if (g_strcmp0 (buffer, "source") == 0) {
-					for (iter = g_list_first (structure->methods); iter != NULL; iter = g_list_next (iter)) {
-						method = get_source_method_body ((Method *)iter->data, structure->nameSpace);
-						fwrite (method, sizeof (gchar), strlen (method), out);
-						fwrite ("\n", sizeof (gchar), strlen ("\n"), out);
-						g_free (method);
-					}				
-				} else if (g_strcmp0 (buffer, "destruction") == 0) {
-					destruction = get_source_destruction (structure);
-					if (destruction != NULL)
-						fwrite (destruction, sizeof (gchar), strlen (destruction), out);
-					g_free (destruction);
-				} else if (g_hash_table_contains (table, buffer)) {
-					val = g_hash_table_lookup (table, buffer);
-					fwrite (val, sizeof (gchar), strlen (val), out);
-					val = NULL;
-				} else {
-					printf ("The string %s is not recognized, please check the template\n", buffer);
-					return;
-				}
-			}
-			buffer[0] = '\0';
-		} else {
-			fputc (c, out);
-		}
-	}
-		
-	g_free (buffer);
+	in = open_file (templates_dir, SOURCE_STRUCTURE_BOILERPLATE_TEMPLATE);
+
+	generate_code_from_template (in, out, structure, table);
+
 	fclose (in);
 }
 
@@ -1575,11 +1450,6 @@ get_source_method_code (Method *method)
 	buffer = g_new (gchar, BUFFER_SIZE);
 	*buffer = '\0';
 
-	if (method->ret != NULL && method->ret->cloner != NULL) {
-		g_stpcpy (buffer + strlen (buffer), method->ret->cloner);
-		g_stpcpy (buffer + strlen (buffer), " (");
-	}
-
 	g_stpcpy (buffer + strlen (buffer), method->corresponds);
 	g_stpcpy (buffer + strlen (buffer), " ");
 	
@@ -1595,16 +1465,6 @@ get_source_method_code (Method *method)
 			para = get_inline_parameter ((Parameter *)iter->data);
 			g_stpcpy (buffer + strlen (buffer), para);
 			g_free (para);
-		}
-		g_stpcpy (buffer + strlen (buffer), ")");
-	}
-
-	if (method->ret != NULL && method->ret->cloner != NULL) {
-		if (method->ret->clonerArgus != NULL) {
-			for (iter = g_list_first (method->ret->clonerArgus); iter != NULL; iter = g_list_next (iter)) {
-				g_stpcpy (buffer + strlen (buffer), ", ");
-				g_stpcpy (buffer + strlen (buffer), (gchar *)iter->data);
-			}
 		}
 		g_stpcpy (buffer + strlen (buffer), ")");
 	}

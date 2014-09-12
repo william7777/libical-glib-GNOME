@@ -4,7 +4,7 @@
                  <comment xml:space="preserve">The constructor of the type #ICalTimezone</comment>
               </method>
               <method name="i_cal_timezone_destroy" corresponds="CUSTOM" annotation="skip" kind="destructor" since="1.0">
-                <parameter type="icaltimezone *" name="zone" autofill="native" comment="The #ICalTimezone to be freed"/> 
+                <parameter type="icaltimezone *" name="zone" comment="The #ICalTimezone to be freed"/> 
                	<comment xml:space="preserve">The destructor of the type #ICalTimezone</comment>
                	<custom>icaltimezone_free (zone, 1);</custom>
               </method>
@@ -15,7 +15,7 @@
                </method>
                
                <method name ="i_cal_timezone_free" corresponds ="icaltimezone_free" kind ="destructor" since="1.0">
-                   <parameter type="ICalTimezone *" name="zone" autofill="native" comment="The #ICalTimezone to be freed"/>
+                   <parameter type="ICalTimezone *" name="zone" comment="The #ICalTimezone to be freed"/>
                    <parameter type="gint" name="free_struct" autofill="1" comment="Whether to free it or reset it. 1 to free and 0 to reset"/>
                    <comment xml:space="preserve">The destructor of #ICalTimezone</comment>
                </method>

@@ -17,9 +17,9 @@ typedef struct Parameter {
 	GList *annotations;
 	gchar *comment;
 	gchar *name;
-        gchar *autofill;
-        gchar *translator;
-        GList *translatorArgus;
+	gchar *autofill;
+	gchar *translator;
+	GList *translatorArgus;
 } Parameter;
 
 typedef struct Ret {
@@ -29,8 +29,6 @@ typedef struct Ret {
         gchar *translator;
         GList *translatorArgus;
         gchar *errorReturnValue;
-        gchar *cloner;
-        GList *clonerArgus;
 } Ret;
 
 typedef struct Method {
@@ -51,8 +49,6 @@ typedef struct Structure {
 	gchar *native;
 	GList *includes;
 	GList *methods;
-        gchar *parent;
-        gchar *parentType;
         gboolean isBare;
         gboolean isPossibleGlobal;
         GList *enumerations;

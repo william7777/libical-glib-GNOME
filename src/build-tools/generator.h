@@ -23,20 +23,20 @@
 #define HEADER_STRUCTURE_BOILERPLATE_TEMPLATE "header-structure-boilerplate-template"
 #define SOURCE_STRUCTURE_BOILERPLATE_TEMPLATE "source-structure-boilerplate-template"
 #define LICENCE_HEADER \
-"/* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */\n\
-/*\n\
- * This library is free software: you can redistribute it and/or modify it\n\
- * under the terms of the GNU Lesser General Public License as published by\n\
- * the Free Software Foundation.\n\
- *\n\
- * This library is distributed in the hope that it will be useful, but\n\
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY\n\
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License\n\
- * for more details.\n\
- *\n\
- * You should have received a copy of the GNU Lesser General Public License\n\
- * along with this library. If not, see <http://www.gnu.org/licenses/>.\n\
- */\n"
+	"/* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */\n\
+	/*\n\
+	 * This library is free software: you can redistribute it and/or modify it\n\
+	 * under the terms of the GNU Lesser General Public License as published by\n\
+	 * the Free Software Foundation.\n\
+	 *\n\
+	 * This library is distributed in the hope that it will be useful, but\n\
+	 * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY\n\
+	 * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License\n\
+	 * for more details.\n\
+	 *\n\
+	 * You should have received a copy of the GNU Lesser General Public License\n\
+	 * along with this library. If not, see <http://www.gnu.org/licenses/>.\n\
+	 */\n"
 #define BUFFER_SIZE 2000
 #define TAB_SIZE 8
 #define RET_TAB_COUNT 2
@@ -97,6 +97,7 @@ void generate_header (FILE *out, Structure *structure, GHashTable* table);
 void generate_source (FILE *out, Structure *structure, GHashTable* table);
 void generate_source_structure_boilerplate (FILE *out, Structure *structure, GHashTable* table);
 void generate_conditional (FILE *out, Structure *structure, gchar *statement, GHashTable * table);
+void generate_code_from_template (FILE *in, FILE *out, Structure *structure, GHashTable *table);
 void generate_header_and_source (Structure *structure, gchar * dir);
 
 #endif	/* GENERATOR_H */

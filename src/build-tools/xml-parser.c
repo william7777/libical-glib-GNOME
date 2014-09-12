@@ -10,7 +10,6 @@ structure_new()
 	structure->native = NULL;
 	structure->includes = NULL;
 	structure->methods = NULL;
-	structure->parentType = NULL;
 	structure->isBare = FALSE;
 	structure->isPossibleGlobal = FALSE;
 	structure->enumerations = NULL;
@@ -44,7 +43,6 @@ structure_free(Structure *structure)
 	g_free(structure->nameSpace);
 	g_free(structure->name);
 	g_free(structure->native);
-	g_free(structure->parentType);
 	g_free (structure->destroyFunc);
 	g_free (structure->cloneFunc);
 	g_free (structure->defaultNative);
@@ -150,8 +148,6 @@ ret_new()
 	ret->translator = NULL;
 	ret->translatorArgus = NULL;
 	ret->errorReturnValue = NULL;
-	ret->cloner = NULL;
-	ret->clonerArgus = NULL;
 	return ret;
 }
 
@@ -172,18 +168,12 @@ ret_free(Ret *ret)
 		g_free(list->data);
 	}
 
-	for (list = g_list_first(ret->clonerArgus); list != NULL; list = g_list_next(list)) {
-		g_free(list->data);
-	}
-
 	g_list_free(ret->annotations);
 	g_list_free(ret->translatorArgus);
-	g_list_free (ret->clonerArgus);
 	g_free(ret->type);
 	g_free(ret->comment);
 	g_free(ret->translator);
 	g_free (ret->errorReturnValue);
-	g_free (ret->cloner);
 
 	ret = NULL;
 }
@@ -307,12 +297,6 @@ parse_return(xmlNode *node, Method *method)
 			xmlFree(argus);
 		} else if (xmlStrcmp (attr->name, (xmlChar *) "error_return_value") == 0) {
 			method->ret->errorReturnValue = (gchar *)xmlNodeListGetString(attr->doc, attr->children, 1);
-		} else if (xmlStrcmp (attr->name, (xmlChar *) "cloner") == 0) {
-			method->ret->cloner = (gchar *)xmlNodeListGetString (attr->doc, attr->children, 1);
-		} else if (xmlStrcmp (attr->name, (xmlChar *) "cloner_argus") == 0) {
-			argus = (gchar *)xmlNodeListGetString(attr->doc, attr->children, 1);
-			method->ret->translatorArgus = get_list_from_string((gchar *) argus);
-			xmlFree(argus);
 		} else {
 			printf("The tag name of %s in return cannot be finished\n", attr->name);
 		}
@@ -445,8 +429,6 @@ parse_structure(xmlNode *node, Structure *structure)
 			includes = (gchar *)xmlNodeListGetString(attr->doc, attr->children, 1);
 			structure->includes = get_list_from_string((gchar *) includes);
 			xmlFree(includes);
-		} else if (xmlStrcmp(attr->name, (xmlChar *) "parent_type") == 0) {
-			structure->parentType = (gchar *)xmlNodeListGetString(attr->doc, attr->children, 1);
 		} else if (xmlStrcmp(attr->name, (xmlChar *) "is_possible_global") == 0) {
 			strIsPossibleGlobal = (gchar *)xmlNodeListGetString(attr->doc, attr->children, 1);
 			if (g_strcmp0(strIsPossibleGlobal, "true") == 0) {
