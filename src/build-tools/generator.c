@@ -1990,6 +1990,7 @@ get_source_run_time_checkers (Method *method, const gchar *namespace)
 	
 	buffer = g_new (gchar, BUFFER_SIZE);
 	*buffer = '\0';
+	res = NULL;
 	
 	for (iter = g_list_first (method->parameters); iter != NULL; iter = g_list_next (iter)) {
 		parameter = (Parameter *)iter->data;
@@ -2035,7 +2036,7 @@ get_source_run_time_checkers (Method *method, const gchar *namespace)
 			}
 			
 			for (jter = g_list_first (parameter->annotations); jter != NULL; jter = g_list_next (jter)) {
-				if (g_strcmp0 ((gchar *)jter->data, "nullable") == 0) {
+				if (g_strcmp0 ((gchar *)jter->data, "allow-none") == 0) {
 					break;
 				}
 			}
@@ -2073,7 +2074,9 @@ get_source_run_time_checkers (Method *method, const gchar *namespace)
 		}
 	}
 	
-	res = g_strconcat (buffer, "\n", NULL);
+	if (strlen (buffer) > 0) {
+		res = g_strconcat (buffer, "\n", NULL);
+	}
 	g_free (buffer);
 	return res;
 }

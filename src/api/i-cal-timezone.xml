@@ -6,7 +6,7 @@
               <method name="i_cal_timezone_destroy" corresponds="CUSTOM" annotation="skip" kind="destructor" since="1.0">
                 <parameter type="icaltimezone *" name="zone" comment="The #ICalTimezone to be freed"/> 
                	<comment xml:space="preserve">The destructor of the type #ICalTimezone</comment>
-               	<custom>icaltimezone_free (zone, 1);</custom>
+               	<custom>	icaltimezone_free (zone, 1);</custom>
               </method>
                <method name="i_cal_timezone_copy" corresponds="icaltimezone_copy" kind="clone" since="1.0">
                  <parameter type="const ICalTimezone *" name="zone" comment="The #ICalTimezone needs to be cloned."/>

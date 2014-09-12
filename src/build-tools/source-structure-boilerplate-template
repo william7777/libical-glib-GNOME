@@ -80,15 +80,15 @@ ${lowerSnake}_get_native_remove_owner (${upperCamel} *object)
 ${native} $^!${isBare}*^$
 ${lowerSnake}_steal_native (${upperCamel} *object)
 {
-    ${native} *native_pointer;$^${isBare}
-    ${native} native;^$
-    native_pointer = (${native} *)i_cal_object_steal_native ((ICalObject *)object);
+	${native} *native_pointer;$^${isBare}
+	${native} native;^$
+	native_pointer = (${native} *)i_cal_object_steal_native ((ICalObject *)object);
     
-    $^!${isBare}return native_pointer;^$$^${isBare}if (native_pointer != NULL) {
-    	native = *native_pointer;
-    	${destroyFunc} (native_pointer);
-    	return native;
-    } else {
-    	return ${defaultNative};
-    }^$
+	$^!${isBare}return native_pointer;^$$^${isBare}if (native_pointer != NULL) {
+		native = *native_pointer;
+		${destroyFunc} (native_pointer);
+		return native;
+	} else {
+		return ${defaultNative};
+	}^$
 }
