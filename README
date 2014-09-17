@@ -1,3 +1,11 @@
+Libical-glib is initiated from an GSoC idea in GNOME foundation, which is to introspect the libecal part in Evolution-Data-Server.
+Since libical has been used by a lot of GNOME projects, we think it's better to target the whole libical project instead of only the EDS.
+The whole project takes the API and types from libical and output the introspectable APIs and types in GNOME project.
+
+The project will be continued and hosted on
+<https://github.com/william7777/libical-glib>
+
+
 ========================
 
 1. BUILD
@@ -8,4 +16,11 @@
 
 ========================
 
-TODO
+2. CHECK
+
+   $ ./autogen.sh
+   $ make
+   $ make check
+
+========================
+
