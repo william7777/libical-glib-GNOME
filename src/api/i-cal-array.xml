@@ -1,0 +1,38 @@
+<structure namespace="ICal" name="Array" native="icalarray" destroy_func="icalarray_free">
+    <method name="i_cal_array_new" corresponds="icalarray_new" kind="constructor" since="1.0">
+        <parameter type="gint" name="element_size" comment="The size of the element of the array"/>
+        <parameter type="gint" name="increment_size" comment="The incremental size when the array is full"/>
+        <returns type="ICalArray *" annotation="transfer full" comment="The newly create #ICalArray with the properties set by @element_size and @increment_size"/>
+        <comment xml:space="preserve">Create a #ICalArray with the element size to be @element_size and increment size to be @increment_size</comment>
+    </method>
+    <method name="i_cal_array_copy" corresponds="icalarray_copy" kind="clone" since="1.0">
+        <parameter type="ICalArray *" name="array" annotation="in" comment="The #ICalArray to be cloned."/>
+        <returns type="ICalArray *" annotation="transfer full" comment="The newly cloned #ICalArray with the same value as the @array"/>
+        <comment xml:space="preserve">Create a deep copy of #ICalArray with the same properties as the @array</comment>
+    </method>
+    <method name="i_cal_array_free" corresponds="icalarray_free" annotation="skip" kind="destructor" since="1.0">
+        <parameter type="ICalArray *" name="array" annotation="in" comment="The #ICalArray to be freed."/>
+        <comment xml:space="preserve">Free the #ICalArray</comment>
+    </method>
+    <method name="i_cal_array_append" corresponds="icalarray_append" kind="others" since="1.0">
+        <parameter type="ICalArray *" name="array" annotation="inout" comment="The #ICalArray to be appended."/>
+        <parameter type="gconstpointer" name="element" comment="The element to be appended to the #ICalArray"/>
+        <comment xml:space="preserve">Append @element to the end of the array</comment>
+    </method>
+    <method name="i_cal_array_remove_element_at" corresponds="icalarray_remove_element_at" kind="others" since="1.0">
+        <parameter type="ICalArray *" name="array" annotation="inout" comment="The #ICalArray to be modified."/>
+        <parameter type="gint" name="position" annotation="in" comment="The position in which the element will be removed from the array"/>
+        <comment xml:space="preserve">Remove the element at the @position from the array</comment>
+    </method>
+    <method name="i_cal_array_element_at" corresponds="icalarray_element_at" kind="others" since="1.0">
+        <parameter type="ICalArray *" name="array" comment="The #ICalArray to be queried."/>
+        <parameter type="gint" name="position" comment="The position the target element is located"/>
+        <returns type="const void *" annotation="transfer none, allow-none" comment="The element located at the @position in the @array"/>
+        <comment xml:space="preserve">Get the element located in the @position in the @array. NULL if position if out of bound</comment>
+    </method>
+    <method name="i_cal_array_sort" corresponds="icalarray_sort" kind="others" since="1.0">
+        <parameter type="ICalArray *" name="array" annotation="inout" comment="The #ICalArray to be sorted."/>
+        <parameter type="GCompareFunc" name="compare" annotation="scope call" comment="The compare function which is used to sort the array"/>
+        <comment xml:space="preserve">Sort the @array using the sort function @compare</comment>
+    </method> 
+</structure>

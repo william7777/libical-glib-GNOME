@@ -45,11 +45,8 @@ get_source_method_comment (Method *method)
 
 	for (iter_list = g_list_first (method->annotations); iter_list != NULL; iter_list = g_list_next (iter_list)) {
 		anno = (gchar *)iter_list->data;
-		if (iter_list == g_list_first (method->annotations)) {
-			buffer = g_strconcat (res, " (", anno, ")", NULL);
-		} else {
-			buffer = g_strconcat (res, ", (", anno, ")", NULL);
-		}
+		buffer = g_strconcat (res, " (", anno, ")", NULL);
+
 		g_free (res);
 		res = buffer;
 	}
@@ -1291,7 +1288,6 @@ generate_conditional (FILE *out, Structure *structure, gchar *statement, GHashTa
 	gchar c;
 	gchar *var;	
 	gchar *val;
-	gchar *destruction;
 	
 	g_return_if_fail (out != NULL && structure != NULL && statement != NULL && *statement != '\0');
 	
@@ -1366,17 +1362,12 @@ generate_conditional (FILE *out, Structure *structure, gchar *statement, GHashTa
 						var[len+1] = '\0';
 					}
 
-					if (g_strcmp0 (var, "destruction") == 0) {
-						destruction = get_source_destruction (structure);
-						if (destruction != NULL)
-							fwrite (destruction, sizeof (gchar), strlen (destruction), out);
-						g_free (destruction);
-					} else if (g_hash_table_contains (table, var)) {
+					if (g_hash_table_contains (table, var)) {
 						val = g_hash_table_lookup (table, var);
 						fwrite (val, sizeof (gchar), strlen (val), out);
 						val = NULL;
 					} else {
-						printf ("The string %s is not recognized in destruction, please check the template\n", var);
+						printf ("The string %s is not recognized in conditional, please check the template\n", var);
 						return;
 					}
 					var[0] = '\0';
@@ -1388,55 +1379,6 @@ generate_conditional (FILE *out, Structure *structure, gchar *statement, GHashTa
 	}
 	g_free (expression);
 	g_free (var);
-}
-
-gchar *
-get_source_destruction (Structure *structure)
-{
-	GList *iter;
-	Method *method;
-	gchar *buffer;
-	gchar *ret;
-	gchar *upperCamel;
-	gchar *cast;
-	
-	g_return_val_if_fail (structure != NULL, NULL);
-	
-	buffer  = g_new (gchar, BUFFER_SIZE);
-	*buffer = '\0';
-	upperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
-	cast = get_upper_snake_from_upper_camel (upperCamel);
-	g_free (upperCamel);
-	
-	for (iter = g_list_first (structure->methods); iter != NULL; iter = g_list_next (iter)) {
-		method = (Method *)iter->data;
-		
-		if (g_strcmp0 (method->kind, "destructor") == 0) {
-			break;
-		}
-	}
-	
-	if (iter == NULL)
-		return NULL;
-	
-	g_stpcpy (buffer + strlen (buffer), method->name);
-	g_stpcpy (buffer + strlen (buffer), " (");
-	g_stpcpy (buffer + strlen (buffer), cast);
-	g_free (cast);
-	g_stpcpy (buffer + strlen (buffer), " (object)");
-	iter = g_list_next (g_list_first (method->parameters));
-	if (iter == NULL) {
-		g_stpcpy (buffer + strlen (buffer), ");");
-	} else {
-		for (; iter != NULL; iter = g_list_next (iter)) {
-			g_stpcpy (buffer + strlen (buffer), ", ");
-			g_stpcpy (buffer + strlen (buffer), ((Parameter *)iter->data)->autofill);
-		}
-		g_stpcpy (buffer + strlen (buffer), ");");
-	}
-	ret = g_strdup (buffer);
-	g_free (buffer);
-	return ret;
 }
 
 gchar *
@@ -1611,8 +1553,10 @@ get_source_method_body (Method *method, const gchar *nameSpace)
 	
 	if (g_strcmp0 (method->corresponds, (gchar *)"CUSTOM") != 0) {
 		checkers = get_source_run_time_checkers (method, nameSpace);
-		g_stpcpy (buffer + strlen (buffer), checkers);
-		g_free (checkers);
+		if (checkers != NULL) {
+			g_stpcpy (buffer + strlen (buffer), checkers);
+			g_free (checkers);
+		}
 
 		g_stpcpy (buffer + strlen (buffer), "\t");
 		if (method->ret != NULL) {

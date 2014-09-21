@@ -120,8 +120,9 @@ i_cal_object_finalize (GObject *object)
 	ICalObject *iobject = I_CAL_OBJECT (object);
 
 	if (!iobject->priv->owner &&
-	    !iobject->priv->is_global_memory)
+	    !iobject->priv->is_global_memory) {
 		iobject->priv->native_destroy_func (iobject->priv->native);
+	}
 
 	if (iobject->priv->owner)
 		g_object_unref (iobject->priv->owner);

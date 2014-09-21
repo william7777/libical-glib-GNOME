@@ -139,7 +139,8 @@ am_libical_glib_1_0_la_OBJECTS = libical_glib_1_0_la-i-cal-object.lo \
 	libical_glib_1_0_la-i-cal-component.lo \
 	libical_glib_1_0_la-i-cal-property.lo \
 	libical_glib_1_0_la-i-cal-timetype.lo \
-	libical_glib_1_0_la-i-cal-time.lo $(am__objects_1)
+	libical_glib_1_0_la-i-cal-time.lo \
+	libical_glib_1_0_la-i-cal-array.lo $(am__objects_1)
 libical_glib_1_0_la_OBJECTS = $(am_libical_glib_1_0_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -396,6 +397,7 @@ libical_glib_1_0_la_SOURCES = \
 	i-cal-property.c \
 	i-cal-timetype.c \
 	i-cal-time.c \
+	i-cal-array.c \
 	$(NULL)
 
 privinclude_HEADERS = \
@@ -407,6 +409,7 @@ privinclude_HEADERS = \
 	i-cal-property.h \
 	i-cal-timetype.h \
 	i-cal-time.h \
+	i-cal-array.h \
 	$(NULL)
 
 INTROSPECTION_GIRS = $(am__append_1)
@@ -537,6 +540,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-array.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-component.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-enums.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-object.Plo@am__quote@
@@ -614,6 +618,13 @@ libical_glib_1_0_la-i-cal-time.lo: i-cal-time.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='i-cal-time.c' object='libical_glib_1_0_la-i-cal-time.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libical_glib_1_0_la-i-cal-time.lo `test -f 'i-cal-time.c' || echo '$(srcdir)/'`i-cal-time.c
+
+libical_glib_1_0_la-i-cal-array.lo: i-cal-array.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libical_glib_1_0_la-i-cal-array.lo -MD -MP -MF $(DEPDIR)/libical_glib_1_0_la-i-cal-array.Tpo -c -o libical_glib_1_0_la-i-cal-array.lo `test -f 'i-cal-array.c' || echo '$(srcdir)/'`i-cal-array.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libical_glib_1_0_la-i-cal-array.Tpo $(DEPDIR)/libical_glib_1_0_la-i-cal-array.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='i-cal-array.c' object='libical_glib_1_0_la-i-cal-array.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libical_glib_1_0_la-i-cal-array.lo `test -f 'i-cal-array.c' || echo '$(srcdir)/'`i-cal-array.c
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -909,8 +920,8 @@ i-cal-object.h: i-cal-object.h.in
 libical-glib.h: libical-glib.h.in
 	cp $< $@
 
-i-cal-timezone.h i-cal-timezone.c i-cal-enums.h i-cal-enums.c i-cal-property.h i-cal-property.c i-cal-component.h i-cal-component.c i-cal-timetype.h i-cal-timetype.c i-cal-time.h i-cal-time.c: 
-	$(top_builddir)/src/build-tools/src-generator "$(top_builddir)/src/build-tools" "$(top_builddir)/src/api" i-cal-timezone.xml i-cal-enums.xml i-cal-property.xml i-cal-component.xml i-cal-timetype.xml i-cal-time.xml
+i-cal-timezone.h i-cal-timezone.c i-cal-enums.h i-cal-enums.c i-cal-property.h i-cal-property.c i-cal-component.h i-cal-component.c i-cal-timetype.h i-cal-timetype.c i-cal-time.h i-cal-time.c i-cal-array.h i-cal-array.c: 
+	$(top_builddir)/src/build-tools/src-generator "$(top_builddir)/src/build-tools" "$(top_builddir)/src/api" i-cal-timezone.xml i-cal-enums.xml i-cal-property.xml i-cal-component.xml i-cal-timetype.xml i-cal-time.xml i-cal-array.xml
 
 -include $(INTROSPECTION_MAKEFILE)
 @HAVE_INTROSPECTION_TRUE@ICalGLib-1.0.gir: libical-glib-1.0.la

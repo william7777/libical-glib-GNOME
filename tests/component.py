@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-#GI_TYPELIB_PATH=$PREFIX/lib/girepository-1.0/ ./test-cal.py
+#GI_TYPELIB_PATH=$PREFIX/lib/girepository-1.0/ ./component.py
 
 from gi.repository import ICalGLib
 
