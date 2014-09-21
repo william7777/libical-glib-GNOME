@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-#GI_TYPELIB_PATH=$PREFIX/lib/girepository-1.0/ ./test-array.py
+#GI_TYPELIB_PATH=$PREFIX/lib/girepository-1.0/ ./array.py
 
 import sys
 from gi.repository import ICalGLib

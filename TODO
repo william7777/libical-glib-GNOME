@@ -3,3 +3,4 @@
 
 Detailed plan:
 -test for i_cal_array_sort
+-Question: how to add a callback function which will free a heap allocated data. (i_cal_attach_new_from_data)

@@ -70,7 +70,7 @@ get_source_method_comment (Method *method)
 				if (jter == g_list_first (para->annotations)) {
 					buffer = g_strconcat (res, ": (", anno, ")", NULL);
 				} else {
-					buffer = g_strconcat (res, ", (", anno, ")", NULL);
+					buffer = g_strconcat (res, " (", anno, ")", NULL);
 				}
 				g_free (res);
 				res = buffer;
@@ -95,7 +95,7 @@ get_source_method_comment (Method *method)
 			if (jter == g_list_first (method->ret->annotations)) {
 				buffer = g_strconcat (res, ": (", anno, ")", NULL);
 			} else {
-				buffer = g_strconcat (res, ", (", anno, ")", NULL);
+				buffer = g_strconcat (res, " (", anno, ")", NULL);
 			}
 			g_free (res);
 			res = buffer;
