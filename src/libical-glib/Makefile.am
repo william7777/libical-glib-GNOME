@@ -11,8 +11,8 @@ i-cal-object.h: i-cal-object.h.in
 libical-glib.h: libical-glib.h.in
 	cp $< $@
 
-i-cal-timezone.h i-cal-timezone.c i-cal-enums.h i-cal-enums.c i-cal-property.h i-cal-property.c i-cal-component.h i-cal-component.c i-cal-timetype.h i-cal-timetype.c i-cal-time.h i-cal-time.c i-cal-array.h i-cal-array.c i-cal-attach.h i-cal-attach.c: 
-	$(top_builddir)/src/build-tools/src-generator "$(top_builddir)/src/build-tools" "$(top_builddir)/src/api" i-cal-timezone.xml i-cal-enums.xml i-cal-property.xml i-cal-component.xml i-cal-timetype.xml i-cal-time.xml i-cal-array.xml i-cal-attach.xml
+i-cal-timezone.h i-cal-timezone.c i-cal-enums.h i-cal-enums.c i-cal-property.h i-cal-property.c i-cal-component.h i-cal-component.c i-cal-timetype.h i-cal-timetype.c i-cal-time.h i-cal-time.c i-cal-array.h i-cal-array.c i-cal-attach.h i-cal-attach.c i-cal-duration-type.h i-cal-duration-type.c i-cal-error.h i-cal-error.c: 
+	$(top_builddir)/src/build-tools/src-generator "$(top_builddir)/src/build-tools" "$(top_builddir)/src/api" i-cal-timezone.xml i-cal-enums.xml i-cal-property.xml i-cal-component.xml i-cal-timetype.xml i-cal-time.xml i-cal-array.xml i-cal-attach.xml i-cal-duration-type.xml i-cal-error.xml
 
 lib_LTLIBRARIES = libical-glib-1.0.la
 
@@ -48,6 +48,8 @@ libical_glib_1_0_la_SOURCES = \
 	i-cal-time.c \
 	i-cal-array.c \
 	i-cal-attach.c \
+	i-cal-duration-type.c \
+	i-cal-error.c \
 	$(NULL)
 
 privinclude_HEADERS = \
@@ -61,6 +63,8 @@ privinclude_HEADERS = \
 	i-cal-time.h \
 	i-cal-array.h \
 	i-cal-attach.h \
+	i-cal-duration-type.h \
+	i-cal-error.h \
 	$(NULL)
 
 BUILT_SOURCES += \

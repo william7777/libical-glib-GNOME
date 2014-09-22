@@ -1574,9 +1574,11 @@ get_source_method_body (Method *method, const gchar *nameSpace)
 
 		if (method->ret != NULL && translator != NULL) {
 			if (method->ret->translatorArgus != NULL) {
-				for (iter = g_list_first (method->ret->translatorArgus); iter != NULL; iter = g_list_next (iter)) {
-					g_stpcpy (buffer + strlen (buffer), ", ");
-					g_stpcpy (buffer + strlen (buffer), (gchar *)iter->data);
+				if (g_strcmp0 ((gchar *) method->ret->translatorArgus->data, "NONE") != 0) {
+					for (iter = g_list_first (method->ret->translatorArgus); iter != NULL; iter = g_list_next (iter)) {
+						g_stpcpy (buffer + strlen (buffer), ", ");
+						g_stpcpy (buffer + strlen (buffer), (gchar *)iter->data);
+					}
 				}
 			} else {
 				trueType = get_true_type (method->ret->type);
@@ -1880,6 +1882,12 @@ generate_header_enum (FILE *out, Enumeration *enumeration)
 	
 	g_return_if_fail (out != NULL && enumeration != NULL);
 	
+	if (enumeration->defaultNative != NULL) {
+		g_hash_table_insert (defaultValues, g_strdup (enumeration->name), g_strdup (enumeration->defaultNative));
+	} else {
+		g_hash_table_insert (defaultValues, g_strdup (enumeration->name), g_strdup ("0"));
+	}
+
 	fwrite ("typedef enum {", sizeof (gchar), strlen ("typedef enum {"), out);
 	
 	for (iter = g_list_first (enumeration->elements); iter != NULL; iter = g_list_next (iter)) {
@@ -1895,8 +1903,6 @@ generate_header_enum (FILE *out, Enumeration *enumeration)
 			printf ("The enum name %s cannot be processed\n", nativeName);
 		}
 		newName = g_strconcat ("I_CAL", nativeName+i, NULL);
-		
-		g_hash_table_insert (defaultValues, g_strdup (newName), g_strdup ("0"));
 		
 		fputc ('\n', out);
 		fputc ('\t', out);

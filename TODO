@@ -4,3 +4,20 @@
 Detailed plan:
 -test for i_cal_array_sort
 -Question: how to add a callback function which will free a heap allocated data. (i_cal_attach_new_from_data)
+-icalattachtype
+-i-cal-component.xml
+-i-cal-error.xml
+-i-cal-langbind.xml
+-i-cal-memory.xml
+-i-cal-mime.xml
+-i-cal-parameter.xml
+-i-cal-parser.xml
+-i-cal-period.xml
+-i-cal-property.xml
+-i-cal-recur.xml
+-i-cal-recur-iterator.xml
+-i-cal-restriction.xml
+-i-cal-timetype.xml
+-i-cal-timezone.xml
+-i-cal-types.xml
+-i-cal-value.xml

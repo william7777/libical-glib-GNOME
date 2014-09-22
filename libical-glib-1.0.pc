@@ -1,0 +1,13 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+privlibdir=@privlibdir@
+datarootdir=${prefix}/share
+datadir=${datarootdir}
+privdatadir=@privdatadir@
+
+Name: libical-glib
+Description: A GObject interface of the libical library
+Version: 1.0.0
+Requires: glib-2.0, gobject-2.0

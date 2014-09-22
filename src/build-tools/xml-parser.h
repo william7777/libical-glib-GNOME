@@ -61,6 +61,7 @@ typedef struct Structure {
 typedef struct Enumeration {
         gchar *name;
         GList *elements;
+        gchar *defaultNative;
 } Enumeration;
 
 Structure *structure_new ();
