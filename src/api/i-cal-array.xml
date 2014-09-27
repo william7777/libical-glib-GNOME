@@ -1,4 +1,14 @@
 <structure namespace="ICal" name="Array" native="icalarray" destroy_func="icalarray_free">
+	<method name="i_cal_array_compare" corresponds="CUSTOM" since="1.0">
+		<parameter type="gchar *" annotation="allow-none" name="str1" comment="string 1"/>
+		<parameter type="gchar *" annotation="allow-none" name="str2" comment="string 2"/>
+		<returns type="gint" comment="The compare result"/>
+		<comment xml:space="preserve">Compare two strings.</comment>
+        <custom >	if (str1 == NULL &amp;&amp; str2 == NULL)	return 0;
+	if (str1 == NULL)	return -1;
+	if (str2 == NULL)	return 1;
+	return g_strcmp0 (str1, str2);</custom>
+	</method>
     <method name="i_cal_array_new" corresponds="icalarray_new" kind="constructor" since="1.0">
         <parameter type="gint" name="element_size" comment="The size of the element of the array"/>
         <parameter type="gint" name="increment_size" comment="The incremental size when the array is full"/>

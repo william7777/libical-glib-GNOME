@@ -17,6 +17,7 @@ structure_new()
 	structure->cloneFunc = NULL;
 	structure->defaultNative = NULL;
 	structure->dependencies = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
+	structure->declarations = NULL;
 	return structure;
 }
 
@@ -37,6 +38,9 @@ structure_free(Structure *structure)
 	for (list = g_list_first (structure->enumerations); list != NULL; list = g_list_next (list)) {
 		enumeration_free ((Enumeration *)list->data);
 	}
+	for (list = g_list_first (structure->declarations); list != NULL; list = g_list_next (list)) {
+		declaration_free ((Declaration *)list->data);
+	}
 	g_list_free(structure->methods);
 	g_list_free(structure->includes);
 	g_list_free (structure->enumerations);
@@ -49,6 +53,29 @@ structure_free(Structure *structure)
 	g_hash_table_destroy (structure->dependencies);
 
 	structure = NULL;
+}
+
+Declaration *
+declaration_new ()
+{
+	Declaration *declaration = g_new (Declaration, 1);
+	declaration->position = NULL;
+	declaration->content = NULL;
+
+	return declaration;
+}
+
+void
+declaration_free (Declaration *declaration)
+{
+	if (declaration == NULL)
+		return;
+
+	if (declaration->position != NULL)
+		g_free (declaration->position);
+	if (declaration->content != NULL)
+		g_free (declaration->content);
+	g_free (declaration);
 }
 
 Method *
@@ -374,6 +401,29 @@ parse_method(xmlNode *node, Method *method)
 }
 
 gboolean
+parse_declaration (xmlNode *node, Declaration *declaration)
+{
+	xmlAttr *attr;
+
+	g_return_val_if_fail (node != NULL && declaration != NULL, FALSE);
+	if (xmlStrcmp (node->name, (xmlChar *)"declaration") != 0) {
+		return FALSE;
+	}
+
+	for (attr = node->properties; attr != NULL; attr = attr->next) {
+		if (xmlStrcmp (attr->name, (xmlChar *)"position") == 0) {
+			declaration->position = (gchar *)xmlNodeListGetString (attr->doc, attr->children, 1);
+		} else if (xmlStrcmp (attr->name, (xmlChar *)"content") == 0) {
+			declaration->content = (gchar *)xmlNodeListGetString (attr->doc, attr->children, 1);
+		} else {
+			printf ("The node named %s in declaration cannot be parsed\n", attr->name);
+		}
+	}
+
+	return TRUE;
+}
+
+gboolean
 parse_enumeration (xmlNode *node, Enumeration *enumeration)
 {
 	xmlAttr *attr;
@@ -417,6 +467,7 @@ parse_structure(xmlNode *node, Structure *structure)
 	gchar *strIsPossibleGlobal;
 	gchar *strIsBare;
 	gchar *includes;
+	Declaration *declaration;
 
 	if (xmlStrcmp(node->name, (xmlChar *) "structure") != 0) {
 		return FALSE;
@@ -463,6 +514,12 @@ parse_structure(xmlNode *node, Structure *structure)
 				method_free(method);
 			structure->methods = g_list_append(structure->methods, method);
 			method = NULL;
+		} if (g_strcmp0 ((gchar *)child->name, "declaration") == 0) {
+			declaration = declaration_new ();
+			if (!parse_declaration(child, declaration))
+				declaration_free (declaration);
+			structure->declarations = g_list_append (structure->declarations, declaration);
+			declaration = NULL;
 		} else if (g_strcmp0 ((gchar *)child->name, "enum") == 0) {
 			enumeration = enumeration_new ();
 			if (!parse_enumeration (child, enumeration))

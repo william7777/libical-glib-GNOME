@@ -1,0 +1,13 @@
+<structure namespace="ICal" name="Mime">
+    <declaration position="header" content="typedef gchar* (*i_cal_mime_line_gen_func)(gchar *str,size_t len,void *data);"/>
+    <method name="i_cal_mime_parse" corresponds="CUSTOM" since="1.0">
+        <parameter type="gchar *" name="(*func)(gchar *,size_t,void *)" comment="The parsing function."/>
+        <parameter type="void *" name="data" comment="The source to be parsed."/>
+        <returns type="ICalComponent *" annotation="transfer full" comment="The #ICalComponent parsed from @data"/>
+        <comment xml:space="preserve">Parse from the data to #ICalComponent.</comment>
+        <custom>	g_return_val_if_fail (func != NULL, NULL);
+	g_return_val_if_fail (data != NULL, NULL);
+
+	return i_cal_component_new_full (icalmime_parse(func, data), NULL) ;</custom>
+    </method>
+</structure>

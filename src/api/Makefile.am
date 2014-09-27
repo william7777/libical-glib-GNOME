@@ -18,6 +18,8 @@ EXTRA_DIST =  \
 	i-cal-restriction.xml \
 	i-cal-timetype.xml \
 	i-cal-timezone.xml \
+	i-cal-derived-value.xml \
+	i-cal-value.xml \
 	$(NULL)
 
 -include $(top_srcdir)/git.mk

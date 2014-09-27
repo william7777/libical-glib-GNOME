@@ -7,7 +7,7 @@ from sys import getsizeof
 
 array = ICalGLib.Array.new(100, 100);
 
-element1 = "Hello";
+element1 = "hello";
 element2 = "world";
 element3 = "how";
 element4 = "are";
@@ -48,6 +48,13 @@ assert (element5 == e5);
 array.remove_element_at (2);
 e3 = array.element_at(2);
 assert (element4 == e3);
+
+#ICalGLib.Array.sort (clone, ICalGLib.Array.compare);
+#print (clone.element_at(0));
+#print (clone.element_at(1));
+#print (clone.element_at(2));
+#print (clone.element_at(3));
+#print (clone.element_at(4));
 
 
 

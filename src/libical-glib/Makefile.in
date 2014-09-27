@@ -144,7 +144,12 @@ am_libical_glib_1_0_la_OBJECTS = libical_glib_1_0_la-i-cal-object.lo \
 	libical_glib_1_0_la-i-cal-attach.lo \
 	libical_glib_1_0_la-i-cal-duration-type.lo \
 	libical_glib_1_0_la-i-cal-error.lo \
-	libical_glib_1_0_la-i-cal-memory.lo $(am__objects_1)
+	libical_glib_1_0_la-i-cal-memory.lo \
+	libical_glib_1_0_la-i-cal-mime.lo \
+	libical_glib_1_0_la-i-cal-parser.lo \
+	libical_glib_1_0_la-i-cal-value.lo \
+	libical_glib_1_0_la-i-cal-derived-value.lo \
+	libical_glib_1_0_la-i-cal-parameter.lo $(am__objects_1)
 libical_glib_1_0_la_OBJECTS = $(am_libical_glib_1_0_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -406,6 +411,11 @@ libical_glib_1_0_la_SOURCES = \
 	i-cal-duration-type.c \
 	i-cal-error.c \
 	i-cal-memory.c \
+	i-cal-mime.c \
+	i-cal-parser.c \
+	i-cal-value.c \
+	i-cal-derived-value.c \
+	i-cal-parameter.c \
 	$(NULL)
 
 privinclude_HEADERS = \
@@ -422,6 +432,11 @@ privinclude_HEADERS = \
 	i-cal-duration-type.h \
 	i-cal-error.h \
 	i-cal-memory.h \
+	i-cal-mime.h \
+	i-cal-parser.h \
+	i-cal-value.h \
+	i-cal-derived-value.h \
+	i-cal-parameter.h \
 	$(NULL)
 
 INTROSPECTION_GIRS = $(am__append_1)
@@ -555,15 +570,20 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-array.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-attach.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-component.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-derived-value.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-duration-type.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-enums.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-error.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-memory.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-mime.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-object.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-parameter.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-parser.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-property.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-time.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-timetype.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-timezone.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-value.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -669,6 +689,41 @@ libical_glib_1_0_la-i-cal-memory.lo: i-cal-memory.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='i-cal-memory.c' object='libical_glib_1_0_la-i-cal-memory.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libical_glib_1_0_la-i-cal-memory.lo `test -f 'i-cal-memory.c' || echo '$(srcdir)/'`i-cal-memory.c
+
+libical_glib_1_0_la-i-cal-mime.lo: i-cal-mime.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libical_glib_1_0_la-i-cal-mime.lo -MD -MP -MF $(DEPDIR)/libical_glib_1_0_la-i-cal-mime.Tpo -c -o libical_glib_1_0_la-i-cal-mime.lo `test -f 'i-cal-mime.c' || echo '$(srcdir)/'`i-cal-mime.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libical_glib_1_0_la-i-cal-mime.Tpo $(DEPDIR)/libical_glib_1_0_la-i-cal-mime.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='i-cal-mime.c' object='libical_glib_1_0_la-i-cal-mime.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libical_glib_1_0_la-i-cal-mime.lo `test -f 'i-cal-mime.c' || echo '$(srcdir)/'`i-cal-mime.c
+
+libical_glib_1_0_la-i-cal-parser.lo: i-cal-parser.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libical_glib_1_0_la-i-cal-parser.lo -MD -MP -MF $(DEPDIR)/libical_glib_1_0_la-i-cal-parser.Tpo -c -o libical_glib_1_0_la-i-cal-parser.lo `test -f 'i-cal-parser.c' || echo '$(srcdir)/'`i-cal-parser.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libical_glib_1_0_la-i-cal-parser.Tpo $(DEPDIR)/libical_glib_1_0_la-i-cal-parser.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='i-cal-parser.c' object='libical_glib_1_0_la-i-cal-parser.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libical_glib_1_0_la-i-cal-parser.lo `test -f 'i-cal-parser.c' || echo '$(srcdir)/'`i-cal-parser.c
+
+libical_glib_1_0_la-i-cal-value.lo: i-cal-value.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libical_glib_1_0_la-i-cal-value.lo -MD -MP -MF $(DEPDIR)/libical_glib_1_0_la-i-cal-value.Tpo -c -o libical_glib_1_0_la-i-cal-value.lo `test -f 'i-cal-value.c' || echo '$(srcdir)/'`i-cal-value.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libical_glib_1_0_la-i-cal-value.Tpo $(DEPDIR)/libical_glib_1_0_la-i-cal-value.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='i-cal-value.c' object='libical_glib_1_0_la-i-cal-value.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libical_glib_1_0_la-i-cal-value.lo `test -f 'i-cal-value.c' || echo '$(srcdir)/'`i-cal-value.c
+
+libical_glib_1_0_la-i-cal-derived-value.lo: i-cal-derived-value.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libical_glib_1_0_la-i-cal-derived-value.lo -MD -MP -MF $(DEPDIR)/libical_glib_1_0_la-i-cal-derived-value.Tpo -c -o libical_glib_1_0_la-i-cal-derived-value.lo `test -f 'i-cal-derived-value.c' || echo '$(srcdir)/'`i-cal-derived-value.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libical_glib_1_0_la-i-cal-derived-value.Tpo $(DEPDIR)/libical_glib_1_0_la-i-cal-derived-value.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='i-cal-derived-value.c' object='libical_glib_1_0_la-i-cal-derived-value.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libical_glib_1_0_la-i-cal-derived-value.lo `test -f 'i-cal-derived-value.c' || echo '$(srcdir)/'`i-cal-derived-value.c
+
+libical_glib_1_0_la-i-cal-parameter.lo: i-cal-parameter.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libical_glib_1_0_la-i-cal-parameter.lo -MD -MP -MF $(DEPDIR)/libical_glib_1_0_la-i-cal-parameter.Tpo -c -o libical_glib_1_0_la-i-cal-parameter.lo `test -f 'i-cal-parameter.c' || echo '$(srcdir)/'`i-cal-parameter.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libical_glib_1_0_la-i-cal-parameter.Tpo $(DEPDIR)/libical_glib_1_0_la-i-cal-parameter.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='i-cal-parameter.c' object='libical_glib_1_0_la-i-cal-parameter.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libical_glib_1_0_la-i-cal-parameter.lo `test -f 'i-cal-parameter.c' || echo '$(srcdir)/'`i-cal-parameter.c
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -964,8 +1019,8 @@ i-cal-object.h: i-cal-object.h.in
 libical-glib.h: libical-glib.h.in
 	cp $< $@
 
-i-cal-timezone.h i-cal-timezone.c i-cal-enums.h i-cal-enums.c i-cal-property.h i-cal-property.c i-cal-component.h i-cal-component.c i-cal-timetype.h i-cal-timetype.c i-cal-time.h i-cal-time.c i-cal-array.h i-cal-array.c i-cal-attach.h i-cal-attach.c i-cal-duration-type.h i-cal-duration-type.c i-cal-error.h i-cal-error.c i-cal-memory.h i-cal-memory.c: 
-	$(top_builddir)/src/build-tools/src-generator "$(top_builddir)/src/build-tools" "$(top_builddir)/src/api" i-cal-timezone.xml i-cal-enums.xml i-cal-property.xml i-cal-component.xml i-cal-timetype.xml i-cal-time.xml i-cal-array.xml i-cal-attach.xml i-cal-duration-type.xml i-cal-error.xml i-cal-memory.xml
+i-cal-timezone.h i-cal-timezone.c i-cal-enums.h i-cal-enums.c i-cal-property.h i-cal-property.c i-cal-component.h i-cal-component.c i-cal-timetype.h i-cal-timetype.c i-cal-time.h i-cal-time.c i-cal-array.h i-cal-array.c i-cal-attach.h i-cal-attach.c i-cal-duration-type.h i-cal-duration-type.c i-cal-error.h i-cal-error.c i-cal-memory.h i-cal-memory.c i-cal-mime.h i-cal-mime.c i-cal-parser.h i-cal-parser.c i-cal-value.h i-cal-value.c i-cal-derived-value.h i-cal-derived-value.c i-cal-parameter.h i-cal-parameter.c: 
+	$(top_builddir)/src/build-tools/src-generator "$(top_builddir)/src/build-tools" "$(top_builddir)/src/api" i-cal-timezone.xml i-cal-enums.xml i-cal-property.xml i-cal-component.xml i-cal-timetype.xml i-cal-time.xml i-cal-array.xml i-cal-attach.xml i-cal-duration-type.xml i-cal-error.xml i-cal-memory.xml i-cal-mime.xml i-cal-parser.xml i-cal-value.xml i-cal-derived-value.xml i-cal-parameter.xml
 
 -include $(INTROSPECTION_MAKEFILE)
 @HAVE_INTROSPECTION_TRUE@ICalGLib-1.0.gir: libical-glib-1.0.la

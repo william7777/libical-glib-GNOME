@@ -5,12 +5,11 @@ Detailed plan:
 -test for i_cal_array_sort
 -test for i-cal-memory (The APIs in i-cal-memory is very low level utilities. It may be not a good idea to expose them to the users) (i_cal_memory_free_buffer is tested in attach.py)
 -Question: how to add a callback function which will free a heap allocated data. (i_cal_attach_new_from_data)
+-test for i-cal-mime.xml
+-test for i-cal-value
 -icalattachtype
 -i-cal-component.xml
--i-cal-error.xml
 -i-cal-langbind.xml
--i-cal-memory.xml
--i-cal-mime.xml
 -i-cal-parameter.xml
 -i-cal-parser.xml
 -i-cal-period.xml

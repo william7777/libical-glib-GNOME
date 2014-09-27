@@ -1009,6 +1009,8 @@ generate_code_from_template (FILE *in, FILE *out, Structure *structure, GHashTab
 					generate_source_includes (out, structure);
 				} else if (g_strcmp0 (buffer, "forward_declaration") == 0) {
 					generate_header_forward_declaration (out, structure);
+				} else if (g_strcmp0 (buffer, "header_declaration") == 0) {
+					generate_header_header_declaration (out, structure);
 				} else if (g_hash_table_contains (table, buffer)) {
 					val = g_hash_table_lookup (table, buffer);
 					fwrite (val, sizeof (gchar), strlen (val), out);
@@ -1068,16 +1070,70 @@ generate_header_structure_boilerplate (FILE *out, Structure *structure, GHashTab
 
 void
 generate_header_includes (FILE *out, Structure *structure)
-{	
+{
+	gchar *typeName;
+	Structure *parentStructure;
+	gchar *lowerTrain;
+	gchar *upperCamel;
+	gchar *ownUpperCamel;
+	gchar *includeName;
+	GHashTable *includeNames;
+	GHashTableIter iter_table;
+	gpointer key;
+	gpointer value;
+	gchar *kind;
+
 	g_return_if_fail (out != NULL && structure != NULL);
-		
+
 	fwrite ("#include \"", sizeof (gchar), strlen ("#include \""), out);
 	fwrite (COMMON_HEADER, sizeof (gchar), strlen (COMMON_HEADER), out);
 	fwrite (".h\"\n", sizeof (gchar), strlen (".h\"\n"), out);
-	
-	fwrite ("#include \"", sizeof (gchar), strlen ("#include \""), out);
-	fwrite ("i-cal-enums", sizeof (gchar), strlen ("i-cal-enums"), out);
-	fwrite (".h\"\n", sizeof (gchar), strlen (".h\"\n"), out);
+
+
+	g_return_if_fail (out != NULL && structure != NULL);
+
+	includeNames = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
+
+	upperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
+	lowerTrain = get_lower_train_from_upper_camel (upperCamel);
+	g_free (upperCamel);
+
+	for (g_hash_table_iter_init (&iter_table, structure->dependencies); g_hash_table_iter_next (&iter_table, &key, &value);) {
+		typeName = (gchar *)key;
+		if (g_hash_table_contains (type2structure, typeName)) {
+			parentStructure = g_hash_table_lookup (type2structure, typeName);
+			upperCamel = g_strconcat (parentStructure->nameSpace, parentStructure->name, NULL);
+			ownUpperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
+			if (g_strcmp0 (upperCamel, ownUpperCamel) == 0) {
+				g_free (upperCamel);
+				g_free (ownUpperCamel);
+				continue;
+			}
+
+			kind = g_strdup (g_hash_table_lookup(type2kind, typeName));
+			if (g_strcmp0 (kind, "enum") != 0) {
+				g_free (kind);
+				g_free (upperCamel);
+				g_free (ownUpperCamel);
+				continue;
+			}
+			g_free (kind);
+			lowerTrain = get_lower_train_from_upper_camel (upperCamel);
+			g_free (upperCamel);
+			g_hash_table_insert (includeNames, lowerTrain, NULL);
+			lowerTrain = NULL;
+		}
+	}
+
+	for (g_hash_table_iter_init (&iter_table, includeNames); g_hash_table_iter_next (&iter_table, &key, &value);) {
+		includeName = (gchar *)key;
+		fwrite ("#include \"", sizeof (gchar), strlen ("#include \""), out);
+		fwrite (includeName, sizeof (gchar), strlen (includeName), out);
+		fwrite (".h\"\n", sizeof (gchar), strlen (".h\"\n"), out);
+	}
+	g_hash_table_destroy (includeNames);
+
+
 }
 
 void
@@ -1108,8 +1164,8 @@ generate_source_includes (FILE *out, Structure *structure)
 		
 	for (g_hash_table_iter_init (&iter_table, structure->dependencies); g_hash_table_iter_next (&iter_table, &key, &value);) {
 		typeName = (gchar *)key;
-		if (g_hash_table_contains (type2Structure, typeName)) {
-			parentStructure = g_hash_table_lookup (type2Structure, typeName);
+		if (g_hash_table_contains (type2structure, typeName)) {
+			parentStructure = g_hash_table_lookup (type2structure, typeName);
 			upperCamel = g_strconcat (parentStructure->nameSpace, parentStructure->name, NULL);
 			ownUpperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
 			if (g_strcmp0 (upperCamel, ownUpperCamel) == 0) {
@@ -1154,8 +1210,8 @@ generate_header_forward_declaration (FILE *out, Structure *structure)
 	/* Temporary solution. To be rewritten */	
 	for (g_hash_table_iter_init (&iter_table, structure->dependencies); g_hash_table_iter_next (&iter_table, &key, &value);) {
 		typeName = (gchar *)key;
-		if (g_hash_table_contains (type2Structure, typeName)) {
-			parentStructure = g_hash_table_lookup (type2Structure, typeName);
+		if (g_hash_table_contains (type2structure, typeName)) {
+			parentStructure = g_hash_table_lookup (type2structure, typeName);
 			upperCamel = g_strconcat (parentStructure->nameSpace, parentStructure->name, NULL);
 			ownUpperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
 			if (g_strcmp0 (upperCamel, ownUpperCamel) == 0) {
@@ -1424,6 +1480,7 @@ get_translator_for_paramter (Parameter *para)
 	gchar *trueType;
 	gchar *lowerSnake;
 	gchar *res;
+	gchar *kind;
 	
 	g_return_val_if_fail (para != NULL, NULL);
 
@@ -1434,10 +1491,14 @@ get_translator_for_paramter (Parameter *para)
 			res = g_strdup (para->translator);
 	} else {
 		trueType = get_true_type (para->type);
-		if (g_hash_table_contains (allStructures, trueType)) {
-			lowerSnake = get_lower_snake_from_upper_camel (trueType);
-			res = g_strconcat (lowerSnake, "_get_native_set_owner", NULL);
-			g_free (lowerSnake);
+		if (g_hash_table_contains (type2kind, trueType)) {
+			kind = g_strdup (g_hash_table_lookup (type2kind, trueType));
+			if (g_strcmp0 (kind, "enum") != 0) {
+				lowerSnake = get_lower_snake_from_upper_camel (trueType);
+				res = g_strconcat (lowerSnake, "_get_native_set_owner", NULL);
+				g_free (lowerSnake);
+			}
+			g_free (kind);
 		}
 		g_free (trueType);
 	}
@@ -1450,6 +1511,7 @@ get_translator_for_return (Ret *ret)
 	gchar *trueType;
 	gchar *lowerSnake;
 	gchar *res;
+	gchar *kind;
 	
 	g_return_val_if_fail (ret != NULL, NULL);
 	
@@ -1460,10 +1522,14 @@ get_translator_for_return (Ret *ret)
 			res = g_strdup (ret->translator);
 	} else {
 		trueType = get_true_type (ret->type);
-		if (g_hash_table_contains (allStructures, trueType)) {
-			lowerSnake = get_lower_snake_from_upper_camel (trueType);
-			res = g_strconcat (lowerSnake, "_new_full", NULL);
-			g_free (lowerSnake);
+		if (g_hash_table_contains (type2kind, trueType)) {
+			kind = g_strdup (g_hash_table_lookup (type2kind, trueType));
+			if (g_strcmp0 (kind, "enum") != 0) {
+				lowerSnake = get_lower_snake_from_upper_camel (trueType);
+				res = g_strconcat (lowerSnake, "_new_full", NULL);
+				g_free (lowerSnake);
+			}
+			g_free (kind);
 		}
 		g_free (trueType);
 	}
@@ -1501,8 +1567,8 @@ get_inline_parameter (Parameter *para)
 			}
 		} else if (para->translator == NULL) {
 			trueType = get_true_type (para->type);
-			if (g_hash_table_contains (type2Structure, trueType)) {
-				structure = g_hash_table_lookup (type2Structure, trueType);
+			if (g_hash_table_contains (type2structure, trueType)) {
+				structure = g_hash_table_lookup (type2structure, trueType);
 				if (structure->isBare == FALSE) {
 					g_stpcpy (buffer + strlen (buffer), ", NULL");				
 				}
@@ -1582,8 +1648,8 @@ get_source_method_body (Method *method, const gchar *nameSpace)
 				}
 			} else {
 				trueType = get_true_type (method->ret->type);
-				if (g_hash_table_contains (type2Structure, trueType)) {
-					structure = g_hash_table_lookup (type2Structure, trueType);
+				if (g_hash_table_contains (type2structure, trueType)) {
+					structure = g_hash_table_lookup (type2structure, trueType);
 					if (structure->isBare == FALSE) {
 						g_stpcpy (buffer + strlen (buffer), ", NULL");
 					}
@@ -1895,14 +1961,24 @@ generate_header_enum (FILE *out, Enumeration *enumeration)
 		if (iter != g_list_first (enumeration->elements)) {
 			fputc (',', out);
 		}
-		for (i = 0; i < strlen (nativeName); i++) {
-			if (nativeName[i] == '_')
+		if (strlen (ENUM_HEADER) >= strlen (nativeName)) {
+			printf ("The enum name %s is longer than the enum header %s\n", nativeName, ENUM_HEADER);
+			continue;
+		}
+		for (i = 0; i < strlen (ENUM_HEADER); i++) {
+			if (ENUM_HEADER[i] != nativeName[i]) {
 				break;
+			}
 		}
-		if (i == strlen(nativeName)) {
+		if (i != strlen(ENUM_HEADER)) {
 			printf ("The enum name %s cannot be processed\n", nativeName);
+			continue;
 		}
-		newName = g_strconcat ("I_CAL", nativeName+i, NULL);
+		if (nativeName[i] == '_') {
+			newName = g_strconcat ("I_CAL", nativeName+i, NULL);
+		} else {
+			newName = g_strconcat ("I_CAL_", nativeName+i, NULL);
+		}
 		
 		fputc ('\n', out);
 		fputc ('\t', out);
@@ -2047,8 +2123,8 @@ static gint generate_library (gint count, char **fileNames) {
 	
 	buffer = g_new (gchar, BUFFER_SIZE);
 	*buffer = '\0';
-	allStructures = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
-	type2Structure = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
+	type2kind = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
+	type2structure = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
 	initialize_default_value_table ();
 	structures = NULL;
 	
@@ -2071,13 +2147,21 @@ static gint generate_library (gint count, char **fileNames) {
 		parse_structure (node, structure);
 		
 		if (structure->native != NULL) {
-			g_hash_table_insert (allStructures, g_strconcat (structure->nameSpace, structure->name, NULL), NULL);
-			g_hash_table_insert (type2Structure, g_strconcat (structure->nameSpace, structure->name, NULL), structure);
+			g_hash_table_insert (type2kind, g_strconcat (structure->nameSpace, structure->name, NULL), (void *)"std");
+			g_hash_table_insert (type2structure, g_strconcat (structure->nameSpace, structure->name, NULL), structure);
+			if (structure->isBare && structure->defaultNative != NULL) {
+				g_hash_table_insert (defaultValues, g_strconcat (structure->nameSpace, structure->name, NULL), structure->defaultNative);
+			}
 		}
 		
 		for (iter_enum = g_list_first (structure->enumerations); iter_enum != NULL; iter_enum = g_list_next (iter_enum)) {
 			enumeration = (Enumeration *)iter_enum->data;
-			g_hash_table_insert (type2Structure, g_strdup (enumeration->name), structure);
+			g_hash_table_insert (type2kind, g_strdup (enumeration->name), (void *)"enum");
+			g_hash_table_insert (type2structure, g_strdup (enumeration->name), structure);
+
+			if (enumeration->defaultNative != NULL) {
+				g_hash_table_insert (defaultValues, g_strdup (enumeration->name), enumeration->defaultNative);
+			}
 		}
 		structures = g_list_append (structures, structure);
 		xmlFreeDoc (doc);
@@ -2089,8 +2173,8 @@ static gint generate_library (gint count, char **fileNames) {
 		generate_header_and_source (structure, (char*)"");
 	}
 	
-	g_hash_table_destroy (allStructures);
-	g_hash_table_destroy (type2Structure);
+	g_hash_table_destroy (type2kind);
+	g_hash_table_destroy (type2structure);
 	g_hash_table_destroy (defaultValues);
 	for (iter_list = g_list_first (structures); iter_list != NULL; iter_list = g_list_next (iter_list)) {
 		structure = (Structure *)iter_list->data;		
@@ -2099,6 +2183,25 @@ static gint generate_library (gint count, char **fileNames) {
 	g_free (buffer);
 
 	return 0;
+}
+
+void
+generate_header_header_declaration (FILE *out, Structure *structure)
+{
+	GList *list_iter;
+	Declaration *declaration;
+
+	g_return_if_fail (out != NULL && structure != NULL);
+
+	for (list_iter = g_list_first (structure->declarations); list_iter != NULL; list_iter = g_list_next (list_iter)) {
+		declaration = (Declaration *)list_iter->data;
+
+		if (g_strcmp0 (declaration->position, "header") == 0) {
+			fwrite (declaration->content, sizeof (gchar), strlen (declaration->content), out);
+			fputc ('\n', out);
+		}
+		declaration = NULL;
+	}
 }
 
 int

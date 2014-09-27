@@ -1,0 +1,36 @@
+<structure namespace="ICal" name="DerivedValue">
+	<enum name="ICalValueKind" default_native="I_CAL_NO_VALUE">
+		<element name="ICAL_ANY_VALUE"/>
+	    <element name="ICAL_RECUR_VALUE"/>
+	    <element name="ICAL_GEO_VALUE"/>
+	    <element name="ICAL_XLICCLASS_VALUE"/>
+	    <element name="ICAL_BOOLEAN_VALUE"/>
+	    <element name="ICAL_ATTACH_VALUE"/>
+	    <element name="ICAL_TRANSP_VALUE"/>
+	    <element name="ICAL_STRING_VALUE"/>
+	    <element name="ICAL_CLASS_VALUE"/>
+	    <element name="ICAL_FLOAT_VALUE"/>
+	    <element name="ICAL_ACTION_VALUE"/>
+	    <element name="ICAL_CMD_VALUE"/>
+	    <element name="ICAL_URI_VALUE"/>
+	    <element name="ICAL_BINARY_VALUE"/>
+	    <element name="ICAL_STATUS_VALUE"/>
+	    <element name="ICAL_DURATION_VALUE"/>
+	    <element name="ICAL_METHOD_VALUE"/>
+	    <element name="ICAL_REQUESTSTATUS_VALUE"/>
+	    <element name="ICAL_INTEGER_VALUE"/>
+	    <element name="ICAL_X_VALUE"/>
+	    <element name="ICAL_DATE_VALUE"/>
+	    <element name="ICAL_TEXT_VALUE"/>
+	    <element name="ICAL_UTCOFFSET_VALUE"/>
+	    <element name="ICAL_CALADDRESS_VALUE"/>
+	    <element name="ICAL_PERIOD_VALUE"/>
+	    <element name="ICAL_DATETIMEPERIOD_VALUE"/>
+	    <element name="ICAL_DATETIME_VALUE"/>
+	    <element name="ICAL_TRIGGER_VALUE"/>
+	    <element name="ICAL_QUERY_VALUE"/>
+	    <element name="ICAL_QUERYLEVEL_VALUE"/>
+	    <element name="ICAL_CARLEVEL_VALUE"/>
+	   	<element name="ICAL_NO_VALUE"/>
+	</enum>
+</structure>

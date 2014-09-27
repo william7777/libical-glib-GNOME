@@ -25,6 +25,7 @@ ${headerIncludes}
 G_BEGIN_DECLS
 
 ${structure_boilerplate}
+${header_declaration}
 ${forward_declaration}
 ${enums}
 ${protos}

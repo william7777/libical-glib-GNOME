@@ -22,6 +22,7 @@
 #define COMMON_HEADER "common-header"
 #define HEADER_STRUCTURE_BOILERPLATE_TEMPLATE "header-structure-boilerplate-template"
 #define SOURCE_STRUCTURE_BOILERPLATE_TEMPLATE "source-structure-boilerplate-template"
+#define ENUM_HEADER "ICAL"
 #define LICENCE_HEADER \
 	"/* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */\n\
 	/*\n\
@@ -43,9 +44,12 @@
 #define METHOD_NAME_TAB_COUNT 4
 #define COMMENT_LINE_LENGTH 100
 
+/* Store the default value for bare type */
 GHashTable *defaultValues;
-GHashTable *allStructures;
-GHashTable *type2Structure;
+/* The table for each type and its kind (std, enum) */
+GHashTable *type2kind;
+/* The table for each type and the file where this type is declared. */
+GHashTable *type2structure;
 
 gchar *get_upper_camel_from_lower_snake (const gchar *lowerSnake);
 gchar *get_lower_snake_from_upper_camel (const gchar *upperCamel);
@@ -98,5 +102,6 @@ void generate_source_structure_boilerplate (FILE *out, Structure *structure, GHa
 void generate_conditional (FILE *out, Structure *structure, gchar *statement, GHashTable * table);
 void generate_code_from_template (FILE *in, FILE *out, Structure *structure, GHashTable *table);
 void generate_header_and_source (Structure *structure, gchar * dir);
+void generate_header_header_declaration (FILE *out, Structure *structure);
 
 #endif	/* GENERATOR_H */

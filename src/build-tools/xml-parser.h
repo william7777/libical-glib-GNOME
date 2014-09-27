@@ -56,7 +56,13 @@ typedef struct Structure {
         gchar *destroyFunc;
         gchar *cloneFunc;
         gchar *defaultNative;
+        GList *declarations;
 } Structure;
+
+typedef struct Declaration {
+	gchar *position;
+	gchar *content;
+} Declaration;
 
 typedef struct Enumeration {
         gchar *name;
@@ -74,6 +80,9 @@ Ret *ret_new ();
 void ret_free (Ret *ret);
 Enumeration *enumeration_new ();
 void enumeration_free (Enumeration *enumeration);
+Declaration *declaration_new ();
+void declaration_free (Declaration *declaration);
+
 
 GList *get_list_from_string (const gchar *str);
 gchar *get_true_type (const gchar *type);
@@ -85,6 +94,7 @@ gboolean parse_method (xmlNode *node, Method *method);
 gboolean parse_structure (xmlNode *node, Structure *structure);
 gboolean parse_enumeration (xmlNode *node, Enumeration *enumeration);
 gboolean parse_custom(xmlNode *node, Method *method);
+gboolean parse_declaration (xmlNode *node, Declaration *declaration);
 
 #endif	/* XML_PARSER_H */
 
