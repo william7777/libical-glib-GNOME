@@ -21,3 +21,10 @@ Detailed plan:
 -i-cal-timezone.xml
 -i-cal-types.xml
 -i-cal-value.xml
+
+
+
+CHECK:
+-All the getters for the bare type.
+-All the setters for the bare type.
+-The destroy_func is supplied for all structures.

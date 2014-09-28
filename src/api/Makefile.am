@@ -12,7 +12,7 @@ EXTRA_DIST =  \
 	i-cal-mime.xml \
 	i-cal-parameter.xml \
 	i-cal-parser.xml \
-	i-cal-period.xml \
+	i-cal-period-type.xml \
 	i-cal-recur-iterator.xml \
 	i-cal-recur.xml \
 	i-cal-restriction.xml \
