@@ -15,7 +15,7 @@
         <returns type="ICalValue *" annotation="transfer full" comment="The newly created #ICalValue based on the @kind and @str."/>
         <comment xml:space="preserve">Create a new #ICalValue based on the #ICalValueKind and a string.</comment>
     </method>
-    <method name="i_cal_value_free" corresponds="icalvalue_free" kind="destructor" since="1.0">
+    <method name="i_cal_value_free" corresponds="icalvalue_free" annotation="skip" kind="destructor" since="1.0">
         <parameter type="ICalValue *" name="value" comment="The #ICalValue to be freed."/>
         <comment xml:space="preserve">Free a #ICalValue.</comment>
     </method>
@@ -60,18 +60,44 @@
         <returns type="gint" comment="1 if yes, 0 if not."/>
         <comment xml:space="preserve">Check whether the #ICalValueKind is valid.</comment>
     </method>
-    <method name="i_cal_value_encode_ical_string" corresponds="icalvalue_encode_ical_string" since="1.0">
+    <method name="i_cal_value_encode_ical_string" corresponds="CUSTOM" since="1.0">
         <parameter type="const gchar *" name="szText" comment="A string."/>
-        <parameter type="gchar *" name="szEncText" annotation="in-out" comment="The encoded string in ical format."/>
-        <parameter type="gint" name="MaxBufferLen" comment="The size of @szEncText."/>
-        <returns type="gint" comment="1 if successful, 0 if failed."/>
+        <returns type="gchar *" annotation="allow-none, transfer full" comment="The encoded string. NULL if fail."/>
         <comment xml:space="preserve">Encode a character string in ical format, esacpe certain characters, etc.</comment>
+        <custom>	gchar *szEncText;
+	gchar *buffer;
+	gint result;
+	g_return_val_if_fail (szText != NULL, 0);
+	szEncText = g_new (gchar, 2 * strlen (szText));
+
+	result = icalvalue_encode_ical_string (szText, szEncText, 2*strlen (szText)-1);
+	if (result == 0) {
+		g_free (szEncText);
+		return NULL;
+	} else {
+		buffer = g_strdup (szEncText);
+		g_free (szEncText);
+		return buffer;
+	}</custom>
     </method>
-    <method name="i_cal_value_decode_ical_string" corresponds="icalvalue_decode_ical_string" since="1.0">
+    <method name="i_cal_value_decode_ical_string" corresponds="CUSTOM" since="1.0">
         <parameter type="const gchar *" name="szText" comment="A string."/>
-        <parameter type="gchar *" name="szDecText" annotation="in-out" comment="The original character string before encoded."/>
-        <parameter type="gint" name="MaxBufferLen" comment="The size of @szDecText."/>
-        <returns type="gint" comment="1 if successful, 0 if failed."/>
+        <returns type="gchar *" annotation="allow-none, transfer full" comment="The decoded string. NULL if fail."/>
         <comment xml:space="preserve">Extract the original character string encoded by the above function</comment>
+        <custom>	gchar *szDecText;
+	gchar *buffer;
+	gint result;
+	g_return_val_if_fail (szText != NULL, 0);
+	szDecText = g_new (gchar, strlen (szText));
+
+	result = icalvalue_decode_ical_string (szText, szDecText, strlen (szText)-1);
+	if (result == 0) {
+		g_free (szDecText);
+		return NULL;
+	} else {
+		buffer = g_strdup (szDecText);
+		g_free (szDecText);
+		return buffer;
+	}</custom>
     </method>
 </structure>

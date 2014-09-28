@@ -44,6 +44,7 @@ structure_free(Structure *structure)
 	g_list_free(structure->methods);
 	g_list_free(structure->includes);
 	g_list_free (structure->enumerations);
+	g_list_free (structure->declarations);
 	g_free(structure->nameSpace);
 	g_free(structure->name);
 	g_free(structure->native);

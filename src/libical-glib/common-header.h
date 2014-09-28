@@ -13,6 +13,7 @@
 #include <libical/ical.h>
 #include <gobject/gobject.h>
 #include "i-cal-object.h"
+#include "string.h"
 
 #endif	/* COMMON_HEADER_H */
 

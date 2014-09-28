@@ -2160,7 +2160,7 @@ static gint generate_library (gint count, char **fileNames) {
 			g_hash_table_insert (type2structure, g_strdup (enumeration->name), structure);
 
 			if (enumeration->defaultNative != NULL) {
-				g_hash_table_insert (defaultValues, g_strdup (enumeration->name), enumeration->defaultNative);
+				g_hash_table_insert (defaultValues, g_strdup (enumeration->name), g_strdup (enumeration->defaultNative));
 			}
 		}
 		structures = g_list_append (structures, structure);
@@ -2177,9 +2177,10 @@ static gint generate_library (gint count, char **fileNames) {
 	g_hash_table_destroy (type2structure);
 	g_hash_table_destroy (defaultValues);
 	for (iter_list = g_list_first (structures); iter_list != NULL; iter_list = g_list_next (iter_list)) {
-		structure = (Structure *)iter_list->data;		
+		structure = (Structure *)iter_list->data;
 		structure_free (structure);
 	}
+	g_list_free (structures);
 	g_free (buffer);
 
 	return 0;
