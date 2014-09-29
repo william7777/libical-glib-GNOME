@@ -150,7 +150,10 @@ am_libical_glib_1_0_la_OBJECTS = libical_glib_1_0_la-i-cal-object.lo \
 	libical_glib_1_0_la-i-cal-value.lo \
 	libical_glib_1_0_la-i-cal-derived-value.lo \
 	libical_glib_1_0_la-i-cal-parameter.lo \
-	libical_glib_1_0_la-i-cal-period-type.lo $(am__objects_1)
+	libical_glib_1_0_la-i-cal-period-type.lo \
+	libical_glib_1_0_la-i-cal-recur.lo \
+	libical_glib_1_0_la-i-cal-recurrence-type.lo \
+	libical_glib_1_0_la-i-cal-recur-iterator.lo $(am__objects_1)
 libical_glib_1_0_la_OBJECTS = $(am_libical_glib_1_0_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -418,6 +421,9 @@ libical_glib_1_0_la_SOURCES = \
 	i-cal-derived-value.c \
 	i-cal-parameter.c \
 	i-cal-period-type.c \
+	i-cal-recur.c \
+	i-cal-recurrence-type.c \
+	i-cal-recur-iterator.c \
 	$(NULL)
 
 privinclude_HEADERS = \
@@ -440,6 +446,9 @@ privinclude_HEADERS = \
 	i-cal-derived-value.h \
 	i-cal-parameter.h \
 	i-cal-period-type.h \
+	i-cal-recur.h \
+	i-cal-recurrence-type.h \
+	i-cal-recur-iterator.h \
 	$(NULL)
 
 INTROSPECTION_GIRS = $(am__append_1)
@@ -584,6 +593,9 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-parser.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-period-type.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-property.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-recur-iterator.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-recur.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-recurrence-type.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-time.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-timetype.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-timezone.Plo@am__quote@
@@ -735,6 +747,27 @@ libical_glib_1_0_la-i-cal-period-type.lo: i-cal-period-type.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='i-cal-period-type.c' object='libical_glib_1_0_la-i-cal-period-type.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libical_glib_1_0_la-i-cal-period-type.lo `test -f 'i-cal-period-type.c' || echo '$(srcdir)/'`i-cal-period-type.c
+
+libical_glib_1_0_la-i-cal-recur.lo: i-cal-recur.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libical_glib_1_0_la-i-cal-recur.lo -MD -MP -MF $(DEPDIR)/libical_glib_1_0_la-i-cal-recur.Tpo -c -o libical_glib_1_0_la-i-cal-recur.lo `test -f 'i-cal-recur.c' || echo '$(srcdir)/'`i-cal-recur.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libical_glib_1_0_la-i-cal-recur.Tpo $(DEPDIR)/libical_glib_1_0_la-i-cal-recur.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='i-cal-recur.c' object='libical_glib_1_0_la-i-cal-recur.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libical_glib_1_0_la-i-cal-recur.lo `test -f 'i-cal-recur.c' || echo '$(srcdir)/'`i-cal-recur.c
+
+libical_glib_1_0_la-i-cal-recurrence-type.lo: i-cal-recurrence-type.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libical_glib_1_0_la-i-cal-recurrence-type.lo -MD -MP -MF $(DEPDIR)/libical_glib_1_0_la-i-cal-recurrence-type.Tpo -c -o libical_glib_1_0_la-i-cal-recurrence-type.lo `test -f 'i-cal-recurrence-type.c' || echo '$(srcdir)/'`i-cal-recurrence-type.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libical_glib_1_0_la-i-cal-recurrence-type.Tpo $(DEPDIR)/libical_glib_1_0_la-i-cal-recurrence-type.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='i-cal-recurrence-type.c' object='libical_glib_1_0_la-i-cal-recurrence-type.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libical_glib_1_0_la-i-cal-recurrence-type.lo `test -f 'i-cal-recurrence-type.c' || echo '$(srcdir)/'`i-cal-recurrence-type.c
+
+libical_glib_1_0_la-i-cal-recur-iterator.lo: i-cal-recur-iterator.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libical_glib_1_0_la-i-cal-recur-iterator.lo -MD -MP -MF $(DEPDIR)/libical_glib_1_0_la-i-cal-recur-iterator.Tpo -c -o libical_glib_1_0_la-i-cal-recur-iterator.lo `test -f 'i-cal-recur-iterator.c' || echo '$(srcdir)/'`i-cal-recur-iterator.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libical_glib_1_0_la-i-cal-recur-iterator.Tpo $(DEPDIR)/libical_glib_1_0_la-i-cal-recur-iterator.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='i-cal-recur-iterator.c' object='libical_glib_1_0_la-i-cal-recur-iterator.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libical_glib_1_0_la-i-cal-recur-iterator.lo `test -f 'i-cal-recur-iterator.c' || echo '$(srcdir)/'`i-cal-recur-iterator.c
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -1030,8 +1063,8 @@ i-cal-object.h: i-cal-object.h.in
 libical-glib.h: libical-glib.h.in
 	cp $< $@
 
-i-cal-timezone.h i-cal-timezone.c i-cal-enums.h i-cal-enums.c i-cal-property.h i-cal-property.c i-cal-component.h i-cal-component.c i-cal-timetype.h i-cal-timetype.c i-cal-time.h i-cal-time.c i-cal-array.h i-cal-array.c i-cal-attach.h i-cal-attach.c i-cal-duration-type.h i-cal-duration-type.c i-cal-error.h i-cal-error.c i-cal-memory.h i-cal-memory.c i-cal-mime.h i-cal-mime.c i-cal-parser.h i-cal-parser.c i-cal-value.h i-cal-value.c i-cal-derived-value.h i-cal-derived-value.c i-cal-parameter.h i-cal-parameter.c i-cal-period-type.h i-cal-period-type.c: 
-	$(top_builddir)/src/build-tools/src-generator "$(top_builddir)/src/build-tools" "$(top_builddir)/src/api" i-cal-timezone.xml i-cal-enums.xml i-cal-property.xml i-cal-component.xml i-cal-timetype.xml i-cal-time.xml i-cal-array.xml i-cal-attach.xml i-cal-duration-type.xml i-cal-error.xml i-cal-memory.xml i-cal-mime.xml i-cal-parser.xml i-cal-value.xml i-cal-derived-value.xml i-cal-parameter.xml i-cal-period-type.xml
+i-cal-timezone.h i-cal-timezone.c i-cal-enums.h i-cal-enums.c i-cal-property.h i-cal-property.c i-cal-component.h i-cal-component.c i-cal-timetype.h i-cal-timetype.c i-cal-time.h i-cal-time.c i-cal-array.h i-cal-array.c i-cal-attach.h i-cal-attach.c i-cal-duration-type.h i-cal-duration-type.c i-cal-error.h i-cal-error.c i-cal-memory.h i-cal-memory.c i-cal-mime.h i-cal-mime.c i-cal-parser.h i-cal-parser.c i-cal-value.h i-cal-value.c i-cal-derived-value.h i-cal-derived-value.c i-cal-parameter.h i-cal-parameter.c i-cal-period-type.h i-cal-period-type.c i-cal-recur.h i-cal-recur.c i-cal-recurrence-type.h i-cal-recurrence-type.c i-cal-recur-iterator.h i-cal-recur-iterator.c: 
+	$(top_builddir)/src/build-tools/src-generator "$(top_builddir)/src/build-tools" "$(top_builddir)/src/api" i-cal-timezone.xml i-cal-enums.xml i-cal-property.xml i-cal-component.xml i-cal-timetype.xml i-cal-time.xml i-cal-array.xml i-cal-attach.xml i-cal-duration-type.xml i-cal-error.xml i-cal-memory.xml i-cal-mime.xml i-cal-parser.xml i-cal-value.xml i-cal-derived-value.xml i-cal-parameter.xml i-cal-period-type.xml i-cal-recur.xml i-cal-recurrence-type.xml i-cal-recur-iterator.xml
 
 -include $(INTROSPECTION_MAKEFILE)
 @HAVE_INTROSPECTION_TRUE@ICalGLib-1.0.gir: libical-glib-1.0.la

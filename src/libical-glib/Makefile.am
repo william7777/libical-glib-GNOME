@@ -11,8 +11,8 @@ i-cal-object.h: i-cal-object.h.in
 libical-glib.h: libical-glib.h.in
 	cp $< $@
 
-i-cal-timezone.h i-cal-timezone.c i-cal-enums.h i-cal-enums.c i-cal-property.h i-cal-property.c i-cal-component.h i-cal-component.c i-cal-timetype.h i-cal-timetype.c i-cal-time.h i-cal-time.c i-cal-array.h i-cal-array.c i-cal-attach.h i-cal-attach.c i-cal-duration-type.h i-cal-duration-type.c i-cal-error.h i-cal-error.c i-cal-memory.h i-cal-memory.c i-cal-mime.h i-cal-mime.c i-cal-parser.h i-cal-parser.c i-cal-value.h i-cal-value.c i-cal-derived-value.h i-cal-derived-value.c i-cal-parameter.h i-cal-parameter.c i-cal-period-type.h i-cal-period-type.c: 
-	$(top_builddir)/src/build-tools/src-generator "$(top_builddir)/src/build-tools" "$(top_builddir)/src/api" i-cal-timezone.xml i-cal-enums.xml i-cal-property.xml i-cal-component.xml i-cal-timetype.xml i-cal-time.xml i-cal-array.xml i-cal-attach.xml i-cal-duration-type.xml i-cal-error.xml i-cal-memory.xml i-cal-mime.xml i-cal-parser.xml i-cal-value.xml i-cal-derived-value.xml i-cal-parameter.xml i-cal-period-type.xml
+i-cal-timezone.h i-cal-timezone.c i-cal-enums.h i-cal-enums.c i-cal-property.h i-cal-property.c i-cal-component.h i-cal-component.c i-cal-timetype.h i-cal-timetype.c i-cal-time.h i-cal-time.c i-cal-array.h i-cal-array.c i-cal-attach.h i-cal-attach.c i-cal-duration-type.h i-cal-duration-type.c i-cal-error.h i-cal-error.c i-cal-memory.h i-cal-memory.c i-cal-mime.h i-cal-mime.c i-cal-parser.h i-cal-parser.c i-cal-value.h i-cal-value.c i-cal-derived-value.h i-cal-derived-value.c i-cal-parameter.h i-cal-parameter.c i-cal-period-type.h i-cal-period-type.c i-cal-recur.h i-cal-recur.c i-cal-recurrence-type.h i-cal-recurrence-type.c i-cal-recur-iterator.h i-cal-recur-iterator.c: 
+	$(top_builddir)/src/build-tools/src-generator "$(top_builddir)/src/build-tools" "$(top_builddir)/src/api" i-cal-timezone.xml i-cal-enums.xml i-cal-property.xml i-cal-component.xml i-cal-timetype.xml i-cal-time.xml i-cal-array.xml i-cal-attach.xml i-cal-duration-type.xml i-cal-error.xml i-cal-memory.xml i-cal-mime.xml i-cal-parser.xml i-cal-value.xml i-cal-derived-value.xml i-cal-parameter.xml i-cal-period-type.xml i-cal-recur.xml i-cal-recurrence-type.xml i-cal-recur-iterator.xml
 
 lib_LTLIBRARIES = libical-glib-1.0.la
 
@@ -57,6 +57,9 @@ libical_glib_1_0_la_SOURCES = \
 	i-cal-derived-value.c \
 	i-cal-parameter.c \
 	i-cal-period-type.c \
+	i-cal-recur.c \
+	i-cal-recurrence-type.c \
+	i-cal-recur-iterator.c \
 	$(NULL)
 
 privinclude_HEADERS = \
@@ -79,6 +82,9 @@ privinclude_HEADERS = \
 	i-cal-derived-value.h \
 	i-cal-parameter.h \
 	i-cal-period-type.h \
+	i-cal-recur.h \
+	i-cal-recurrence-type.h \
+	i-cal-recur-iterator.h \
 	$(NULL)
 
 BUILT_SOURCES += \

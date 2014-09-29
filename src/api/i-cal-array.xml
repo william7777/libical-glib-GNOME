@@ -1,12 +1,13 @@
 <structure namespace="ICal" name="Array" native="icalarray" destroy_func="icalarray_free">
 	<method name="i_cal_array_compare" corresponds="CUSTOM" since="1.0">
-		<parameter type="gchar *" annotation="allow-none" name="str1" comment="string 1"/>
-		<parameter type="gchar *" annotation="allow-none" name="str2" comment="string 2"/>
+		<parameter type="const gchar *" annotation="allow-none" name="str1" comment="string 1"/>
+		<parameter type="const gchar *" annotation="allow-none" name="str2" comment="string 2"/>
 		<returns type="gint" comment="The compare result"/>
 		<comment xml:space="preserve">Compare two strings.</comment>
         <custom >	if (str1 == NULL &amp;&amp; str2 == NULL)	return 0;
 	if (str1 == NULL)	return -1;
 	if (str2 == NULL)	return 1;
+    printf ("compare %s and %s\n", str1, str2); fflush (NULL);
 	return g_strcmp0 (str1, str2);</custom>
 	</method>
     <method name="i_cal_array_new" corresponds="icalarray_new" kind="constructor" since="1.0">
@@ -40,9 +41,16 @@
         <returns type="const void *" annotation="transfer none, allow-none" comment="The element located at the @position in the @array"/>
         <comment xml:space="preserve">Get the element located in the @position in the @array. NULL if position if out of bound</comment>
     </method>
-    <method name="i_cal_array_sort" corresponds="icalarray_sort" kind="others" since="1.0">
-        <parameter type="ICalArray *" name="array" annotation="inout" comment="The #ICalArray to be sorted."/>
-        <parameter type="GCompareFunc" name="compare" annotation="scope call" comment="The compare function which is used to sort the array"/>
+    <method name="i_cal_array_sort" corresponds="CUSTOM" kind="others" since="1.0">
+        <parameter type="ICalArray *" name="array" comment="The #ICalArray to be sorted."/>
+        <parameter type="gint (*compare)" name="(const void *, const void *)" annotation="scope call" comment="The compare function which is used to sort the array"/>
         <comment xml:space="preserve">Sort the @array using the sort function @compare</comment>
+        <custom>	g_return_if_fail (I_CAL_IS_ARRAY (array));
+	g_return_if_fail (array != NULL);
+	g_return_if_fail (compare != NULL);
+        	
+	printf ("Begin sorting\n");
+
+	icalarray_sort (i_cal_array_get_native_set_owner (array, NULL), compare);</custom>
     </method> 
 </structure>

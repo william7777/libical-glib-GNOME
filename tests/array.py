@@ -49,12 +49,12 @@ array.remove_element_at (2);
 e3 = array.element_at(2);
 assert (element4 == e3);
 
-#ICalGLib.Array.sort (clone, ICalGLib.Array.compare);
-#print (clone.element_at(0));
-#print (clone.element_at(1));
-#print (clone.element_at(2));
-#print (clone.element_at(3));
-#print (clone.element_at(4));
+def my_cmp(a, b): 
+    print('my_cmp(%r, %r)' % (a, b));
+    return cmp(a, b)
+
+#TEST SORT
+#ICalGLib.Array.sort (array, my_cmp);
 
 
 

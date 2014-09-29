@@ -15,6 +15,7 @@ EXTRA_DIST =  \
 	i-cal-period-type.xml \
 	i-cal-recur-iterator.xml \
 	i-cal-recur.xml \
+	i-cal-recurrence-type.xml \
 	i-cal-restriction.xml \
 	i-cal-timetype.xml \
 	i-cal-timezone.xml \
