@@ -24,3 +24,19 @@ secs_per_day = 24*60*60;
 for i in range (0, 9):
     assert (result[i] == start + i*secs_per_day);
     
+    
+string = "19970101T183248Z/19970102T071625Z";
+
+period = ICalGLib.PeriodType.from_string (string);
+start = period.get_start();
+    
+iter = ICalGLib.RecurIterator.new (recurrence, start);
+timetype = iter.next();
+day = timetype.get_day();
+ref = 1;
+while day != 0:
+    assert (day == ref);
+    ref += 1;
+    timetype = iter.next();
+    day = timetype.get_day();
+    
