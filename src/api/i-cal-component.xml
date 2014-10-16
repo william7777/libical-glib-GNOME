@@ -44,7 +44,7 @@
         <comment xml:space="preserve">Check whether the native part of #ICalComponent is icalcomponent.</comment>
     </method>
     <method name="i_cal_component_add_property" corresponds="icalcomponent_add_property" since="1.0">
-        <parameter type="ICalComponent *" name="component" translator="i_cal_component_get_native_set_owner" translator_argus="(GObject *)property" comment="A #ICalComponent."/>
+        <parameter type="ICalComponent *" name="component" translator_argus="(GObject *)property" comment="A #ICalComponent."/>
         <parameter type="ICalProperty *" name="property" comment="A #ICalProperty."/>
         <comment xml:space="preserve">Add a #ICalProperty into #ICalComponent.</comment>
     </method>

@@ -1478,13 +1478,15 @@ gchar *
 get_translator_for_paramter (Parameter *para)
 {
 	gchar *trueType;
-	gchar *lowerSnake;
 	gchar *res;
 	gchar *kind;
+	gboolean is_bare;
+	Structure *structure;
 	
 	g_return_val_if_fail (para != NULL, NULL);
 
 	res = NULL;
+	is_bare = FALSE;
 
 	if (para->translator != NULL) {
 		if (g_strcmp0 (para->translator, (gchar *)"NONE") != 0)
@@ -1493,10 +1495,18 @@ get_translator_for_paramter (Parameter *para)
 		trueType = get_true_type (para->type);
 		if (g_hash_table_contains (type2kind, trueType)) {
 			kind = g_strdup (g_hash_table_lookup (type2kind, trueType));
+			structure = g_hash_table_lookup (type2structure, trueType);
+			if (structure == NULL) {
+				printf ("ERROR: There is no corresponding structure for type %s\n", trueType);
+			} else {
+				is_bare = structure->isBare;
+			}
 			if (g_strcmp0 (kind, "enum") != 0) {
-				lowerSnake = get_lower_snake_from_upper_camel (trueType);
-				res = g_strconcat (lowerSnake, "_get_native_set_owner", NULL);
-				g_free (lowerSnake);
+				if (is_bare) {
+					res = g_strconcat ("* (", structure->native, " *) i_cal_object_get_native", NULL);
+				} else {
+					res = g_strdup ("i_cal_object_get_native");
+				}
 			}
 			g_free (kind);
 		}
@@ -1543,9 +1553,6 @@ get_inline_parameter (Parameter *para)
 	gchar *buffer;
 	gchar *ret;
 	gchar *translator;
-	GList *iter;
-	Structure *structure;
-	gchar *trueType;
 	
 	buffer = g_new (gchar, BUFFER_SIZE);
 	*buffer = '\0';
@@ -1554,18 +1561,25 @@ get_inline_parameter (Parameter *para)
 	if (translator != NULL) {
 		g_stpcpy (buffer + strlen (buffer), translator);
 		g_stpcpy (buffer + strlen (buffer), " (");
+		if (para->translator == NULL)
+			g_stpcpy (buffer + strlen (buffer), " (ICalObject *)");
 	}
-	
 	g_stpcpy (buffer + strlen (buffer), para->name);
 	
-	
+	if (translator != NULL) {
+		g_stpcpy (buffer + strlen (buffer), ")");
+	}
+
+	/*
 	if (translator != NULL)	{
 		if (para->translatorArgus != NULL) {
 			for (iter = g_list_first (para->translatorArgus); iter != NULL; iter = g_list_next (iter)) {
 				g_stpcpy (buffer + strlen (buffer), ", ");
 				g_stpcpy (buffer + strlen (buffer), (gchar *)iter->data);
 			}
-		} else if (para->translator == NULL) {
+		}
+
+		else if (para->translator == NULL) {
 			trueType = get_true_type (para->type);
 			if (g_hash_table_contains (type2structure, trueType)) {
 				structure = g_hash_table_lookup (type2structure, trueType);
@@ -1578,7 +1592,7 @@ get_inline_parameter (Parameter *para)
 		g_stpcpy (buffer + strlen (buffer), ")");
 		g_free (translator);
 	}
-	
+	*/
 	ret = g_new (gchar, strlen (buffer) + 1);
 	g_stpcpy (ret, buffer);
 	g_free (buffer);
@@ -1600,6 +1614,7 @@ get_source_method_body (Method *method, const gchar *nameSpace)
 	gchar *translator;
 	gchar *trueType;
 	Structure *structure;
+	Parameter *parameter;
 	
 	buffer  = g_new (gchar, BUFFER_SIZE);
 	buffer[0] = '\0';
@@ -1622,6 +1637,20 @@ get_source_method_body (Method *method, const gchar *nameSpace)
 		if (checkers != NULL) {
 			g_stpcpy (buffer + strlen (buffer), checkers);
 			g_free (checkers);
+		}
+
+		/*Set the owner */
+		/* TODO: Change the translatorArgus in Parameter to parent */
+		for (iter = g_list_first (method->parameters); iter != NULL; iter = g_list_next (iter)) {
+			parameter = (Parameter *)iter->data;
+
+			if (parameter->translatorArgus != NULL) {
+				g_stpcpy (buffer + strlen (buffer), "\ti_cal_object_set_owner ((ICalObject *)");
+				g_stpcpy (buffer + strlen (buffer), parameter->name);
+				g_stpcpy (buffer + strlen (buffer), ", (GObject *)");
+				g_stpcpy (buffer + strlen (buffer), (gchar *)parameter->translatorArgus->data);
+				g_stpcpy (buffer + strlen (buffer), ");\n");
+			}
 		}
 
 		g_stpcpy (buffer + strlen (buffer), "\t");
