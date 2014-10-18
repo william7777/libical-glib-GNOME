@@ -1082,6 +1082,7 @@ generate_header_includes (FILE *out, Structure *structure)
 	gpointer key;
 	gpointer value;
 	gchar *kind;
+	GList *iter;
 
 	g_return_if_fail (out != NULL && structure != NULL);
 
@@ -1127,6 +1128,13 @@ generate_header_includes (FILE *out, Structure *structure)
 
 	for (g_hash_table_iter_init (&iter_table, includeNames); g_hash_table_iter_next (&iter_table, &key, &value);) {
 		includeName = (gchar *)key;
+		fwrite ("#include \"", sizeof (gchar), strlen ("#include \""), out);
+		fwrite (includeName, sizeof (gchar), strlen (includeName), out);
+		fwrite (".h\"\n", sizeof (gchar), strlen (".h\"\n"), out);
+	}
+
+	for (iter = g_list_first (structure->includes); iter != NULL; iter = g_list_next (iter)) {
+		includeName = (gchar *)iter->data;
 		fwrite ("#include \"", sizeof (gchar), strlen ("#include \""), out);
 		fwrite (includeName, sizeof (gchar), strlen (includeName), out);
 		fwrite (".h\"\n", sizeof (gchar), strlen (".h\"\n"), out);

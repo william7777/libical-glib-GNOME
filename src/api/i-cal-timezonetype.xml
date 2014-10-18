@@ -1,0 +1,10 @@
+<structure namespace="ICal" name="Timezonetype" native="struct icaltimezonetype" is_bare="true" default_native="i_cal_timezonetype_new_default ()" includes="i-cal-timetype">
+	<method name="i_cal_timezonetype_new_default" corresponds="CUSTOM" kind="constructor" since="1.0">
+        <returns type="struct icaltimezonetype" annotation="transfer full" comment="The newly created #ICalTimezonetype" />
+        <comment xml:space="preserve">Create a new default #ICalTimezonetype</comment>
+        <custom>	struct icaltimezonetype timezonetype;
+	timezonetype.last_mod = i_cal_timetype_new_default ();
+	timezonetype.phases = NULL;
+	return timezonetype;</custom>
+	</method>
+</structure>

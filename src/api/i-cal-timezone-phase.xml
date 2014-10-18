@@ -1,0 +1,13 @@
+<structure namespace="ICal" name="TimezonePhase" native="struct icaltimezonephase" is_bare="true" default_native="i_cal_timezone_phase_new_default ()" includes="i-cal-timetype, i-cal-datetimeperiod-type">
+	<method name="i_cal_timezone_phase_new_default" corresponds="CUSTOM" kind="constructor" since="1.0">
+        <returns type="struct icaltimezonephase" annotation="transfer full" comment="The newly created #ICalTimezonePhase" />
+        <comment xml:space="preserve">Create a new default #ICalTimezonePhase</comment>
+        <custom>	struct icaltimezonephase timezonephase;
+	timezonephase.is_stdandard = 1;
+	timezonephase.dtstart = i_cal_timetype_new_default ();
+	timezonephase.offsetto = 0;
+	timezonephase.tzoffsetfrom = 0;
+	timezonephase.rdate = i_cal_datetimeperiod_type_new_default ();
+	return timezonephase;</custom>
+	</method>
+</structure>

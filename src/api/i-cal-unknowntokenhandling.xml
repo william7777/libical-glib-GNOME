@@ -1,0 +1,7 @@
+<structure namespace="ICal" name="Unknowntokenhandling">
+    <enum name="ICalUnknowntokenhandling">
+        <element name="ICAL_ASSUME_IANA_TOKEN"/>
+        <element name="ICAL_DISCARD_TOKEN"/>	
+        <element name="ICAL_TREAT_AS_ERROR"/>
+    </enum>
+</structure>

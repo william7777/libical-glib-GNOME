@@ -1,0 +1,10 @@
+<structure namespace="ICal" name="GeoType" native="struct icalgeotype" is_bare="true" default_native="i_cal_geo_type_new_default ()">
+	<method name="i_cal_geo_type_new_default" corresponds="CUSTOM" kind="constructor" since="1.0">
+        <returns type="struct icalgeotype" annotation="transfer full" comment="The newly created #ICalGeoType" />
+        <comment xml:space="preserve">Create a new default #ICalGeoType.</comment>
+        <custom>	struct icalgeotype geotype;
+	geotype.lat = 0;
+	geotype.lon = 0;
+	return geotype;</custom>
+    </method> 
+</structure>

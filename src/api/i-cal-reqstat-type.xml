@@ -1,0 +1,19 @@
+<structure namespace="ICal" name="ReqstatType" native="struct icalreqstattype" is_bare="true" default_native="i_cal_reqstat_type_new_default ()">
+    <method name="i_cal_reqstat_type_from_string" corresponds="icalreqstattype_from_string" kind="constructor" since="">
+        <parameter type="const gchar *" name="str" comment="A string."/>
+        <returns type="ICalReqstatType *" annotation="transfer full" comment="The newly created #ICalReqstatType."/>
+        <comment xml:space="preserve">Create a #ICalReqstatType from string.</comment>
+    </method>
+    <method name="i_cal_reqstat_type_as_string_r" corresponds="icalreqstattype_as_string_r" since="">
+        <parameter type="ICalReqstatType *" name="stat" comment="A #ICalReqstatType."/>
+        <returns type="gchar *" annotation="transfer full" comment="A string."/>
+        <comment xml:space="preserve">Convert #ICalReqstatType to a string representation.</comment>
+    </method>
+    <method name="i_cal_reqstat_type_new_default" corresponds="CUSTOM" kind="constructor" since="1.0">
+        <returns type="struct icalreqstattype" annotation="transfer full" comment="The newly created #ICalReqstatType" />
+        <comment xml:space="preserve">Create a new default #ICalReqstatType</comment>
+        <custom>	struct icalreqstattype reqstattype;
+	reqstattype.code = ICAL_UNKNOWN_STATUS;
+	return reqstattype;</custom>
+    </method> 
+</structure>

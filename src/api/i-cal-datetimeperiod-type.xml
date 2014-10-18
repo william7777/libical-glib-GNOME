@@ -1,0 +1,10 @@
+<structure namespace="ICal" name="DatetimeperiodType" native="struct icaldatetimeperiodtype" is_bare="true" default_native="i_cal_datetimeperiod_type_new_default ()" includes="i-cal-timetype, i-cal-period-type">
+	<method name="i_cal_datetimeperiod_type_new_default" corresponds="CUSTOM" kind="constructor" since="1.0">
+        <returns type="struct icaldatetimeperiodtype" annotation="transfer full" comment="The newly created #ICalDatetimeperiodType" />
+        <comment xml:space="preserve">Create a new default #ICalDatetimeperiodType</comment>
+        <custom>	struct icaldatetimeperiodtype datetimeperiodtype;
+	datetimeperiodtype.time = i_cal_timetype_new_default ();
+	datetimeperiodtype.period = icalperiodtype_null_period ();
+	return datetimeperiodtype;</custom>
+    </method> 
+</structure>

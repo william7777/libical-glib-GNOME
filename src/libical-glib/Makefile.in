@@ -153,7 +153,16 @@ am_libical_glib_1_0_la_OBJECTS = libical_glib_1_0_la-i-cal-object.lo \
 	libical_glib_1_0_la-i-cal-period-type.lo \
 	libical_glib_1_0_la-i-cal-recur.lo \
 	libical_glib_1_0_la-i-cal-recurrence-type.lo \
-	libical_glib_1_0_la-i-cal-recur-iterator.lo $(am__objects_1)
+	libical_glib_1_0_la-i-cal-recur-iterator.lo \
+	libical_glib_1_0_la-i-cal-restriction.lo \
+	libical_glib_1_0_la-i-cal-geo-type.lo \
+	libical_glib_1_0_la-i-cal-datetimeperiod-type.lo \
+	libical_glib_1_0_la-i-cal-reqstat-type.lo \
+	libical_glib_1_0_la-i-cal-trigger-type.lo \
+	libical_glib_1_0_la-i-cal-timezone-phase.lo \
+	libical_glib_1_0_la-i-cal-timezonetype.lo \
+	libical_glib_1_0_la-i-cal-unknowntokenhandling.lo \
+	$(am__objects_1)
 libical_glib_1_0_la_OBJECTS = $(am_libical_glib_1_0_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -424,6 +433,14 @@ libical_glib_1_0_la_SOURCES = \
 	i-cal-recur.c \
 	i-cal-recurrence-type.c \
 	i-cal-recur-iterator.c \
+	i-cal-restriction.c \
+	i-cal-geo-type.c \
+	i-cal-datetimeperiod-type.c \
+	i-cal-reqstat-type.c \
+	i-cal-trigger-type.c \
+	i-cal-timezone-phase.c \
+	i-cal-timezonetype.c \
+	i-cal-unknowntokenhandling.c \
 	$(NULL)
 
 privinclude_HEADERS = \
@@ -449,6 +466,14 @@ privinclude_HEADERS = \
 	i-cal-recur.h \
 	i-cal-recurrence-type.h \
 	i-cal-recur-iterator.h \
+	i-cal-restriction.h \
+	i-cal-geo-type.h \
+	i-cal-datetimeperiod-type.h \
+	i-cal-reqstat-type.h \
+	i-cal-trigger-type.h \
+	i-cal-timezone-phase.h \
+	i-cal-timezonetype.h \
+	i-cal-unknowntokenhandling.h \
 	$(NULL)
 
 INTROSPECTION_GIRS = $(am__append_1)
@@ -582,10 +607,12 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-array.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-attach.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-component.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-datetimeperiod-type.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-derived-value.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-duration-type.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-enums.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-error.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-geo-type.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-memory.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-mime.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-object.Plo@am__quote@
@@ -596,9 +623,15 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-recur-iterator.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-recur.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-recurrence-type.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-reqstat-type.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-restriction.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-time.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-timetype.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-timezone-phase.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-timezone.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-timezonetype.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-trigger-type.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-unknowntokenhandling.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-value.Plo@am__quote@
 
 .c.o:
@@ -768,6 +801,62 @@ libical_glib_1_0_la-i-cal-recur-iterator.lo: i-cal-recur-iterator.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='i-cal-recur-iterator.c' object='libical_glib_1_0_la-i-cal-recur-iterator.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libical_glib_1_0_la-i-cal-recur-iterator.lo `test -f 'i-cal-recur-iterator.c' || echo '$(srcdir)/'`i-cal-recur-iterator.c
+
+libical_glib_1_0_la-i-cal-restriction.lo: i-cal-restriction.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libical_glib_1_0_la-i-cal-restriction.lo -MD -MP -MF $(DEPDIR)/libical_glib_1_0_la-i-cal-restriction.Tpo -c -o libical_glib_1_0_la-i-cal-restriction.lo `test -f 'i-cal-restriction.c' || echo '$(srcdir)/'`i-cal-restriction.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libical_glib_1_0_la-i-cal-restriction.Tpo $(DEPDIR)/libical_glib_1_0_la-i-cal-restriction.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='i-cal-restriction.c' object='libical_glib_1_0_la-i-cal-restriction.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libical_glib_1_0_la-i-cal-restriction.lo `test -f 'i-cal-restriction.c' || echo '$(srcdir)/'`i-cal-restriction.c
+
+libical_glib_1_0_la-i-cal-geo-type.lo: i-cal-geo-type.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libical_glib_1_0_la-i-cal-geo-type.lo -MD -MP -MF $(DEPDIR)/libical_glib_1_0_la-i-cal-geo-type.Tpo -c -o libical_glib_1_0_la-i-cal-geo-type.lo `test -f 'i-cal-geo-type.c' || echo '$(srcdir)/'`i-cal-geo-type.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libical_glib_1_0_la-i-cal-geo-type.Tpo $(DEPDIR)/libical_glib_1_0_la-i-cal-geo-type.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='i-cal-geo-type.c' object='libical_glib_1_0_la-i-cal-geo-type.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libical_glib_1_0_la-i-cal-geo-type.lo `test -f 'i-cal-geo-type.c' || echo '$(srcdir)/'`i-cal-geo-type.c
+
+libical_glib_1_0_la-i-cal-datetimeperiod-type.lo: i-cal-datetimeperiod-type.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libical_glib_1_0_la-i-cal-datetimeperiod-type.lo -MD -MP -MF $(DEPDIR)/libical_glib_1_0_la-i-cal-datetimeperiod-type.Tpo -c -o libical_glib_1_0_la-i-cal-datetimeperiod-type.lo `test -f 'i-cal-datetimeperiod-type.c' || echo '$(srcdir)/'`i-cal-datetimeperiod-type.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libical_glib_1_0_la-i-cal-datetimeperiod-type.Tpo $(DEPDIR)/libical_glib_1_0_la-i-cal-datetimeperiod-type.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='i-cal-datetimeperiod-type.c' object='libical_glib_1_0_la-i-cal-datetimeperiod-type.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libical_glib_1_0_la-i-cal-datetimeperiod-type.lo `test -f 'i-cal-datetimeperiod-type.c' || echo '$(srcdir)/'`i-cal-datetimeperiod-type.c
+
+libical_glib_1_0_la-i-cal-reqstat-type.lo: i-cal-reqstat-type.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libical_glib_1_0_la-i-cal-reqstat-type.lo -MD -MP -MF $(DEPDIR)/libical_glib_1_0_la-i-cal-reqstat-type.Tpo -c -o libical_glib_1_0_la-i-cal-reqstat-type.lo `test -f 'i-cal-reqstat-type.c' || echo '$(srcdir)/'`i-cal-reqstat-type.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libical_glib_1_0_la-i-cal-reqstat-type.Tpo $(DEPDIR)/libical_glib_1_0_la-i-cal-reqstat-type.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='i-cal-reqstat-type.c' object='libical_glib_1_0_la-i-cal-reqstat-type.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libical_glib_1_0_la-i-cal-reqstat-type.lo `test -f 'i-cal-reqstat-type.c' || echo '$(srcdir)/'`i-cal-reqstat-type.c
+
+libical_glib_1_0_la-i-cal-trigger-type.lo: i-cal-trigger-type.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libical_glib_1_0_la-i-cal-trigger-type.lo -MD -MP -MF $(DEPDIR)/libical_glib_1_0_la-i-cal-trigger-type.Tpo -c -o libical_glib_1_0_la-i-cal-trigger-type.lo `test -f 'i-cal-trigger-type.c' || echo '$(srcdir)/'`i-cal-trigger-type.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libical_glib_1_0_la-i-cal-trigger-type.Tpo $(DEPDIR)/libical_glib_1_0_la-i-cal-trigger-type.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='i-cal-trigger-type.c' object='libical_glib_1_0_la-i-cal-trigger-type.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libical_glib_1_0_la-i-cal-trigger-type.lo `test -f 'i-cal-trigger-type.c' || echo '$(srcdir)/'`i-cal-trigger-type.c
+
+libical_glib_1_0_la-i-cal-timezone-phase.lo: i-cal-timezone-phase.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libical_glib_1_0_la-i-cal-timezone-phase.lo -MD -MP -MF $(DEPDIR)/libical_glib_1_0_la-i-cal-timezone-phase.Tpo -c -o libical_glib_1_0_la-i-cal-timezone-phase.lo `test -f 'i-cal-timezone-phase.c' || echo '$(srcdir)/'`i-cal-timezone-phase.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libical_glib_1_0_la-i-cal-timezone-phase.Tpo $(DEPDIR)/libical_glib_1_0_la-i-cal-timezone-phase.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='i-cal-timezone-phase.c' object='libical_glib_1_0_la-i-cal-timezone-phase.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libical_glib_1_0_la-i-cal-timezone-phase.lo `test -f 'i-cal-timezone-phase.c' || echo '$(srcdir)/'`i-cal-timezone-phase.c
+
+libical_glib_1_0_la-i-cal-timezonetype.lo: i-cal-timezonetype.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libical_glib_1_0_la-i-cal-timezonetype.lo -MD -MP -MF $(DEPDIR)/libical_glib_1_0_la-i-cal-timezonetype.Tpo -c -o libical_glib_1_0_la-i-cal-timezonetype.lo `test -f 'i-cal-timezonetype.c' || echo '$(srcdir)/'`i-cal-timezonetype.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libical_glib_1_0_la-i-cal-timezonetype.Tpo $(DEPDIR)/libical_glib_1_0_la-i-cal-timezonetype.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='i-cal-timezonetype.c' object='libical_glib_1_0_la-i-cal-timezonetype.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libical_glib_1_0_la-i-cal-timezonetype.lo `test -f 'i-cal-timezonetype.c' || echo '$(srcdir)/'`i-cal-timezonetype.c
+
+libical_glib_1_0_la-i-cal-unknowntokenhandling.lo: i-cal-unknowntokenhandling.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libical_glib_1_0_la-i-cal-unknowntokenhandling.lo -MD -MP -MF $(DEPDIR)/libical_glib_1_0_la-i-cal-unknowntokenhandling.Tpo -c -o libical_glib_1_0_la-i-cal-unknowntokenhandling.lo `test -f 'i-cal-unknowntokenhandling.c' || echo '$(srcdir)/'`i-cal-unknowntokenhandling.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libical_glib_1_0_la-i-cal-unknowntokenhandling.Tpo $(DEPDIR)/libical_glib_1_0_la-i-cal-unknowntokenhandling.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='i-cal-unknowntokenhandling.c' object='libical_glib_1_0_la-i-cal-unknowntokenhandling.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libical_glib_1_0_la-i-cal-unknowntokenhandling.lo `test -f 'i-cal-unknowntokenhandling.c' || echo '$(srcdir)/'`i-cal-unknowntokenhandling.c
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -1063,8 +1152,8 @@ i-cal-object.h: i-cal-object.h.in
 libical-glib.h: libical-glib.h.in
 	cp $< $@
 
-i-cal-timezone.h i-cal-timezone.c i-cal-enums.h i-cal-enums.c i-cal-property.h i-cal-property.c i-cal-component.h i-cal-component.c i-cal-timetype.h i-cal-timetype.c i-cal-time.h i-cal-time.c i-cal-array.h i-cal-array.c i-cal-attach.h i-cal-attach.c i-cal-duration-type.h i-cal-duration-type.c i-cal-error.h i-cal-error.c i-cal-memory.h i-cal-memory.c i-cal-mime.h i-cal-mime.c i-cal-parser.h i-cal-parser.c i-cal-value.h i-cal-value.c i-cal-derived-value.h i-cal-derived-value.c i-cal-parameter.h i-cal-parameter.c i-cal-period-type.h i-cal-period-type.c i-cal-recur.h i-cal-recur.c i-cal-recurrence-type.h i-cal-recurrence-type.c i-cal-recur-iterator.h i-cal-recur-iterator.c: 
-	$(top_builddir)/src/build-tools/src-generator "$(top_builddir)/src/build-tools" "$(top_builddir)/src/api" i-cal-timezone.xml i-cal-enums.xml i-cal-property.xml i-cal-component.xml i-cal-timetype.xml i-cal-time.xml i-cal-array.xml i-cal-attach.xml i-cal-duration-type.xml i-cal-error.xml i-cal-memory.xml i-cal-mime.xml i-cal-parser.xml i-cal-value.xml i-cal-derived-value.xml i-cal-parameter.xml i-cal-period-type.xml i-cal-recur.xml i-cal-recurrence-type.xml i-cal-recur-iterator.xml
+i-cal-timezone.h i-cal-timezone.c i-cal-enums.h i-cal-enums.c i-cal-property.h i-cal-property.c i-cal-component.h i-cal-component.c i-cal-timetype.h i-cal-timetype.c i-cal-time.h i-cal-time.c i-cal-array.h i-cal-array.c i-cal-attach.h i-cal-attach.c i-cal-duration-type.h i-cal-duration-type.c i-cal-error.h i-cal-error.c i-cal-memory.h i-cal-memory.c i-cal-mime.h i-cal-mime.c i-cal-parser.h i-cal-parser.c i-cal-value.h i-cal-value.c i-cal-derived-value.h i-cal-derived-value.c i-cal-parameter.h i-cal-parameter.c i-cal-period-type.h i-cal-period-type.c i-cal-recur.h i-cal-recur.c i-cal-recurrence-type.h i-cal-recurrence-type.c i-cal-recur-iterator.h i-cal-recur-iterator.c i-cal-restriction.h i-cal-restriction.c i-cal-geo-type.h i-cal-geo-type.c i-cal-datetimeperiod-type.h i-cal-datetimeperiod-type.c i-cal-reqstat-type.h i-cal-reqstat-type.c i-cal-trigger-type.h i-cal-trigger-type.c i-cal-timezone-phase.h i-cal-timezone-phase.c i-cal-timezonetype.h i-cal-timezonetype.c i-cal-unknowntokenhandling.h i-cal-unknowntokenhandling.c: 
+	$(top_builddir)/src/build-tools/src-generator "$(top_builddir)/src/build-tools" "$(top_builddir)/src/api" i-cal-timezone.xml i-cal-enums.xml i-cal-property.xml i-cal-component.xml i-cal-timetype.xml i-cal-time.xml i-cal-array.xml i-cal-attach.xml i-cal-duration-type.xml i-cal-error.xml i-cal-memory.xml i-cal-mime.xml i-cal-parser.xml i-cal-value.xml i-cal-derived-value.xml i-cal-parameter.xml i-cal-period-type.xml i-cal-recur.xml i-cal-recurrence-type.xml i-cal-recur-iterator.xml i-cal-restriction.xml i-cal-geo-type.xml i-cal-datetimeperiod-type.xml i-cal-reqstat-type.xml i-cal-trigger-type.xml i-cal-timezone-phase.xml i-cal-timezonetype.xml i-cal-unknowntokenhandling.xml
 
 -include $(INTROSPECTION_MAKEFILE)
 @HAVE_INTROSPECTION_TRUE@ICalGLib-1.0.gir: libical-glib-1.0.la

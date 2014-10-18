@@ -1,6 +1,6 @@
-<structure namespace="ICal" name="Timetype" native="icaltimetype" is_bare="true" default_native="i_cal_timetype_new()">
-	<method name="i_cal_timetype_new" corresponds="CUSTOM" annotation="skip" kind="constructor" since="1.0">
-		<returns type="icaltimetype" comment="The newly created #ICalTimetype. It is the epoch time (19700-1-1 00:00:00 utc)" />
+<structure namespace="ICal" name="Timetype" native="struct icaltimetype" is_bare="true" default_native="i_cal_timetype_new_default ()">
+	<method name="i_cal_timetype_new_default" corresponds="CUSTOM" annotation="skip" kind="constructor" since="1.0">
+		<returns type="struct icaltimetype" comment="The newly created #ICalTimetype. It is the epoch time (19700-1-1 00:00:00 utc)" />
         <comment xml:space="preserve">Create a new #ICalTimetype.</comment>
         <custom>	icaltimetype timetype;
 	timetype.year = 1970;

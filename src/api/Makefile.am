@@ -21,6 +21,13 @@ EXTRA_DIST =  \
 	i-cal-timezone.xml \
 	i-cal-derived-value.xml \
 	i-cal-value.xml \
+	i-cal-geo-type.xml \
+	i-cal-datetimeperiod-type.xml \
+	i-cal-reqstat-type.xml \
+	i-cal-trigger-type.xml \
+	i-cal-timezone-phase.xml \
+	i-cal-timezonetype.xml \
+	i-cal-unknowntokenhandling.xml \
 	$(NULL)
 
 -include $(top_srcdir)/git.mk
