@@ -28,6 +28,7 @@ EXTRA_DIST =  \
 	i-cal-timezone-phase.xml \
 	i-cal-timezonetype.xml \
 	i-cal-unknowntokenhandling.xml \
+	i-cal-langbind.xml \
 	$(NULL)
 
 -include $(top_srcdir)/git.mk

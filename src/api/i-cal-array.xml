@@ -44,12 +44,10 @@
     <method name="i_cal_array_sort" corresponds="CUSTOM" kind="others" since="1.0">
         <parameter type="ICalArray *" name="array" comment="The #ICalArray to be sorted."/>
         <parameter type="gint (*compare)" name="(const void *, const void *)" annotation="scope call" comment="The compare function which is used to sort the array"/>
-        <comment xml:space="preserve">Sort the @array using the sort function @compare</comment>
+        <comment xml:space="preserve">Does not work right now. Sort the @array using the sort function @compare</comment>
         <custom>	g_return_if_fail (I_CAL_IS_ARRAY (array));
 	g_return_if_fail (array != NULL);
 	g_return_if_fail (compare != NULL);
-        	
-	printf ("Begin sorting\n");
 
 	icalarray_sort (i_cal_array_get_native_set_owner (array, NULL), compare);</custom>
     </method> 

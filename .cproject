@@ -40,6 +40,13 @@
 			<resource resourceType="PROJECT" workspacePath="/libical-glib"/>
 		</configuration>
 	</storageModule>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="org.eclipse.linuxtools.cdt.autotools.core.toolChain.1268463322;org.eclipse.linuxtools.cdt.autotools.core.toolChain.1268463322.1138596957;org.eclipse.linuxtools.cdt.autotools.core.toolchain.tool.gcc.393403291;cdt.managedbuild.tool.gnu.c.compiler.input.1808884662">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
 		<buildTargets>
 			<target name="&quot;file" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
@@ -532,11 +539,4 @@
 			</target>
 		</buildTargets>
 	</storageModule>
-	<storageModule moduleId="scannerConfiguration">
-		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		<scannerConfigBuildInfo instanceId="org.eclipse.linuxtools.cdt.autotools.core.toolChain.1268463322;org.eclipse.linuxtools.cdt.autotools.core.toolChain.1268463322.1138596957;org.eclipse.linuxtools.cdt.autotools.core.toolchain.tool.gcc.393403291;cdt.managedbuild.tool.gnu.c.compiler.input.1808884662">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
-		</scannerConfigBuildInfo>
-	</storageModule>
-	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 </cproject>

@@ -24,6 +24,10 @@ Detailed plan:
 
 
 
+-langbind test
+-types test
+
+
 CHECK:
 -All the getters for the bare type.
 -All the setters for the bare type.
