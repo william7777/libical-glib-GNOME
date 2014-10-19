@@ -6,7 +6,7 @@
 		<custom>	g_return_val_if_fail (period != NULL, NULL);
 	g_return_val_if_fail (I_CAL_IS_PERIOD_TYPE (period), NULL);
 	
-	return i_cal_timetype_new_full (i_cal_period_type_get_native_set_owner (period).start);</custom>
+	return i_cal_timetype_new_full ((* (struct icalperiodtype *)i_cal_object_get_native ((ICalObject *)period)).start);</custom>
 	</method>
 	<method name="i_cal_period_type_set_start" corresponds="CUSTOM" kind="set" since="1.0">
 		<parameter type="ICalPeriodType *" name="period" comment="The #ICalPeriodType to be set."/>
@@ -18,8 +18,8 @@
 	g_return_if_fail (start != NULL);
 	g_return_if_fail (I_CAL_IS_TIMETYPE (start));
 	
-	periodtype = i_cal_period_type_get_native_pointer_set_owner (period);
-	periodtype->start = i_cal_timetype_get_native_set_owner (start);</custom>
+	periodtype = (struct icalperiodtype *)i_cal_object_get_native ((ICalObject *)period);
+	periodtype->start = * (struct icaltimetype *)i_cal_object_get_native ((ICalObject *)start);</custom>
 	</method>
 	<method name="i_cal_period_type_get_end" corresponds="CUSTOM" kind="get" since="1.0">
 		<parameter type="ICalPeriodType *" name="period" comment="The #ICalPeriodType to be queried."/>
@@ -28,7 +28,7 @@
 		<custom>	g_return_val_if_fail (period != NULL, NULL);
 	g_return_val_if_fail (I_CAL_IS_PERIOD_TYPE (period), NULL);
 	
-	return i_cal_timetype_new_full (i_cal_period_type_get_native_set_owner (period).end);</custom>
+	return i_cal_timetype_new_full ((* (struct icalperiodtype *)i_cal_object_get_native ((ICalObject *)period)).end);</custom>
 	</method>
 	<method name="i_cal_period_type_set_end" corresponds="CUSTOM" kind="set" since="1.0">
 		<parameter type="ICalPeriodType *" name="period" comment="The #ICalPeriodType to be set."/>
@@ -40,8 +40,8 @@
 	g_return_if_fail (end != NULL);
 	g_return_if_fail (I_CAL_IS_TIMETYPE (end));
 	
-	periodtype = i_cal_period_type_get_native_pointer_set_owner (period);
-	periodtype->end = i_cal_timetype_get_native_set_owner (end);</custom>
+	periodtype = (struct icalperiodtype *)i_cal_object_get_native ((ICalObject *)period);
+	periodtype->end = (* (struct icaltimetype *)i_cal_object_get_native ((ICalObject *)end));</custom>
 	</method>
 	<method name="i_cal_period_type_get_duration" corresponds="CUSTOM" kind="get" since="1.0">
 		<parameter type="ICalPeriodType *" name="period" comment="The #ICalPeriodType to be queried."/>
@@ -50,7 +50,7 @@
 		<custom>	g_return_val_if_fail (period != NULL, NULL);
 	g_return_val_if_fail (I_CAL_IS_PERIOD_TYPE (period), NULL);
 	
-	return i_cal_duration_type_new_full (i_cal_period_type_get_native_set_owner (period).duration);</custom>
+	return i_cal_duration_type_new_full ((* (struct icalperiodtype *)i_cal_object_get_native ((ICalObject *)period)).duration);</custom>
 	</method>
 	<method name="i_cal_period_type_set_duration" corresponds="CUSTOM" kind="set" since="1.0">
 		<parameter type="ICalPeriodType *" name="period" comment="The #ICalPeriodType to be set."/>
@@ -62,8 +62,8 @@
 	g_return_if_fail (duration != NULL);
 	g_return_if_fail (I_CAL_IS_DURATION_TYPE (duration));
 	
-	periodtype = i_cal_period_type_get_native_pointer_set_owner (period);
-	periodtype->duration = i_cal_duration_type_get_native_set_owner (duration);</custom>
+	periodtype = (struct icalperiodtype *)i_cal_object_get_native ((ICalObject *)period);
+	periodtype->duration = (* (struct icaldurationtype *)i_cal_object_get_native ((ICalObject *)duration));</custom>
 	</method>
     <method name="i_cal_period_type_from_string" corresponds="icalperiodtype_from_string" kind="constructor" since="1.0">
         <parameter type="const gchar *" name="str" comment="The string used to create the #ICalPeriodType"/>

@@ -26,7 +26,7 @@
 	return ret;</custom>
     </method>
     <method name="i_cal_recurrence_type_clear" corresponds="icalrecurrencetype_clear" since="1.0">
-        <parameter type="ICalRecurrenceType *" name="r" translator="i_cal_recurrence_type_get_native_pointer_set_owner" comment="The #ICalRecurrenceType to be reset."/>
+        <parameter type="ICalRecurrenceType *" name="r" kind="POINTER" comment="The #ICalRecurrenceType to be reset."/>
         <comment xml:space="preserve">Reset an #ICalRecurrenceType.</comment>
     </method>
     <method name="i_cal_recurrence_type_day_day_of_week" corresponds="icalrecurrencetype_day_day_of_week" since="1.0">
@@ -45,7 +45,7 @@
         <comment xml:space="preserve">Convert a string to a #ICalRecurrenceType.</comment>
     </method>
     <method name="i_cal_recurrence_type_as_string_r" corresponds="icalrecurrencetype_as_string_r" since="1.0">
-        <parameter type="ICalRecurrenceType *" name="recur" translator="i_cal_recurrence_type_get_native_pointer_set_owner" comment="The #ICalRecurrenceType to be converted."/>
+        <parameter type="ICalRecurrenceType *" name="recur" kind="POINTER" comment="The #ICalRecurrenceType to be converted."/>
         <returns type="gchar *" annotation="transfer full" comment="The string representation of @recur."/>
         <comment xml:space="preserve">Convert a #ICalRecurrenceType to a string.</comment>
     </method>

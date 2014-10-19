@@ -67,7 +67,7 @@ gchar *get_source_method_checkers (Method *method);
 gchar *get_source_method_checker (Parameter *para, Ret *ret);
 gchar *get_source_run_time_checkers (Method *method, const gchar *namespace);
 gchar *get_translator_name_for_return (gchar *upperCamel);
-gchar *get_translator_for_paramter (Parameter *para);
+gchar *get_translator_for_parameter (Parameter *para);
 gchar *get_translator_for_return (Ret *ret);
 
 gchar *get_source_method_proto_new_full (Structure *structure);

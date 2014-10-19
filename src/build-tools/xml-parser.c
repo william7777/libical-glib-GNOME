@@ -139,6 +139,7 @@ parameter_new()
 	parameter->autofill = NULL;
 	parameter->translator = NULL;
 	parameter->translatorArgus = NULL;
+	parameter->kind = NULL;
 	return parameter;
 }
 
@@ -163,6 +164,7 @@ parameter_free(Parameter *para)
 	g_free(para->name);
 	g_free(para->autofill);
 	g_free(para->translator);
+	g_free (para->kind);
 
 	para = NULL;
 }
@@ -290,6 +292,8 @@ parse_parameters(xmlNode *node, Method *method)
 				para->translator = (gchar *)xmlNodeListGetString(attr->doc, attr->children, 1);
 			} else if (xmlStrcmp(attr->name, (xmlChar *) "autofill") == 0) {
 				para->autofill = (gchar *)xmlNodeListGetString(attr->doc, attr->children, 1);
+			} else if (xmlStrcmp (attr->name, (xmlChar *) "kind") == 0) {
+				para->kind = (gchar *)xmlNodeListGetString(attr->doc, attr->children, 1);
 			} else {
 				printf("The tag name of %s in parameter cannot be finished\n", attr->name);
 			}

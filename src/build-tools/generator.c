@@ -839,12 +839,16 @@ generate_header_method_protos (FILE *out, Structure *structure)
 	if (structure->native != NULL) {
 		generate_header_method_new_full (out, structure);
 		generate_header_method_get_type (out, structure);
+		/*
 		generate_header_method_get_native_set_owner (out, structure);
+		*/
 		generate_header_method_get_native_remove_owner (out, structure);
 		generate_header_method_steal_native (out, structure);
+		/*
 		if (structure->isBare) {
 			generate_header_method_get_native_pointer_set_owner (out, structure);
 		}
+		*/
 	}
 	
 	for (iter = g_list_first (structure->methods); iter != NULL; iter = g_list_next (iter)) {
@@ -1483,11 +1487,11 @@ get_source_method_code (Method *method)
 }
 
 gchar *
-get_translator_for_paramter (Parameter *para)
+get_translator_for_parameter (Parameter *para)
 {
 	gchar *trueType;
 	gchar *res;
-	gchar *kind;
+	gchar *structureKind;
 	gboolean is_bare;
 	Structure *structure;
 	
@@ -1502,21 +1506,33 @@ get_translator_for_paramter (Parameter *para)
 	} else {
 		trueType = get_true_type (para->type);
 		if (g_hash_table_contains (type2kind, trueType)) {
-			kind = g_strdup (g_hash_table_lookup (type2kind, trueType));
+			structureKind = g_strdup (g_hash_table_lookup (type2kind, trueType));
 			structure = g_hash_table_lookup (type2structure, trueType);
 			if (structure == NULL) {
 				printf ("ERROR: There is no corresponding structure for type %s\n", trueType);
 			} else {
 				is_bare = structure->isBare;
 			}
-			if (g_strcmp0 (kind, "enum") != 0) {
-				if (is_bare) {
-					res = g_strconcat ("* (", structure->native, " *) i_cal_object_get_native", NULL);
+			if (g_strcmp0 (structureKind, "enum") != 0) {
+				/* If the kind of parameter is specified */
+				if (para->kind != NULL) {
+					if (g_strcmp0 (para->kind, "OBJECT") == 0) {
+						res = g_strconcat ("* (", structure->native, " *) i_cal_object_get_native", NULL);
+					} else if (g_strcmp0 (para->kind, "POINTER") == 0) {
+						res = g_strconcat ("(", structure->native, " *)i_cal_object_get_native", NULL);
+					} else {
+						printf ("The parameter kind \"%s\" is illegal!", para->kind);
+						fflush (NULL);
+					}
 				} else {
-					res = g_strconcat ("(", structure->native, " *)i_cal_object_get_native", NULL);
+					if (is_bare) {
+						res = g_strconcat ("* (", structure->native, " *) i_cal_object_get_native", NULL);
+					} else {
+						res = g_strconcat ("(", structure->native, " *)i_cal_object_get_native", NULL);
+					}
 				}
 			}
-			g_free (kind);
+			g_free (structureKind);
 		}
 		g_free (trueType);
 	}
@@ -1564,13 +1580,13 @@ get_inline_parameter (Parameter *para)
 	
 	buffer = g_new (gchar, BUFFER_SIZE);
 	*buffer = '\0';
-	translator = get_translator_for_paramter (para);
+	translator = get_translator_for_parameter (para);
 	
 	if (translator != NULL) {
 		g_stpcpy (buffer + strlen (buffer), translator);
 		g_stpcpy (buffer + strlen (buffer), " (");
 		if (para->translator == NULL)
-			g_stpcpy (buffer + strlen (buffer), " (ICalObject *)");
+			g_stpcpy (buffer + strlen (buffer), "(ICalObject *)");
 	}
 	g_stpcpy (buffer + strlen (buffer), para->name);
 	

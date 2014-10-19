@@ -49,6 +49,6 @@
 	g_return_if_fail (array != NULL);
 	g_return_if_fail (compare != NULL);
 
-	icalarray_sort (i_cal_array_get_native_set_owner (array, NULL), compare);</custom>
+	icalarray_sort ((icalarray *)i_cal_object_get_native ((ICalObject *)array), compare);</custom>
     </method> 
 </structure>

@@ -33,6 +33,7 @@ ${new_full}
 /**
  * ${lowerSnake}_get_native_set_owner: (skip)
  **/
+ /*
 ${get_native_set_owner}
 {
 	${native} *native_pointer;$^!${isBare}	
@@ -45,17 +46,20 @@ ${get_native_set_owner}
 	} else {
 		return ${defaultNative};
 	}^$
-}$^${isBare}
+}*/$^${isBare}
+
 
 /**
  * ${lowerSnake}_get_native_pointer_set_owner: (skip)
  **/
+ /*
 ${get_native_pointer_set_owner}
 {$^!${isBare}
 	if (owner != NULL)
 		i_cal_object_set_owner ((ICalObject *)object, owner);^$
 	return i_cal_object_get_native ((ICalObject *)object);
-}^$
+}*/^$
+
 
 /**
  * ${lowerSnake}_get_native_remove_owner: (skip)
