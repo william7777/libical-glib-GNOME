@@ -2,7 +2,7 @@
 	<method name="i_cal_timetype_new_default" corresponds="CUSTOM" annotation="skip" kind="constructor" since="1.0">
 		<returns type="struct icaltimetype" comment="The newly created #ICalTimetype. It is the epoch time (19700-1-1 00:00:00 utc)" />
         <comment xml:space="preserve">Create a new #ICalTimetype.</comment>
-        <custom>	icaltimetype timetype;
+        <custom>	struct icaltimetype timetype;
 	timetype.year = 1970;
 	timetype.month = 1;
 	timetype.day = 1;

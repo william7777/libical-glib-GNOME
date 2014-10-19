@@ -1513,7 +1513,7 @@ get_translator_for_paramter (Parameter *para)
 				if (is_bare) {
 					res = g_strconcat ("* (", structure->native, " *) i_cal_object_get_native", NULL);
 				} else {
-					res = g_strdup ("i_cal_object_get_native");
+					res = g_strconcat ("(", structure->native, " *)i_cal_object_get_native", NULL);
 				}
 			}
 			g_free (kind);
@@ -2187,7 +2187,7 @@ static gint generate_library (gint count, char **fileNames) {
 			g_hash_table_insert (type2kind, g_strconcat (structure->nameSpace, structure->name, NULL), (void *)"std");
 			g_hash_table_insert (type2structure, g_strconcat (structure->nameSpace, structure->name, NULL), structure);
 			if (structure->isBare && structure->defaultNative != NULL) {
-				g_hash_table_insert (defaultValues, g_strconcat (structure->nameSpace, structure->name, NULL), structure->defaultNative);
+				g_hash_table_insert (defaultValues, g_strconcat (structure->nameSpace, structure->name, NULL), g_strdup (structure->defaultNative));
 			}
 		}
 		

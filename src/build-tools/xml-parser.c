@@ -25,18 +25,21 @@ void
 structure_free(Structure *structure)
 {
 	GList *list;
+	Enumeration *enumeration;
 
 	if (structure == NULL)
 		return;
 
-	for (list = structure->methods; list != NULL; list = list->next) {
+	for (list = g_list_first (structure->methods); list != NULL; list = list->next) {
 		method_free((Method *)list->data);
 	}
-	for (list = structure->includes; list != NULL; list = list->next) {
+	for (list = g_list_first (structure->includes); list != NULL; list = list->next) {
 		g_free(list->data);
 	}
 	for (list = g_list_first (structure->enumerations); list != NULL; list = g_list_next (list)) {
-		enumeration_free ((Enumeration *)list->data);
+		enumeration = (Enumeration *)list->data;
+		enumeration_free (enumeration);
+		enumeration = NULL;
 	}
 	for (list = g_list_first (structure->declarations); list != NULL; list = g_list_next (list)) {
 		declaration_free ((Declaration *)list->data);

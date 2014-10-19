@@ -1,0 +1,2 @@
+<structure namespace="ICal" name="TimeSpan" native="struct icaltime_span" is_bare="true" default_native="icaltime_span_new (i_cal_timetype_new_default (), i_cal_timetype_new_default (), 0)" includes="i-cal-timetype">
+</structure>

@@ -1,5 +1,5 @@
 <structure namespace="ICal" name="Enums">
-    <enum name="ICalComponentKind">
+    <enum name="ICalComponentKind" default_native="I_CAL_NO_COMPONENT">
         <element name="ICAL_NO_COMPONENT"/>
         <element name="ICAL_ANY_COMPONENT"/>	
         <element name="ICAL_XROOT_COMPONENT"/>
@@ -27,7 +27,7 @@
         <element name="ICAL_XLICINVALID_COMPONENT"/>
         <element name="ICAL_XLICMIMEPART_COMPONENT"/>
     </enum>
-    <enum name="ICalRequestStatus">
+    <enum name="ICalRequestStatus" default_native="I_CAL_UNKNOWN_STATUS">
         <element name="ICAL_UNKNOWN_STATUS"/>
         <element name="ICAL_2_0_SUCCESS_STATUS"/>
         <element name="ICAL_2_1_FALLBACK_STATUS"/>
@@ -68,7 +68,7 @@
         <element name="ICAL_6_1_CONTAINER_NOT_FOUND"/>
 		<element name="ICAL_9_0_UNRECOGNIZED_COMMAND"/>
     </enum>
-    <enum name="ICalPropertyKind">
+    <enum name="ICalPropertyKind" default_native="I_CAL_NO_PROPERTY">
         <element name="ICAL_ANY_PROPERTY"/>
         <element name="ICAL_ACKNOWLEDGED_PROPERTY"/>
         <element name="ICAL_ACTION_PROPERTY"/>

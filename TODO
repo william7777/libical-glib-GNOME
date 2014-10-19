@@ -26,6 +26,8 @@ Detailed plan:
 
 -langbind test
 -types test
+-test Property
+-test compiter
 
 
 CHECK:
