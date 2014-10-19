@@ -20,7 +20,8 @@ typedef struct Parameter {
 	gchar *autofill;
 	gchar *translator;
 	GList *translatorArgus;
-	gchar *kind;
+	gchar *native_op;
+	gchar *owner_op;
 } Parameter;
 
 typedef struct Ret {

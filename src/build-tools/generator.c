@@ -421,88 +421,6 @@ get_source_method_proto_new_full (Structure *structure)
 }
 
 gchar *
-get_source_method_proto_get_native_set_owner (Structure *structure)
-{
-	gchar *upperCamel;
-	gchar *lowerSnake;
-	Parameter *para;	
-	Method *get_native_set_owner;
-	gchar *res;
-	
-	g_return_if_fail (structure != NULL);
-	upperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
-	lowerSnake = get_lower_snake_from_upper_camel (upperCamel);
-	get_native_set_owner = method_new();
-	
-	get_native_set_owner->ret = ret_new();
-	if (structure->isBare) {
-		get_native_set_owner->ret->type = g_strdup (structure->native);
-	} else {
-		get_native_set_owner->ret->type = g_strconcat (structure->native, " *", NULL);
-	}
-	get_native_set_owner->name = g_strconcat (lowerSnake, "_get_native_set_owner", NULL);
-	g_free (lowerSnake);
-	
-	para = parameter_new ();
-	para->type = g_strconcat ("const ", upperCamel, " *", NULL);
-	g_free (upperCamel);
-	para->name = g_strdup ("object");
-	get_native_set_owner->parameters = g_list_append (get_native_set_owner->parameters, para);
-	para = NULL;
-	
-	if (structure->isBare == FALSE) {
-		para = parameter_new ();
-		para->type = g_strdup ("GObject *");
-		para->name = g_strdup ("owner");
-		get_native_set_owner->parameters = g_list_append (get_native_set_owner->parameters, para);
-		para = NULL;
-	}
-	
-	res = get_source_method_proto (get_native_set_owner);
-	method_free (get_native_set_owner);
-	return res;
-}
-
-gchar *
-get_source_method_proto_get_native_pointer_set_owner (Structure *structure)
-{
-	gchar *upperCamel;
-	gchar *lowerSnake;
-	Parameter *para;	
-	Method *get_native_pointer_set_owner;
-	gchar *res;
-	
-	g_return_if_fail (structure != NULL);
-	upperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
-	lowerSnake = get_lower_snake_from_upper_camel (upperCamel);
-	get_native_pointer_set_owner = method_new();
-	
-	get_native_pointer_set_owner->ret = ret_new();
-	get_native_pointer_set_owner->ret->type = g_strconcat (structure->native, " *", NULL);
-	get_native_pointer_set_owner->name = g_strconcat (lowerSnake, "_get_native_pointer_set_owner", NULL);
-	g_free (lowerSnake);
-	
-	para = parameter_new ();
-	para->type = g_strconcat (upperCamel, " *", NULL);
-	g_free (upperCamel);
-	para->name = g_strdup ("object");
-	get_native_pointer_set_owner->parameters = g_list_append (get_native_pointer_set_owner->parameters, para);
-	para = NULL;
-	
-	if (structure->isBare == FALSE) {
-		para = parameter_new ();
-		para->type = g_strdup ("GObject *");
-		para->name = g_strdup ("owner");
-		get_native_pointer_set_owner->parameters = g_list_append (get_native_pointer_set_owner->parameters, para);
-		para = NULL;
-	}
-	
-	res = get_source_method_proto (get_native_pointer_set_owner);
-	method_free (get_native_pointer_set_owner);
-	return res;
-}
-
-gchar *
 get_source_method_proto_set_owner (Structure *structure)
 {
 	gchar *upperCamel;
@@ -696,141 +614,6 @@ get_source_method_proto_get_property (Structure *structure)
 }
 
 void
-generate_header_method_get_native_set_owner (FILE *out, Structure *structure)
-{
-	gchar *upperCamel;
-	gchar *lowerSnake;
-	Parameter *para;	
-	Method *get_native_set_owner;
-	
-	g_return_if_fail (out != NULL && structure != NULL);
-	upperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
-	lowerSnake = get_lower_snake_from_upper_camel (upperCamel);
-	get_native_set_owner = method_new();
-	
-	get_native_set_owner->ret = ret_new();
-	if (structure->isBare) {
-		get_native_set_owner->ret->type = g_strdup (structure->native);
-	} else {
-		get_native_set_owner->ret->type = g_strconcat (structure->native, " *", NULL);
-	}
-	get_native_set_owner->name = g_strconcat (lowerSnake, "_get_native_set_owner", NULL);
-	g_free (lowerSnake);
-	
-	para = parameter_new ();
-	para->type = g_strconcat ("const ", upperCamel, " *", NULL);
-	g_free (upperCamel);
-	para->name = g_strdup ("object");
-	get_native_set_owner->parameters = g_list_append (get_native_set_owner->parameters, para);
-	para = NULL;
-	
-	if (structure->isBare == FALSE) {
-		para = parameter_new ();
-		para->type = g_strdup ("GObject *");
-		para->name = g_strdup ("owner");
-		get_native_set_owner->parameters = g_list_append (get_native_set_owner->parameters, para);
-		para = NULL;
-	}
-	
-	generate_header_method_proto (out, get_native_set_owner);
-	method_free (get_native_set_owner);
-}
-
-void
-generate_header_method_get_native_remove_owner (FILE *out, Structure *structure) {
-	gchar *upperCamel;
-	gchar *lowerSnake;
-	Parameter *para;	
-	Method *get_native_remove_owner;
-	
-	g_return_if_fail (out != NULL && structure != NULL);
-	upperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
-	lowerSnake = get_lower_snake_from_upper_camel (upperCamel);
-	get_native_remove_owner = method_new();
-	
-	get_native_remove_owner->ret = ret_new();
-	if (structure->isBare) {
-		get_native_remove_owner->ret->type = g_strdup (structure->native);
-	} else {
-		get_native_remove_owner->ret->type = g_strconcat (structure->native, " *", NULL);
-	}
-	get_native_remove_owner->name = g_strconcat (lowerSnake, "_get_native_remove_owner", NULL);
-	g_free (lowerSnake);
-	
-	para = parameter_new ();
-	para->type = g_strconcat (upperCamel, " *", NULL);
-	g_free (upperCamel);
-	para->name = g_strdup ("object");
-	get_native_remove_owner->parameters = g_list_append (get_native_remove_owner->parameters, para);
-	para = NULL;
-	
-	generate_header_method_proto (out, get_native_remove_owner);
-	method_free (get_native_remove_owner);
-}
-
-void
-generate_header_method_get_native_pointer_set_owner (FILE *out, Structure *structure)
-{
-	gchar *upperCamel;
-	gchar *lowerSnake;
-	Parameter *para;	
-	Method *get_native_pointer_set_owner;
-	
-	g_return_if_fail (out != NULL && structure != NULL);
-	upperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
-	lowerSnake = get_lower_snake_from_upper_camel (upperCamel);
-	get_native_pointer_set_owner = method_new();
-	get_native_pointer_set_owner->name = g_strconcat (lowerSnake, "_get_native_pointer_set_owner", NULL);
-	
-	get_native_pointer_set_owner->ret = ret_new();
-	get_native_pointer_set_owner->ret->type = g_strconcat (structure->native, " *", NULL);
-	g_free (lowerSnake);
-	
-	para = parameter_new ();
-	para->type = g_strconcat (upperCamel, " *", NULL);
-	g_free (upperCamel);
-	para->name = g_strdup ("object");
-	get_native_pointer_set_owner->parameters = g_list_append (get_native_pointer_set_owner->parameters, para);
-	para = NULL;
-	
-	generate_header_method_proto (out, get_native_pointer_set_owner);
-	method_free (get_native_pointer_set_owner);
-}
-
-void
-generate_header_method_steal_native (FILE *out, Structure *structure)
-{
-	gchar *upperCamel;
-	gchar *lowerSnake;
-	Parameter *para;
-	Method *steal_native;
-
-	g_return_if_fail (out != NULL && structure != NULL);
-	upperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
-	lowerSnake = get_lower_snake_from_upper_camel (upperCamel);
-	steal_native = method_new();
-	steal_native->name = g_strconcat (lowerSnake, "_steal_native", NULL);
-
-	steal_native->ret = ret_new();
-	if (structure->isBare == TRUE) {
-		steal_native->ret->type = g_strdup (structure->native);
-	} else {
-		steal_native->ret->type = g_strconcat (structure->native, " *", NULL);
-	}
-	g_free (lowerSnake);
-
-	para = parameter_new ();
-	para->type = g_strconcat (upperCamel, " *", NULL);
-	g_free (upperCamel);
-	para->name = g_strdup ("object");
-	steal_native->parameters = g_list_append (steal_native->parameters, para);
-	para = NULL;
-
-	generate_header_method_proto (out, steal_native);
-	method_free (steal_native);
-}
-
-void
 generate_header_method_protos (FILE *out, Structure *structure)
 {
 	GList *iter;
@@ -839,16 +622,6 @@ generate_header_method_protos (FILE *out, Structure *structure)
 	if (structure->native != NULL) {
 		generate_header_method_new_full (out, structure);
 		generate_header_method_get_type (out, structure);
-		/*
-		generate_header_method_get_native_set_owner (out, structure);
-		*/
-		generate_header_method_get_native_remove_owner (out, structure);
-		generate_header_method_steal_native (out, structure);
-		/*
-		if (structure->isBare) {
-			generate_header_method_get_native_pointer_set_owner (out, structure);
-		}
-		*/
 	}
 	
 	for (iter = g_list_first (structure->methods); iter != NULL; iter = g_list_next (iter)) {
@@ -1322,7 +1095,6 @@ get_hash_table_from_structure (Structure *structure)
 		g_hash_table_insert (table, (char *)"set_property", get_source_method_proto_set_property(structure));
 		g_hash_table_insert (table, (char *)"get_property", get_source_method_proto_get_property(structure));
 		g_hash_table_insert (table, (char *)"new_full", get_source_method_proto_new_full(structure));
-		g_hash_table_insert (table, (char *)"get_native_set_owner", get_source_method_proto_get_native_set_owner(structure));
 		if (structure->destroyFunc != NULL) {
 			g_hash_table_insert (table, (char *)"destroyFunc", g_strdup (structure->destroyFunc));
 		} else {
@@ -1332,7 +1104,6 @@ get_hash_table_from_structure (Structure *structure)
 			g_hash_table_insert (table, (gchar *)"cloneFunc", g_strdup (structure->cloneFunc));
 		}
 		if (structure->isBare) {
-			g_hash_table_insert (table, (char *)"get_native_pointer_set_owner", get_source_method_proto_get_native_pointer_set_owner(structure));
 			g_hash_table_insert (table, (gchar *)"defaultNative", g_strdup (structure->defaultNative));
 		}
 	}
@@ -1515,13 +1286,15 @@ get_translator_for_parameter (Parameter *para)
 			}
 			if (g_strcmp0 (structureKind, "enum") != 0) {
 				/* If the kind of parameter is specified */
-				if (para->kind != NULL) {
-					if (g_strcmp0 (para->kind, "OBJECT") == 0) {
+				if (para->native_op != NULL) {
+					if (g_strcmp0 (para->native_op, "OBJECT") == 0) {
 						res = g_strconcat ("* (", structure->native, " *) i_cal_object_get_native", NULL);
-					} else if (g_strcmp0 (para->kind, "POINTER") == 0) {
+					} else if (g_strcmp0 (para->native_op, "POINTER") == 0) {
 						res = g_strconcat ("(", structure->native, " *)i_cal_object_get_native", NULL);
+					} else if (g_strcmp0 (para->native_op, "STEAL") == 0) {
+						res = g_strconcat ("(", structure->native, " *)i_cal_object_steal_native", NULL);
 					} else {
-						printf ("The parameter kind \"%s\" is illegal!", para->kind);
+						printf ("The parameter kind \"%s\" is illegal!", para->native_op);
 						fflush (NULL);
 					}
 				} else {
@@ -1586,11 +1359,13 @@ get_inline_parameter (Parameter *para)
 		g_stpcpy (buffer + strlen (buffer), translator);
 		g_stpcpy (buffer + strlen (buffer), " (");
 		if (para->translator == NULL)
-			g_stpcpy (buffer + strlen (buffer), "(ICalObject *)");
+			g_stpcpy (buffer + strlen (buffer), "I_CAL_OBJECT (");
 	}
 	g_stpcpy (buffer + strlen (buffer), para->name);
 	
 	if (translator != NULL) {
+		if (para->translator == NULL)
+			g_stpcpy (buffer + strlen (buffer), ")");
 		g_stpcpy (buffer + strlen (buffer), ")");
 	}
 
@@ -1663,12 +1438,15 @@ get_source_method_body (Method *method, const gchar *nameSpace)
 			g_free (checkers);
 		}
 
-		/*Set the owner */
+		/*op on the owner */
 		/* TODO: Change the translatorArgus in Parameter to parent */
 		for (iter = g_list_first (method->parameters); iter != NULL; iter = g_list_next (iter)) {
 			parameter = (Parameter *)iter->data;
-
-			if (parameter->translatorArgus != NULL) {
+			if (g_strcmp0 (parameter->owner_op, "REMOVE") == 0) {
+				g_stpcpy (buffer + strlen (buffer), "\ti_cal_object_remove_owner (I_CAL_OBJECT (");
+				g_stpcpy (buffer + strlen (buffer), parameter->name);
+				g_stpcpy (buffer + strlen (buffer), "));\n");
+			} else if (parameter->translatorArgus != NULL) {
 				g_stpcpy (buffer + strlen (buffer), "\ti_cal_object_set_owner ((ICalObject *)");
 				g_stpcpy (buffer + strlen (buffer), parameter->name);
 				g_stpcpy (buffer + strlen (buffer), ", (GObject *)");

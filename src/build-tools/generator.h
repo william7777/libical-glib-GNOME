@@ -71,13 +71,11 @@ gchar *get_translator_for_parameter (Parameter *para);
 gchar *get_translator_for_return (Ret *ret);
 
 gchar *get_source_method_proto_new_full (Structure *structure);
-gchar *get_source_method_proto_get_native_set_owner (Structure *structure);
 gchar *get_source_method_proto_set_owner (Structure *structure);
 gchar *get_source_method_proto_set_native (Structure *structure);
 gchar *get_source_method_proto_set_is_global (Structure *structure);
 gchar *get_source_method_proto_set_property (Structure *structure);
 gchar *get_source_method_proto_get_property (Structure *structure);
-gchar *get_source_method_proto_get_native_pointer_set_owner (Structure *structure);
 
 
 
@@ -86,10 +84,6 @@ void generate_header_method_protos (FILE *out, Structure *structure);
 void generate_header_method_proto (FILE *out, Method *method);
 void generate_header_method_new_full (FILE *out, Structure *structure);
 void generate_header_method_get_type (FILE *out, Structure *structure);
-void generate_header_method_get_native_set_owner (FILE *out, Structure *structure);
-void generate_header_method_get_native_remove_owner (FILE *out, Structure *structure);
-void generate_header_method_get_native_pointer_set_owner (FILE *out, Structure *structure);
-void generate_header_method_steal_native (FILE *out, Structure *structure);
 void generate_header_enums (FILE *out, Structure *structure);
 void generate_header_enum (FILE *out, Enumeration *enumeration);
 void generate_header_includes (FILE *out, Structure *structure);

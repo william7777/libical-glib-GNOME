@@ -62,7 +62,7 @@
         <comment xml:space="preserve">Return the timezone</comment>
     </method> 
     <method name="i_cal_time_set_timezone" corresponds="icaltime_set_timezone" kind="set" since="1.0">
-        <parameter type="ICalTimetype *" name="tt" kind="POINTER" comment="The #ICalTimetype to be queried"/>
+        <parameter type="ICalTimetype *" name="tt" native_op="POINTER" comment="The #ICalTimetype to be queried"/>
         <parameter type="ICalTimezone *" name="zone" annotation="transfer full" comment="The timezone"/>
         <returns type="ICalTimetype *" annotation="transfer full" comment="The #ICalTimetype after being set" />
         <comment xml:space="preserve">Set the timezone</comment>
@@ -138,7 +138,7 @@
         <comment xml:space="preserve">like icaltime_compare_tz, but only use the date parts.</comment>
     </method>
     <method name="i_cal_time_adjust" corresponds="icaltime_adjust" since="1.0">
-        <parameter type="ICalTimetype *" name="tt" kind="POINTER" comment="The #ICalTimetype to be set"/>
+        <parameter type="ICalTimetype *" name="tt" native_op="POINTER" comment="The #ICalTimetype to be set"/>
         <parameter type="const gint" name="days" comment="difference of days adjusted"/>
         <parameter type="const gint" name="hours" comment="difference of hours adjusted"/>
         <parameter type="const gint" name="minutes" comment="difference of minutes adjusted"/>

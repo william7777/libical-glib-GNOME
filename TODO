@@ -28,6 +28,7 @@ Detailed plan:
 -types test
 -test Property
 -test compiter
+-Convert all translator_args to owner_op or native_op for parameter
 
 
 CHECK:
