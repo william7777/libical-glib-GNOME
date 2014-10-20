@@ -10,9 +10,43 @@ i-cal-object.h: i-cal-object.h.in
 
 libical-glib.h: libical-glib.h.in
 	cp $< $@
-
-i-cal-timezone.h i-cal-timezone.c i-cal-enums.h i-cal-enums.c i-cal-property.h i-cal-property.c i-cal-component.h i-cal-component.c i-cal-timetype.h i-cal-timetype.c i-cal-time.h i-cal-time.c i-cal-array.h i-cal-array.c i-cal-attach.h i-cal-attach.c i-cal-duration-type.h i-cal-duration-type.c i-cal-error.h i-cal-error.c i-cal-memory.h i-cal-memory.c i-cal-mime.h i-cal-mime.c i-cal-parser.h i-cal-parser.c i-cal-value.h i-cal-value.c i-cal-derived-value.h i-cal-derived-value.c i-cal-parameter.h i-cal-parameter.c i-cal-period-type.h i-cal-period-type.c i-cal-recur.h i-cal-recur.c i-cal-recurrence-type.h i-cal-recurrence-type.c i-cal-recur-iterator.h i-cal-recur-iterator.c i-cal-restriction.h i-cal-restriction.c i-cal-geo-type.h i-cal-geo-type.c i-cal-datetimeperiod-type.h i-cal-datetimeperiod-type.c i-cal-reqstat-type.h i-cal-reqstat-type.c i-cal-trigger-type.h i-cal-trigger-type.c i-cal-timezone-phase.h i-cal-timezone-phase.c i-cal-timezonetype.h i-cal-timezonetype.c i-cal-unknowntokenhandling.h i-cal-unknowntokenhandling.c i-cal-langbind.h i-cal-langbind.c i-cal-time-span.h i-cal-time-span.c i-cal-comp-iter.h i-cal-comp-iter.c: 
-	$(top_builddir)/src/build-tools/src-generator "$(top_builddir)/src/build-tools" "$(top_builddir)/src/api" i-cal-timezone.xml i-cal-enums.xml i-cal-property.xml i-cal-component.xml i-cal-timetype.xml i-cal-time.xml i-cal-array.xml i-cal-attach.xml i-cal-duration-type.xml i-cal-error.xml i-cal-memory.xml i-cal-mime.xml i-cal-parser.xml i-cal-value.xml i-cal-derived-value.xml i-cal-parameter.xml i-cal-period-type.xml i-cal-recur.xml i-cal-recurrence-type.xml i-cal-recur-iterator.xml i-cal-restriction.xml i-cal-geo-type.xml i-cal-datetimeperiod-type.xml i-cal-reqstat-type.xml i-cal-trigger-type.xml i-cal-timezone-phase.xml i-cal-timezonetype.xml i-cal-unknowntokenhandling.xml i-cal-langbind.xml i-cal-time-span.xml i-cal-comp-iter.xml
+	
+allFileNames = \
+	i-cal-enums \
+	i-cal-timezone \
+	i-cal-component \
+	i-cal-property \
+	i-cal-timetype \
+	i-cal-time \
+	i-cal-array \
+	i-cal-attach \
+	i-cal-duration-type \
+	i-cal-error \
+	i-cal-memory \
+	i-cal-mime \
+	i-cal-parser \
+	i-cal-value \
+	i-cal-derived-value \
+	i-cal-parameter \
+	i-cal-period-type \
+	i-cal-recur \
+	i-cal-recurrence-type \
+	i-cal-recur-iterator \
+	i-cal-restriction \
+	i-cal-geo-type \
+	i-cal-datetimeperiod-type \
+	i-cal-reqstat-type \
+	i-cal-trigger-type \
+	i-cal-timezone-phase \
+	i-cal-timezonetype \
+	i-cal-unknowntokenhandling \
+	i-cal-langbind \
+	i-cal-time-span \
+	i-cal-comp-iter \
+	$(NULL)
+	
+$(addsuffix .h, $(allFileNames)) $(addsuffix .c, $(allFileNames)):
+	$(top_builddir)/src/build-tools/src-generator "$(top_builddir)/src/build-tools" "$(top_builddir)/src/api" $(addsuffix .xml, $(allFileNames))
 
 lib_LTLIBRARIES = libical-glib-1.0.la
 
@@ -76,37 +110,7 @@ libical_glib_1_0_la_SOURCES = \
 privinclude_HEADERS = \
 	libical-glib.h \
 	i-cal-object.h \
-	i-cal-enums.h \
-	i-cal-timezone.h \
-	i-cal-component.h \
-	i-cal-property.h \
-	i-cal-timetype.h \
-	i-cal-time.h \
-	i-cal-array.h \
-	i-cal-attach.h \
-	i-cal-duration-type.h \
-	i-cal-error.h \
-	i-cal-memory.h \
-	i-cal-mime.h \
-	i-cal-parser.h \
-	i-cal-value.h \
-	i-cal-derived-value.h \
-	i-cal-parameter.h \
-	i-cal-period-type.h \
-	i-cal-recur.h \
-	i-cal-recurrence-type.h \
-	i-cal-recur-iterator.h \
-	i-cal-restriction.h \
-	i-cal-geo-type.h \
-	i-cal-datetimeperiod-type.h \
-	i-cal-reqstat-type.h \
-	i-cal-trigger-type.h \
-	i-cal-timezone-phase.h \
-	i-cal-timezonetype.h \
-	i-cal-unknowntokenhandling.h \
-	i-cal-langbind.h \
-	i-cal-time-span.h \
-	i-cal-comp-iter.h \
+	$(addsuffix .h, $(allFileNames)) \
 	$(NULL)
 
 BUILT_SOURCES += \
