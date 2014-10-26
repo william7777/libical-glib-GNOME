@@ -43,6 +43,8 @@ allFileNames = \
 	i-cal-langbind \
 	i-cal-time-span \
 	i-cal-comp-iter \
+	i-cal-derived-parameter \
+	i-cal-derived-property \
 	$(NULL)
 	
 $(addsuffix .h, $(allFileNames)) $(addsuffix .c, $(allFileNames)):
@@ -105,6 +107,8 @@ libical_glib_1_0_la_SOURCES = \
 	i-cal-langbind.c \
 	i-cal-time-span.c \
 	i-cal-comp-iter.c \
+	i-cal-derived-parameter.c \
+	i-cal-derived-property.c \
 	$(NULL)
 
 privinclude_HEADERS = \

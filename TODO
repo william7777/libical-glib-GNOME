@@ -30,6 +30,11 @@ Detailed plan:
 -test compiter
 -Convert all translator_args to owner_op or native_op for parameter
 
+-Ignore all functions like icalproperty* icalproperty_vanew_acknowledged(struct icaltimetype v, ...);
+
+-Use dependers to remove the hassles
+string_property.remove_parameter (ICalGLib.ParameterKind.ALTREP_PARAMETER);
+
 
 CHECK:
 -All the getters for the bare type.

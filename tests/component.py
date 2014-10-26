@@ -49,7 +49,7 @@ event_str3 = \
     "END:VEVENT\n"
 
 event_str4 = \
-    "BEGIN:VCALENDAR\n"                                \
+    "BEGIN:VEVENT\n"                                \
     "UID:event-uid-123\n"                           \
     "SUMMARY;LANGUAGE=en-US:test4\n"                 \
     "DTSTART;TZID=Europe/Prague:20140306T090000\n"  \
@@ -87,6 +87,9 @@ def main ():
 	clone = comp.new_clone();
 	string1 = clone.as_ical_string_r ();
 	assert (string == string1);
+	assert (comp.is_valid() == 1);
+	assert (comp.isa_component() == 1);
+	assert (comp.isa() == ICalGLib.ComponentKind.VEVENT_COMPONENT);
 
 	#Test check_restrictions
 	assert (comp.check_restrictions() == 0);
@@ -97,11 +100,117 @@ def main ():
 	#Test kind_is_valid
 	assert (ICalGLib.Component.kind_is_valid (ICalGLib.ComponentKind.VEVENT_COMPONENT) == True);
 	
-	#Test string_to_kind and kind_to_string
-	kind = ICalGLib.Component.string_to_kind ("VEVENT");
-	string = ICalGLib.Component.kind_to_string (kind);
-	assert (string == "VEVENT");
+	#Test kind_to_string
+	kind_string = ICalGLib.Component.kind_to_string (ICalGLib.ComponentKind.VEVENT_COMPONENT);
+	assert (ICalGLib.Component.string_to_kind(kind_string) == ICalGLib.ComponentKind.VEVENT_COMPONENT);
 
+
+	#Test child component manipulation
+	parent = ICalGLib.Component.new_from_string (event_str1);
+	comp1 = ICalGLib.Component.new_from_string (event_str2);
+	comp2 = ICalGLib.Component.new_from_string (event_str3);
+	comp3 = ICalGLib.Component.new_from_string (event_str4);
+	comp4 = ICalGLib.Component.new_from_string (event_str5);
+
+	parent.add_component (comp1);
+	parent.add_component (comp2);
+	parent.add_component (comp3);
+	parent.add_component (comp4);
+	
+	assert parent.count_components (ICalGLib.ComponentKind.VEVENT_COMPONENT) == 3;
+	assert parent.count_components (ICalGLib.ComponentKind.VCALENDAR_COMPONENT) == 1;
+	
+	#Traverse with internal API.
+	count = parent.count_components (ICalGLib.ComponentKind.VEVENT_COMPONENT);
+	child_component = parent.get_first_component (ICalGLib.ComponentKind.VEVENT_COMPONENT);
+	for i in range(0, count):
+		prefix = "test"
+		index = i+2;
+		assert (child_component.get_summary() == prefix + str(index));
+		if (i != count-1):
+			child_component = parent.get_next_component (ICalGLib.ComponentKind.VEVENT_COMPONENT);
+	
+	#Traverse with external API.
+	iter = parent.begin_component (ICalGLib.ComponentKind.VEVENT_COMPONENT);	
+	child_component = iter.deref();	
+	child_component.set_owner (parent);
+	for i in range(0, count):
+		prefix = "test"
+		index = i+2;
+		assert (child_component.get_summary() == prefix + str(index));
+		if (i != count-1):
+			child_component = iter.next();
+			child_component.set_owner (parent);
+	
+	iter = parent.end_component (ICalGLib.ComponentKind.VEVENT_COMPONENT);	
+	child_component = iter.prior();	
+	child_component.set_owner (parent);
+	for i in range(0, count):
+		prefix = "test"
+		index = count+1-i;
+		assert (child_component.get_summary() == prefix + str(index));
+		if (i != count-1):
+			child_component = iter.prior();
+			child_component.set_owner (parent);
+			
+	#Traverse and remove with external API.		
+	iter = parent.begin_component (ICalGLib.ComponentKind.VEVENT_COMPONENT);	
+	child_component = iter.deref();
+	for i in range(0, count):
+		if (i != count-1):
+			iter.next();
+		parent.remove_component (child_component);
+		if (i != count-1):
+			child_component = iter.deref();
+	assert parent.count_components (ICalGLib.ComponentKind.VEVENT_COMPONENT) == 0;		
+
+	
+	
+	#Test property mainpulation
+	property_string = "SUMMARY:Bastille Day Party";
+	string_property=ICalGLib.Property.new_from_string (property_string);
+	component = ICalGLib.Component.new(ICalGLib.ComponentKind.VEVENT_COMPONENT);
+	component.add_property (string_property);
+	assert (component.count_properties(ICalGLib.PropertyKind.SUMMARY_PROPERTY) == 1);
+	component.remove_property (string_property);
+	assert (component.count_properties(ICalGLib.PropertyKind.SUMMARY_PROPERTY) == 0);
+	
+	component.add_property (string_property);
+	property_string2 = "SUMMARY:event-uid-123";
+	string_property2=ICalGLib.Property.new_from_string (property_string2);
+	component.add_property (string_property2);
+	component.add_property (ICalGLib.Property.new_from_string("SUMMARY:20140306T090000"));
+	assert (component.count_properties(ICalGLib.PropertyKind.SUMMARY_PROPERTY) == 3);
+	property1 = component.get_first_property(ICalGLib.PropertyKind.SUMMARY_PROPERTY);
+	assert (property1.as_ical_string_r().split('\n', 1)[0] == "SUMMARY:Bastille Day Party\r");
+	property2 = component.get_next_property(ICalGLib.PropertyKind.SUMMARY_PROPERTY);
+	assert (property2.as_ical_string_r().split('\n', 1)[0] == "SUMMARY:event-uid-123\r");
+	property3 = component.get_next_property(ICalGLib.PropertyKind.SUMMARY_PROPERTY);
+	assert (property3.as_ical_string_r().split('\n', 1)[0] == "SUMMARY:20140306T090000\r");
+	
+	
+	#Test getters and setters
+	#Test get_dtstart and get_dtend
+	comp = ICalGLib.Component.new_from_string (event_str1);
+	dtstart = comp.get_dtstart ();
+	start_string = ICalGLib.time_as_ical_string_r (dtstart);
+	assert (start_string == "20140306T090000");
+	dtend = comp.get_dtend();
+	end_string = ICalGLib.time_as_ical_string_r (dtend);
+	assert (end_string == "20140306T093000");
+	
+	#Test span
+	span = comp.get_span();
+	assert (span.get_start() == 1394096400);
+	assert (span.get_end() == 1394098200);
+	assert (span.is_busy() == 1);
+	comp.set_dtstart (ICalGLib.time_from_timet(1494096400, 0));
+	comp.set_dtend (ICalGLib.time_from_timet(1494098200, 0));
+	span = comp.get_span();
+	assert (span.get_start() == 1494096400);
+	assert (span.get_end() == 1494098200);
+	assert (span.is_busy() == 1);
+	
 	#Test set_summary/get_summary
 	assert (comp.get_summary () == "test1");
 	comp.set_summary ("newSummary");
@@ -136,47 +245,11 @@ def main ():
 	assert (comp.get_sequence () == 0);
 	comp.set_sequence (5);
 	assert (comp.get_sequence () == 5);
-
-
-	#Test add_component
-	parent = ICalGLib.Component.new_from_string (event_str1);
-	comp1 = ICalGLib.Component.new_from_string (event_str1);
-	comp2 = ICalGLib.Component.new_from_string (event_str2);
-	comp3 = ICalGLib.Component.new_from_string (event_str3);
-	comp4 = ICalGLib.Component.new_from_string (event_str4);
-	comp5 = ICalGLib.Component.new_from_string (event_str5);
-
-	parent.add_component (comp1);
-	parent.add_component (comp2);
-	parent.add_component (comp3);
-	parent.add_component (comp4);
-	parent.add_component (comp5);
-
-	real = parent.get_first_real_component();
-	comp1_string = comp1.as_ical_string_r ();
-	real_string = real.as_ical_string_r ();
-	assert (comp1_string == real_string);
-
-	#Test count_components
-	assert (parent.count_components(ICalGLib.ComponentKind.VEVENT_COMPONENT) == 3);
-
-	#Test get_first_component and get_next_component
-	comp = parent.get_first_component (ICalGLib.ComponentKind.VEVENT_COMPONENT);
-
-	#Test get_dtstart and get_dtend
-	comp = parent.get_first_component (ICalGLib.ComponentKind.VEVENT_COMPONENT);
-	dtstart = comp.get_dtstart ();
-	start_string = ICalGLib.time_as_ical_string_r (dtstart);
-	assert (start_string == "20140306T090000");
-	dtend = comp.get_dtend();
-	end_string = ICalGLib.time_as_ical_string_r (dtend);
-	assert (end_string == "20140306T093000");
 	
-	#Test merge_component
-	comp4_string = comp4.as_ical_string_r();
-	comp4.merge_component (comp5);
-	assert (comp4.as_ical_string_r() == comp4_string);
-	assert (comp5.as_ical_string_r() == None);
+	
+	
+	
+	
 
 	
 

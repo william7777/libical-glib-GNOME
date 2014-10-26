@@ -31,6 +31,8 @@ EXTRA_DIST =  \
 	i-cal-langbind.xml \
 	i-cal-time-span.xml \
 	i-cal-comp-iter.xml \
+	i-cal-derived-parameter.xml \
+	i-cal-derived-property.xml \
 	$(NULL)
 
 -include $(top_srcdir)/git.mk

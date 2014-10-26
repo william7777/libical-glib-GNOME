@@ -164,7 +164,9 @@ am_libical_glib_1_0_la_OBJECTS = libical_glib_1_0_la-i-cal-object.lo \
 	libical_glib_1_0_la-i-cal-unknowntokenhandling.lo \
 	libical_glib_1_0_la-i-cal-langbind.lo \
 	libical_glib_1_0_la-i-cal-time-span.lo \
-	libical_glib_1_0_la-i-cal-comp-iter.lo $(am__objects_1)
+	libical_glib_1_0_la-i-cal-comp-iter.lo \
+	libical_glib_1_0_la-i-cal-derived-parameter.lo \
+	libical_glib_1_0_la-i-cal-derived-property.lo $(am__objects_1)
 libical_glib_1_0_la_OBJECTS = $(am_libical_glib_1_0_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -422,6 +424,8 @@ allFileNames = \
 	i-cal-langbind \
 	i-cal-time-span \
 	i-cal-comp-iter \
+	i-cal-derived-parameter \
+	i-cal-derived-property \
 	$(NULL)
 
 lib_LTLIBRARIES = libical-glib-1.0.la
@@ -480,6 +484,8 @@ libical_glib_1_0_la_SOURCES = \
 	i-cal-langbind.c \
 	i-cal-time-span.c \
 	i-cal-comp-iter.c \
+	i-cal-derived-parameter.c \
+	i-cal-derived-property.c \
 	$(NULL)
 
 privinclude_HEADERS = \
@@ -621,6 +627,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-comp-iter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-component.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-datetimeperiod-type.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-derived-parameter.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-derived-property.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-derived-value.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-duration-type.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libical_glib_1_0_la-i-cal-enums.Plo@am__quote@
@@ -893,6 +901,20 @@ libical_glib_1_0_la-i-cal-comp-iter.lo: i-cal-comp-iter.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='i-cal-comp-iter.c' object='libical_glib_1_0_la-i-cal-comp-iter.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libical_glib_1_0_la-i-cal-comp-iter.lo `test -f 'i-cal-comp-iter.c' || echo '$(srcdir)/'`i-cal-comp-iter.c
+
+libical_glib_1_0_la-i-cal-derived-parameter.lo: i-cal-derived-parameter.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libical_glib_1_0_la-i-cal-derived-parameter.lo -MD -MP -MF $(DEPDIR)/libical_glib_1_0_la-i-cal-derived-parameter.Tpo -c -o libical_glib_1_0_la-i-cal-derived-parameter.lo `test -f 'i-cal-derived-parameter.c' || echo '$(srcdir)/'`i-cal-derived-parameter.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libical_glib_1_0_la-i-cal-derived-parameter.Tpo $(DEPDIR)/libical_glib_1_0_la-i-cal-derived-parameter.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='i-cal-derived-parameter.c' object='libical_glib_1_0_la-i-cal-derived-parameter.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libical_glib_1_0_la-i-cal-derived-parameter.lo `test -f 'i-cal-derived-parameter.c' || echo '$(srcdir)/'`i-cal-derived-parameter.c
+
+libical_glib_1_0_la-i-cal-derived-property.lo: i-cal-derived-property.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libical_glib_1_0_la-i-cal-derived-property.lo -MD -MP -MF $(DEPDIR)/libical_glib_1_0_la-i-cal-derived-property.Tpo -c -o libical_glib_1_0_la-i-cal-derived-property.lo `test -f 'i-cal-derived-property.c' || echo '$(srcdir)/'`i-cal-derived-property.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libical_glib_1_0_la-i-cal-derived-property.Tpo $(DEPDIR)/libical_glib_1_0_la-i-cal-derived-property.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='i-cal-derived-property.c' object='libical_glib_1_0_la-i-cal-derived-property.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libical_glib_1_0_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libical_glib_1_0_la-i-cal-derived-property.lo `test -f 'i-cal-derived-property.c' || echo '$(srcdir)/'`i-cal-derived-property.c
 
 mostlyclean-libtool:
 	-rm -f *.lo

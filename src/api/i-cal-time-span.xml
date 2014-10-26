@@ -1,2 +1,63 @@
 <structure namespace="ICal" name="TimeSpan" native="struct icaltime_span" is_bare="true" default_native="icaltime_span_new (i_cal_timetype_new_default (), i_cal_timetype_new_default (), 0)" includes="i-cal-timetype">
+	<method name="i_cal_time_span_get_start" corresponds="CUSTOM" kind="get" since="1.0">
+		<parameter type="ICalTimeSpan *" name="timespan" comment="The #ICalTimeSpan to be queried."/>
+        <returns type="time_t" comment="The start." />
+        <comment xml:space="preserve">Get the start of #ICalTimeSpan.</comment>
+        <custom>	g_return_val_if_fail (timespan != NULL, 0);
+	return ((struct icaltime_span *)i_cal_object_get_native ((ICalObject *)timespan))->start;</custom>
+    </method>
+    <method name="i_cal_time_span_set_start" corresponds="CUSTOM" kind="set" since="1.0">
+		<parameter type="ICalTimeSpan *" name="timespan" comment="The #ICalTimeSpan to be set."/>
+        <parameter type="time_t" name="start" comment="The start." />
+        <comment xml:space="preserve">Set the start of #ICalTimeSpan.</comment>
+        <custom>	g_return_if_fail (timespan != NULL);
+	((struct icaltime_span *)i_cal_object_get_native ((ICalObject *)timespan))->start = start;</custom>
+    </method>
+    <method name="i_cal_time_span_get_end" corresponds="CUSTOM" kind="get" since="1.0">
+		<parameter type="ICalTimeSpan *" name="timespan" comment="The #ICalTimeSpan to be queried."/>
+        <returns type="time_t" comment="The end." />
+        <comment xml:space="preserve">Get the end of #ICalTimeSpan.</comment>
+        <custom>	g_return_val_if_fail (timespan != NULL, 0);
+	return ((struct icaltime_span *)i_cal_object_get_native ((ICalObject *)timespan))->end;</custom>
+    </method>
+    <method name="i_cal_time_span_set_end" corresponds="CUSTOM" kind="set" since="1.0">
+		<parameter type="ICalTimeSpan *" name="timespan" comment="The #ICalTimeSpan to be set."/>
+        <parameter type="time_t" name="end" comment="The end." />
+        <comment xml:space="preserve">Set the end of #ICalTimeSpan.</comment>
+        <custom>	g_return_if_fail (timespan != NULL);
+	((struct icaltime_span *)i_cal_object_get_native ((ICalObject *)timespan))->end = end;</custom>
+    </method>
+    <method name="i_cal_time_span_is_busy" corresponds="CUSTOM" kind="get" since="1.0">
+		<parameter type="ICalTimeSpan *" name="timespan" comment="The #ICalTimeSpan to be queried."/>
+        <returns type="gint" comment="The is_busy." />
+        <comment xml:space="preserve">Get the is_busy of #ICalTimeSpan.</comment>
+        <custom>	g_return_val_if_fail (timespan != NULL, 0);
+	return ((struct icaltime_span *)i_cal_object_get_native ((ICalObject *)timespan))->is_busy;</custom>
+    </method>
+    <method name="i_cal_time_span_set_is_busy" corresponds="CUSTOM" kind="set" since="1.0">
+		<parameter type="ICalTimeSpan *" name="timespan" comment="The #ICalTimeSpan to be set."/>
+        <parameter type="gint" name="is_busy" comment="The is_busy." />
+        <comment xml:space="preserve">Set the is_busy of #ICalTimeSpan.</comment>
+        <custom>	g_return_if_fail (timespan != NULL);
+	((struct icaltime_span *)i_cal_object_get_native ((ICalObject *)timespan))->is_busy = is_busy;</custom>
+    </method>
+    <method name="i_cal_time_span_new" corresponds="icaltime_span_new" kind="constructor" since="1.0">
+    	<parameter type="ICalTimetype *" name="dtstart" comment="The start of #ICalTimeSpan"/>
+    	<parameter type="ICalTimetype *" name="dtend" comment="The end of #ICalTimeSpan"/>
+    	<parameter type="gint" name="is_busy" comment="Whether this span is busy"/>
+    	<returns type="ICalTimeSpan *" annotation="transfer full" comment="The newly create #ICalTimeSpan"/>
+    	<comment xml:space="preserve">Create a new #ICalTimeSpan.</comment>
+    </method>
+    <method name="i_cal_time_span_overlaps" corresponds="icaltime_span_overlaps" kind="other" since="1.0">
+    	<parameter type="ICalTimeSpan *" name="s1" native_op="POINTER" comment="The first #ICalTimeSpan"/>
+    	<parameter type="ICalTimeSpan *" name="s2" native_op="POINTER" comment="The second #ICalTimeSpan"/>
+    	<returns type="gint" comment="Whether these two span are overlapped."/>
+    	<comment xml:space="preserve">Check whether two spans overlap.</comment>
+    </method>
+    <method name="i_cal_time_span_contains" corresponds="icaltime_span_contains" kind="other" since="1.0">
+    	<parameter type="ICalTimeSpan *" name="s" native_op="POINTER" comment="The test #ICalTimeSpan"/>
+    	<parameter type="ICalTimeSpan *" name="container" native_op="POINTER" comment="The target container of #ICalTimeSpan"/>
+    	<returns type="gint" comment="Whether one #ICalTimeSpan is contained in another #ICalTimeSpan."/>
+    	<comment xml:space="preserve">Check whether one #ICalTimeSpan is contained in another #ICalTimeSpan.</comment>
+    </method>
 </structure>

@@ -376,7 +376,7 @@ get_source_method_proto_new_full (Structure *structure)
 	Method *new_full;
 	gchar *res;
 	
-	g_return_if_fail (structure != NULL);
+	g_return_val_if_fail (structure != NULL, NULL);
 	
 	new_full = method_new();
 	upperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
@@ -429,7 +429,7 @@ get_source_method_proto_set_owner (Structure *structure)
 	Method *set_owner;
 	gchar *res;
 	
-	g_return_if_fail (structure != NULL);
+	g_return_val_if_fail (structure != NULL, NULL);
 	upperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
 	lowerSnake = get_lower_snake_from_upper_camel (upperCamel);
 	set_owner = method_new();
@@ -464,7 +464,7 @@ get_source_method_proto_set_native (Structure *structure)
 	Method *set_native;
 	gchar *res;
 	
-	g_return_if_fail (structure != NULL);
+	g_return_val_if_fail (structure != NULL, NULL);
 	upperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
 	lowerSnake = get_lower_snake_from_upper_camel (upperCamel);
 	set_native = method_new();
@@ -497,7 +497,7 @@ get_source_method_proto_set_is_global (Structure *structure)
 	Method *set_is_global;
 	gchar *res;
 	
-	g_return_if_fail (structure != NULL);
+	g_return_val_if_fail (structure != NULL, NULL);
 	upperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
 	lowerSnake = get_lower_snake_from_upper_camel (upperCamel);
 	set_is_global = method_new();
@@ -530,7 +530,7 @@ get_source_method_proto_set_property (Structure *structure)
 	Method *set_property;
 	gchar *res;
 	
-	g_return_if_fail (structure != NULL);
+	g_return_val_if_fail (structure != NULL, NULL);
 	upperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
 	lowerSnake = get_lower_snake_from_upper_camel (upperCamel);
 	g_free (upperCamel);
@@ -576,7 +576,7 @@ get_source_method_proto_get_property (Structure *structure)
 	Method *get_property;
 	gchar *res;
 	
-	g_return_if_fail (structure != NULL);
+	g_return_val_if_fail (structure != NULL, NULL);
 	upperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
 	lowerSnake = get_lower_snake_from_upper_camel (upperCamel);
 	g_free (upperCamel);
@@ -1442,10 +1442,18 @@ get_source_method_body (Method *method, const gchar *nameSpace)
 		/* TODO: Change the translatorArgus in Parameter to parent */
 		for (iter = g_list_first (method->parameters); iter != NULL; iter = g_list_next (iter)) {
 			parameter = (Parameter *)iter->data;
-			if (g_strcmp0 (parameter->owner_op, "REMOVE") == 0) {
-				g_stpcpy (buffer + strlen (buffer), "\ti_cal_object_remove_owner (I_CAL_OBJECT (");
-				g_stpcpy (buffer + strlen (buffer), parameter->name);
-				g_stpcpy (buffer + strlen (buffer), "));\n");
+			if (parameter->owner_op != NULL) {
+				if (g_strcmp0 (parameter->owner_op, "REMOVE") == 0) {
+					g_stpcpy (buffer + strlen (buffer), "\ti_cal_object_remove_owner (I_CAL_OBJECT (");
+					g_stpcpy (buffer + strlen (buffer), parameter->name);
+					g_stpcpy (buffer + strlen (buffer), "));\n");
+				} else {
+					g_stpcpy (buffer + strlen (buffer), "\ti_cal_object_set_owner ((ICalObject *)");
+					g_stpcpy (buffer + strlen (buffer), parameter->name);
+					g_stpcpy (buffer + strlen (buffer), ", (GObject *)");
+					g_stpcpy (buffer + strlen (buffer), (gchar *)parameter->owner_op);
+					g_stpcpy (buffer + strlen (buffer), ");\n");
+				}
 			} else if (parameter->translatorArgus != NULL) {
 				g_stpcpy (buffer + strlen (buffer), "\ti_cal_object_set_owner ((ICalObject *)");
 				g_stpcpy (buffer + strlen (buffer), parameter->name);
@@ -1593,7 +1601,7 @@ get_source_method_checkers (Method *method)
 	gchar *checker;
 	Parameter *para;
 	
-	g_return_if_fail (method != NULL);
+	g_return_val_if_fail (method != NULL, NULL);
 
 	buffer = g_new (gchar, BUFFER_SIZE);	
 	*buffer = '\0';
@@ -1626,7 +1634,7 @@ get_source_method_checker (Parameter *para, Ret *ret)
 	gchar *lowerSnake;	
 	gchar *assert;
 	
-	g_return_if_fail (para != NULL);
+	g_return_val_if_fail (para != NULL, NULL);
 	
 	isNullable = FALSE;
 	needReturn = FALSE;
@@ -1675,7 +1683,7 @@ get_true_type (const gchar *type)
 	gchar *res;	
 	const gchar *constPrefix;
 	
-	g_return_if_fail (type != NULL);
+	g_return_val_if_fail (type != NULL, NULL);
 	
 	i = 0;
 	start = 0;
@@ -1950,7 +1958,7 @@ static gint generate_library (gint count, char **fileNames) {
 	GList *iter_list;
 	gint iter_general;
 	
-	g_return_if_fail (count >= 0);
+	g_return_val_if_fail (count >= 0, 1);
 	
 	buffer = g_new (gchar, BUFFER_SIZE);
 	*buffer = '\0';

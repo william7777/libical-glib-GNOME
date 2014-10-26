@@ -476,7 +476,7 @@ i_cal_object_remove_owner (ICalObject *iobject)
 {
 	GObject *owner;
 
-	g_return_val_if_fail (I_CAL_IS_OBJECT (iobject), NULL);
+	g_return_if_fail (I_CAL_IS_OBJECT (iobject));
 
 	LOCK_PROPS (iobject);
 

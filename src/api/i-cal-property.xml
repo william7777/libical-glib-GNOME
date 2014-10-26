@@ -19,7 +19,7 @@
         <returns type="const gchar *" annotation="transfer full" comment="The string representation of @prop."/>
         <comment xml:space="preserve">Convert a #ICalProperty to a string representation.</comment>
     </method>
-    <method name="i_cal_property_free" corresponds="icalproperty_free" kind="destructor" since="1.0">
+    <method name="i_cal_property_free" corresponds="icalproperty_free" annotation="skip" kind="destructor" since="1.0">
         <parameter type="ICalProperty *" name="prop" annotation="transfer full" comment="The #ICalProperty to be freed."/>
         <comment xml:space="preserve">Free a #ICalProperty.</comment>
     </method>
@@ -35,12 +35,12 @@
     </method>
     <method name="i_cal_property_add_parameter" corresponds="icalproperty_add_parameter" since="1.0">
         <parameter type="ICalProperty *" name="prop" comment="The #ICalProperty to be set."/>
-        <parameter type="ICalParameter *" name="parameter" annotation="transfer full" native_op="STEAL" comment="The parameter to be added into @prop."/>
+        <parameter type="ICalParameter *" name="parameter" annotation="transfer full" owner_op="prop" comment="The parameter to be added into @prop."/>
         <comment xml:space="preserve">Add a #ICalParameter into the #ICalProperty. It behaves like set the copy of the #ICalParameter. Upon completion the native part of #ICalParameter will be set to NULL.</comment>
     </method>
     <method name="i_cal_property_set_parameter" corresponds="icalproperty_set_parameter" since="1.0">
         <parameter type="ICalProperty *" name="prop" comment="The #ICalProperty to be set."/>
-        <parameter type="ICalParameter *" name="parameter" annotation="transfer full" native_op="STEAL" comment="The parameter to be set into @prop."/>
+        <parameter type="ICalParameter *" name="parameter" annotation="transfer full" owner_op="prop" comment="The parameter to be set into @prop."/>
         <comment xml:space="preserve">Set a #ICalParameter into the #ICalProperty. It behaves like set the copy of the #ICalParameter. Upon completion the native part of #ICalParameter will be set to NULL.</comment>
     </method>
     <method name="i_cal_property_set_parameter_from_string" corresponds="icalproperty_set_parameter_from_string" since="1.0">
@@ -83,18 +83,18 @@
     <method name="i_cal_property_get_first_parameter" corresponds="icalproperty_get_first_parameter" since="1.0">
         <parameter type="ICalProperty *" name="prop" comment="The #ICalProperty to be queried."/>
         <parameter type="ICalParameterKind" name="kind" comment="The target kind of #ICalParameter to be retrieved."/>
-        <returns type="ICalParameter *" annotation="transfer full" comment="The first #ICalPrameter of @prop."/>
+        <returns type="ICalParameter *" annotation="transfer full" translator_argus="(GObject *)prop" comment="The first #ICalPrameter of @prop."/>
         <comment xml:space="preserve">Get the first #ICalParameter from the parent #ICalProperty.</comment>
     </method>
     <method name="i_cal_property_get_next_parameter" corresponds="icalproperty_get_next_parameter" since="1.0">
         <parameter type="ICalProperty *" name="prop" comment="The #ICalProperty to be queried."/>
         <parameter type="ICalParameterKind" name="kind" comment="The target kind of #ICalParameter to be retrieved."/>
-        <returns type="ICalParameter *" annotation="transfer full" comment="The next #ICalPrameter of @prop."/>
+        <returns type="ICalParameter *" annotation="transfer full" translator_argus="(GObject *)prop" comment="The next #ICalPrameter of @prop."/>
         <comment xml:space="preserve">Get the next #ICalParameter from the parent #ICalProperty.</comment>
     </method>
     <method name="i_cal_property_set_value" corresponds="icalproperty_set_value" since="1.0">
         <parameter type="ICalProperty *" name="prop" translator_argus="value" comment="The target #ICalProperty."/>
-        <parameter type="ICalValue *" name="value" comment="The #ICalValue will be set as the property of @prop."/>
+        <parameter type="ICalValue *" name="value" owner_op="prop" comment="The #ICalValue will be set as the property of @prop."/>
         <comment xml:space="preserve">Set the #ICalProperty with the #ICalValue.</comment>
     </method>
     <method name="i_cal_property_set_value_from_string" corresponds="icalproperty_set_value_from_string" since="1.0">
@@ -105,7 +105,7 @@
     </method>
     <method name="i_cal_property_get_value" corresponds="icalproperty_get_value" since="1.0">
         <parameter type="const ICalProperty *" name="prop" comment="The #ICalProperty to be queried."/>
-        <returns type="ICalValue *" annotation="transfer full" comment="The #ICalValue of @prop."/>
+        <returns type="ICalValue *" annotation="transfer full" translator_argus="(GObject *)prop" comment="The #ICalValue of @prop."/>
         <comment xml:space="preserve">Get the #ICalValue of #ICalProperty.</comment>
     </method>
     <method name="i_cal_property_get_value_as_string_r" corresponds="icalproperty_get_value_as_string_r" since="1.0">
