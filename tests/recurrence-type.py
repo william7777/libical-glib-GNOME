@@ -16,6 +16,31 @@ string = "COUNT=10;FREQ=DAILY";
 recurrence = ICalGLib.RecurrenceType.from_string (string);
 assert (recurrence.as_string_r() == "FREQ=DAILY;COUNT=10");
 
+by_second = recurrence.get_by_second();
+assert len(by_second) == 61;
+by_minute = recurrence.get_by_minute();
+assert len(by_minute) == 61;
+by_hour = recurrence.get_by_hour();
+assert len(by_hour) == 25;
+by_day = recurrence.get_by_day();
+assert len(by_day) == 364;
+by_month_day = recurrence.get_by_month_day();
+assert len(by_month_day) == 32;
+by_year_day = recurrence.get_by_year_day();
+assert len(by_year_day) == 367;
+by_week_no = recurrence.get_by_week_no();
+assert len(by_week_no) == 54;
+by_month = recurrence.get_by_month();
+assert len(by_month) == 13;
+by_set_pos = recurrence.get_by_set_pos();
+assert len(by_set_pos) == 367;
+
+recurrence.set_by_second(0, 1);
+by_second = recurrence.get_by_second();
+assert by_second[0] == 1;
+
+recurrence = ICalGLib.RecurrenceType.from_string (string);
+
 assert (ICalGLib.recur_string_to_weekday ("MO") == ICalGLib.RecurrenceTypeWeekday.MONDAY_WEEKDAY);
 
 start = 100000;
