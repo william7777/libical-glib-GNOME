@@ -14,7 +14,7 @@
         <custom>	g_return_val_if_fail (geo_type != NULL, 0);
 	return ((struct icalgeotype *)i_cal_object_get_native ((ICalObject *)geo_type))->lat;</custom>
     </method>
-    <method name="i_cal_geo_type_set_lat" corresponds="CUSTOM" kind="set" sinec="1.0">
+    <method name="i_cal_geo_type_set_lat" corresponds="CUSTOM" kind="set" since="1.0">
     	<parameter type="ICalGeoType *" name="geo_type" comment="The #ICalGeoType to be set."/>
         <parameter type="gdouble" name="lat" comment="The lat."/>
         <comment>Set the lat of #ICalGeoType.</comment>
@@ -28,7 +28,7 @@
         <custom>	g_return_val_if_fail (geo_type != NULL, 0);
 	return ((struct icalgeotype *)i_cal_object_get_native ((ICalObject *)geo_type))->lon;</custom>
     </method>
-    <method name="i_cal_geo_type_set_lon" corresponds="CUSTOM" kind="set" sinec="1.0">
+    <method name="i_cal_geo_type_set_lon" corresponds="CUSTOM" kind="set" since="1.0">
     	<parameter type="ICalGeoType *" name="geo_type" comment="The #ICalGeoType to be set."/>
         <parameter type="gdouble" name="lon" comment="The lon."/>
         <comment>Set the lon of #ICalGeoType.</comment>

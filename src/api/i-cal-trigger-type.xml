@@ -19,4 +19,34 @@
         <returns type="gint" comment="1 if yes, 0 if not."/>
         <comment xml:space="preserve">Check if a #ICalTriggerType is a bad trigger.</comment>
     </method>
+    <method name="i_cal_trigger_type_get_time" corresponds="CUSTOM" kind="get" since="1.0">
+    	<parameter type="ICalTriggerType *" name="trigger" comment="The #ICalTriggerType."/>
+        <returns type="ICalTimetype *" annotation="transfer full" comment="The time of #ICalTriggerType."/>
+        <comment>Get the time from #ICalTriggerType.</comment>
+        <custom>	g_return_val_if_fail (trigger != NULL &amp;&amp; I_CAL_IS_TRIGGER_TYPE (trigger), NULL);
+	return i_cal_timetype_new_full (((struct icaltriggertype *)i_cal_object_get_native ((ICalObject *)trigger))->time);</custom>
+    </method>
+    <method name="i_cal_trigger_type_set_time" corresponds="CUSTOM" kind="set" since="1.0">
+    	<parameter type="ICalTriggerType *" name="trigger" comment="The #ICalTriggerType."/>
+        <parameter type="ICalTimetype *" name="time" comment="The time of #ICalTriggerType."/>
+        <comment>Set the time from #ICalTriggerType.</comment>
+        <custom>	g_return_if_fail (trigger != NULL &amp;&amp; I_CAL_IS_TRIGGER_TYPE (trigger));
+    g_return_if_fail (time != NULL &amp;&amp; I_CAL_IS_TIMETYPE (time));
+	((struct icaltriggertype *)i_cal_object_get_native ((ICalObject *)trigger))->time = *(struct icaltimetype *)i_cal_object_get_native ((ICalObject *)time);</custom>
+    </method>
+    <method name="i_cal_trigger_type_get_duration" corresponds="CUSTOM" kind="get" since="1.0">
+    	<parameter type="ICalTriggerType *" name="trigger" comment="The #ICalTriggerType."/>
+        <returns type="ICalDurationType *" annotation="transfer full" comment="The duration of #ICalTriggerType."/>
+        <comment>Get the duration from #ICalTriggerType.</comment>
+        <custom>	g_return_val_if_fail (trigger != NULL &amp;&amp; I_CAL_IS_TRIGGER_TYPE (trigger), NULL);
+	return i_cal_duration_type_new_full (((struct icaltriggertype *)i_cal_object_get_native ((ICalObject *)trigger))->duration);</custom>
+    </method>
+    <method name="i_cal_trigger_type_set_duration" corresponds="CUSTOM" kind="set" since="1.0">
+    	<parameter type="ICalTriggerType *" name="trigger" comment="The #ICalTriggerType."/>
+        <parameter type="ICalDurationType *" name="duration" comment="The duration of #ICalTriggerType."/>
+        <comment>Set the duration from #ICalTriggerType.</comment>
+        <custom>	g_return_if_fail (trigger != NULL &amp;&amp; I_CAL_IS_TRIGGER_TYPE (trigger));
+    g_return_if_fail (duration != NULL &amp;&amp; I_CAL_IS_DURATION_TYPE (duration));
+	((struct icaltriggertype *)i_cal_object_get_native ((ICalObject *)trigger))->duration = *(struct icaldurationtype *)i_cal_object_get_native ((ICalObject *)duration);</custom>
+    </method>
 </structure>

@@ -1,4 +1,4 @@
-<structure namespace="ICal" name="Parameter" native="icalparameter">
+<structure namespace="ICal" name="Parameter" native="icalparameter" destroy_func="icalparameter_free">
     <method name="i_cal_parameter_new" corresponds="icalparameter_new" kind="constructor" since="1.0">
         <parameter type="ICalParameterKind" name="v" comment="The type of #ICalParameter to be created"/>
         <returns type="ICalParameter *" annotation="transfer full" comment="The newly created #ICalParameter." />
