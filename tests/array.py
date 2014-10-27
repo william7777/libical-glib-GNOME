@@ -49,9 +49,21 @@ array.remove_element_at (2);
 e3 = array.element_at(2);
 assert (element4 == e3);
 
+attach1 = ICalGLib.Attach.new_from_url (element1);
+attach2 = ICalGLib.Attach.new_from_url (element2);
+attach3 = ICalGLib.Attach.new_from_url (element3);
+attach4 = ICalGLib.Attach.new_from_url (element4);
+attach5 = ICalGLib.Attach.new_from_url (element5);
+
 def my_cmp(a, b): 
-    print('my_cmp(%r, %r)' % (a, b));
-    return cmp(a, b)
+    print a.get_url();
+    print b.get_url();
+    return cmp(a.get_url(), b.get_url());
+   
+array = ICalGLib.Array.new(10000, 10000);
+array.append (attach1);
+array.append (attach2);
+array.append (attach3);
 
 #TEST SORT
 #ICalGLib.Array.sort (array, my_cmp);
