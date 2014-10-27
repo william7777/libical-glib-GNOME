@@ -15,6 +15,11 @@
 	timetype.zone = NULL;
 	return timetype;</custom>
     </method>
+    <method name="i_cal_timetype_new" corresponds="CUSTOM" kind="constructor" since="1.0">
+		<returns type="ICalTimetype *" annotation="transfer full" comment="The newly created #ICalTimetype. It is the epoch time (19700-1-1 00:00:00 utc)" />
+        <comment xml:space="preserve">Create a new #ICalTimetype.</comment>
+        <custom>	return i_cal_timetype_new_full (i_cal_timetype_new_default());</custom>
+    </method>
 	<method name="i_cal_timetype_get_year" corresponds="CUSTOM" kind="get" since="1.0">
 		<parameter type="ICalTimetype *" name="timetype" comment="The #ICalTimetype to be queried."/>
         <returns type="gint" comment="The year."/>

@@ -1,14 +1,15 @@
 <structure namespace="ICal" name="Array" native="icalarray" destroy_func="icalarray_free">
-	<method name="i_cal_array_compare" corresponds="CUSTOM" since="1.0">
-		<parameter type="const gchar *" annotation="allow-none" name="str1" comment="string 1"/>
-		<parameter type="const gchar *" annotation="allow-none" name="str2" comment="string 2"/>
-		<returns type="gint" comment="The compare result"/>
-		<comment xml:space="preserve">Compare two strings.</comment>
-        <custom >	if (str1 == NULL &amp;&amp; str2 == NULL)	return 0;
-	if (str1 == NULL)	return -1;
-	if (str2 == NULL)	return 1;
-    printf ("compare %s and %s\n", str1, str2); fflush (NULL);
-	return g_strcmp0 (str1, str2);</custom>
+	<method name="i_cal_array_size" corresponds="CUSTOM" kind="other" since="1.0">
+		<parameter type="ICalArray *" name="array" comment="The #ICalArray"/>
+		<returns type="gint" comment="The size of current array."/>
+		<comment>Get the size of the array.</comment>
+		<custom>	icalarray *native;
+	gint ret;
+	g_return_val_if_fail (array != NULL &amp;&amp; I_CAL_IS_ARRAY (array), -1);
+	native = i_cal_object_get_native ((ICalObject *)array);
+	ret = native->num_elements;
+	native = NULL;
+	return ret;</custom>
 	</method>
     <method name="i_cal_array_new" corresponds="icalarray_new" kind="constructor" since="1.0">
         <parameter type="gint" name="element_size" comment="The size of the element of the array"/>

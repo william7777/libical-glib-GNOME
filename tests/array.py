@@ -56,8 +56,6 @@ attach4 = ICalGLib.Attach.new_from_url (element4);
 attach5 = ICalGLib.Attach.new_from_url (element5);
 
 def my_cmp(a, b): 
-    print a.get_url();
-    print b.get_url();
     return cmp(a.get_url(), b.get_url());
    
 array = ICalGLib.Array.new(10000, 10000);

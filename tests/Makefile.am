@@ -13,6 +13,7 @@ TESTS =  \
 	period-type.py \
 	property.py \
 	recurrence-type.py \
+	timezone.py \
 	$(NULL)
 
 TESTS_ENVIRONMENT = . $(abs_top_srcdir)/tests/tests-env.sh "$(abs_top_builddir)/src/libical-glib/" "$(abs_top_builddir)/src/libical-glib/.libs/";
