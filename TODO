@@ -8,7 +8,7 @@ Detailed plan:
 -Use dependers to remove the hassles
 string_property.remove_parameter (ICalGLib.ParameterKind.ALTREP_PARAMETER);
 
--Test i_cal_mime_parse
+-Test i_cal_mime_parse, i_cal_parser_parse
 
 
 CHECK:
@@ -21,6 +21,7 @@ Notes:
 	icalproperty* icalproperty_vanew_acknowledged(struct icaltimetype v, ...);
 	icalcomponent* icalcomponent_vanew(icalcomponent_kind kind, ...);
 	icalproperty* icalproperty_vanew_XXX(const char* v, ...);
+	void icalproperty_add_parameters(struct icalproperty_impl *prop,va_list args);
 -Ignore anything relevant to struct icalattachtype since they are only declared by never defined.
 -Ignore icalproperty_get_parent and icalproperty_get_set_parent defined in icalcomponent.c because they are only used by icalcomponent API.
 -Ignore 
@@ -61,3 +62,6 @@ Notes:
 	char* icalmime_as_mime_string(char* component);
 	
 	int icalparameter_is_valid(icalparameter* parameter);
+	
+	icalvalue*  icalparser_parse_value(icalvalue_kind kind, 
+				   	const char* str, icalcomponent** errors);

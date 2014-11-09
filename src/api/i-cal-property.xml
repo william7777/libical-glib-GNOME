@@ -184,6 +184,16 @@
         <returns type="gint" comment="The enum."/>
         <comment xml:space="preserve">Convert a integer and string into an enum.</comment>
     </method>
+    <method name="i_cal_property_string_to_status" corresponds="icalproperty_string_to_status" since="1.0">
+        <parameter type="const gchar *" name="str" comment="A string."/>
+        <returns type="ICalPropertyStatus" comment="The #ICalPropertyStatus."/>
+        <comment xml:space="preserve">Convert the string to #ICalPropertyKind.</comment>
+    </method>
+    <method name="i_cal_property_status_to_string" corresponds="icalproperty_status_to_string" since="1.0">
+        <parameter type="ICalPropertyStatus" name="method" comment="The #ICalPropertyStatus."/>
+        <returns type="const gchar *" comment="The string representation of #ICalPropertyStatus."/>
+        <comment xml:space="preserve">Convert the #ICalPropertyStatus to string.</comment>
+    </method>
     <method name="i_cal_property_enum_belongs_to_property" corresponds="icalproperty_enum_belongs_to_property" since="1.0">
         <parameter type="ICalPropertyKind" name="kind" comment="A #ICalPropertyKind"/>
         <parameter type="gint" name="e" comment="The enum to be checked."/>
