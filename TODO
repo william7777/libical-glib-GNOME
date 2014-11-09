@@ -84,3 +84,4 @@ int icaltime_compare_with_zone(const struct icaltimetype a,
         
         /** Return the number of days in this year */
 int icaltime_days_in_year (const int year);
+void icaltimezonetype_free(struct icaltimezonetype tzt);
