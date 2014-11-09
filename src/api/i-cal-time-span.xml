@@ -41,23 +41,4 @@
         <custom>	g_return_if_fail (timespan != NULL);
 	((struct icaltime_span *)i_cal_object_get_native ((ICalObject *)timespan))->is_busy = is_busy;</custom>
     </method>
-    <method name="i_cal_time_span_new" corresponds="icaltime_span_new" kind="constructor" since="1.0">
-    	<parameter type="ICalTimetype *" name="dtstart" comment="The start of #ICalTimeSpan"/>
-    	<parameter type="ICalTimetype *" name="dtend" comment="The end of #ICalTimeSpan"/>
-    	<parameter type="gint" name="is_busy" comment="Whether this span is busy"/>
-    	<returns type="ICalTimeSpan *" annotation="transfer full" comment="The newly create #ICalTimeSpan"/>
-    	<comment xml:space="preserve">Create a new #ICalTimeSpan.</comment>
-    </method>
-    <method name="i_cal_time_span_overlaps" corresponds="icaltime_span_overlaps" kind="other" since="1.0">
-    	<parameter type="ICalTimeSpan *" name="s1" native_op="POINTER" comment="The first #ICalTimeSpan"/>
-    	<parameter type="ICalTimeSpan *" name="s2" native_op="POINTER" comment="The second #ICalTimeSpan"/>
-    	<returns type="gint" comment="Whether these two span are overlapped."/>
-    	<comment xml:space="preserve">Check whether two spans overlap.</comment>
-    </method>
-    <method name="i_cal_time_span_contains" corresponds="icaltime_span_contains" kind="other" since="1.0">
-    	<parameter type="ICalTimeSpan *" name="s" native_op="POINTER" comment="The test #ICalTimeSpan"/>
-    	<parameter type="ICalTimeSpan *" name="container" native_op="POINTER" comment="The target container of #ICalTimeSpan"/>
-    	<returns type="gint" comment="Whether one #ICalTimeSpan is contained in another #ICalTimeSpan."/>
-    	<comment xml:space="preserve">Check whether one #ICalTimeSpan is contained in another #ICalTimeSpan.</comment>
-    </method>
 </structure>
