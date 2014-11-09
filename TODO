@@ -70,18 +70,25 @@ Notes:
 	                                       icalparameter_kind parameter);
 	                                       
 	                                       /** create a time from an ISO format string */
-struct icaltimetype icaltime_from_string_with_zone(const char* str,
-	const icaltimezone *zone);
-	
-	struct icaltimetype icaltime_from_week_number(const int week_number,
-	const int year);
+	struct icaltimetype icaltime_from_string_with_zone(const char* str,
+							const icaltimezone *zone);
+							
+							struct icaltimetype icaltime_from_week_number(const int week_number,
+							const int year);
+							
 	/** @brief Returns true if time is a floating time */
-int icaltime_is_floating(const struct icaltimetype t);
+	int icaltime_is_floating(const struct icaltimetype t);
 
-/** Return -1, 0, or 1 to indicate that a<b, a==b or a>b */
-int icaltime_compare_with_zone(const struct icaltimetype a,
-        const struct icaltimetype b);
+	/** Return -1, 0, or 1 to indicate that a<b, a==b or a>b */
+	int icaltime_compare_with_zone(const struct icaltimetype a,
+	        			const struct icaltimetype b);
         
         /** Return the number of days in this year */
-int icaltime_days_in_year (const int year);
-void icaltimezonetype_free(struct icaltimezonetype tzt);
+	int icaltime_days_in_year (const int year);
+	void icaltimezonetype_free(struct icaltimezonetype tzt);
+
+-ignore because of not a part of public API
+	const char *icaltzutil_get_zone_directory (void);
+	icalcomponent *icaltzutil_fetch_timezone (const char *location);
+-pvl
+-sspm
