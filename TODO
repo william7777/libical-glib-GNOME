@@ -2,41 +2,62 @@
 -Restructure the whole project so that different parts can be more decoupled.
 
 Detailed plan:
--test for i_cal_array_sort
--test for i-cal-memory (The APIs in i-cal-memory is very low level utilities. It may be not a good idea to expose them to the users) (i_cal_memory_free_buffer is tested in attach.py)
--Question: how to add a callback function which will free a heap allocated data. (i_cal_attach_new_from_data)
--test for i-cal-mime.xml
--test for i-cal-value
--icalattachtype
--i-cal-component.xml
--i-cal-langbind.xml
--i-cal-parameter.xml
--i-cal-parser.xml
--i-cal-period.xml
--i-cal-property.xml
--i-cal-recur.xml
--i-cal-recur-iterator.xml
--i-cal-restriction.xml
--i-cal-timetype.xml
--i-cal-timezone.xml
--i-cal-types.xml
--i-cal-value.xml
-
-
-
--langbind test
--types test
--test Property
--test compiter
 -Convert all translator_args to owner_op or native_op for parameter
 
--Ignore all functions like icalproperty* icalproperty_vanew_acknowledged(struct icaltimetype v, ...);
 
 -Use dependers to remove the hassles
 string_property.remove_parameter (ICalGLib.ParameterKind.ALTREP_PARAMETER);
+
+-Test i_cal_mime_parse
 
 
 CHECK:
 -All the getters for the bare type.
 -All the setters for the bare type.
 -The destroy_func is supplied for all structures.
+
+Notes:
+-Ignore all functions like 
+	icalproperty* icalproperty_vanew_acknowledged(struct icaltimetype v, ...);
+	icalcomponent* icalcomponent_vanew(icalcomponent_kind kind, ...);
+	icalproperty* icalproperty_vanew_XXX(const char* v, ...);
+-Ignore anything relevant to struct icalattachtype since they are only declared by never defined.
+-Ignore icalproperty_get_parent and icalproperty_get_set_parent defined in icalcomponent.c because they are only used by icalcomponent API.
+-Ignore 
+	/* Internal operations. They are private, and you should not be using them. */
+	icalcomponent* icalcomponent_get_parent(icalcomponent* component);
+	void icalcomponent_set_parent(icalcomponent* component, 
+				      icalcomponent* parent);
+	/** Calls the given function for each TZID parameter found in the
+	    component, and any subcomponents. */
+	void icalcomponent_foreach_tzid(icalcomponent* comp,
+					void (*callback)(icalparameter *param, void *data),
+					void *callback_data);
+					
+	void icalcomponent_foreach_recurrence(icalcomponent* comp,
+					      struct icaltimetype start,
+					      struct icaltimetype end,
+				void (*callback)(icalcomponent *comp, 
+	                                         struct icaltime_span *span, 
+	                                         void *data),
+				      void *callback_data);
+				      
+-Ignore 
+	
+	icalenum_XXX_to_string(x)
+	
+	#define icalenum_string_to_XXX(x)
+	Use original API instead.
+
+	
+-Ignore some #define in icalerror. Use original instead.
+
+-Ignore because of no definition
+	icalproperty* icallangbind_get_property(icalcomponent *c, int n, const char* prop);
+	const char* icallangbind_get_property_val(icalproperty* p);
+	const char* icallangbind_get_parameter(icalproperty *p, const char* parameter);
+	icalcomponent* icallangbind_get_component(icalcomponent *c, const char* comp);
+	
+	char* icalmime_as_mime_string(char* component);
+	
+	int icalparameter_is_valid(icalparameter* parameter);

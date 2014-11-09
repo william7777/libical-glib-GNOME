@@ -43,11 +43,6 @@
         <returns type="gint" comment="1 if yes, 0 if not."/>
         <comment xml:space="preserve">Check whether the native part of #ICalComponent is icalcomponent.</comment>
     </method>
-    <method name="i_cal_component_check_restrictions" corresponds="icalcomponent_check_restrictions" kind="other" since="1.0">
-    	<parameter type="ICalComponent *" name="comp" comment="The #ICalComponent to be checked"/>
-    	<returns type="int" comment="The number of restrictions in @comp"/>
-    	<comment xml:space="preserve">Check the number of restrictions in #ICalComponent</comment>
-    </method>
     <method name="i_cal_component_add_property" corresponds="icalcomponent_add_property" since="1.0">
         <parameter type="ICalComponent *" name="component" comment="A #ICalComponent."/>
         <parameter type="ICalProperty *" name="property" translator_argus="component" comment="A #ICalProperty."/>
@@ -107,11 +102,6 @@
         <parameter type="ICalComponent *" name="comp_to_merge" annotation="in" native_op="STEAL" comment="A #ICalComponent. After merged it will not exist any more."/>
         <comment xml:space="preserve">This takes 2 VCALENDAR components and merges the second one into the first, resolving any problems with conflicting TZIDs. comp_to_merge will no longer exist after calling this function.</comment>
     </method>
-    <method name="i_cal_component_get_first_real_component" corresponds="icalcomponent_get_first_real_component" since="1.0">
-        <parameter type="ICalComponent *" name="c" comment="A VCOMPONENT type of #ICalComponent."/>
-        <returns type="ICalComponent *" annotation="transfer full" translator_argus="(GObject *)c" comment="A reference to the first VEVENT, VTODO or VJOURNAL"/>
-        <comment xml:space="preserve">For VCOMPONENT: Return a reference to the first VEVENT, VTODO or VJOURNAL.</comment>
-    </method>
     <method name="i_cal_component_get_current_component" corresponds="icalcomponent_get_current_component" since="1.0">
         <parameter type="ICalComponent *" name="component" comment="A #ICalComponent."/>
         <returns type="ICalComponent *" annotation="transfer full" translator_argus="(GObject *)component" comment="The current #ICalComponent."/>
@@ -156,6 +146,11 @@
         <returns type="ICalComponent *" annotation="transfer full" comment="A #ICalComponent"/>
         <comment xml:space="preserve">Get the current #ICalComponent pointed by #ICalCompIter. Use #ICalCompIter when you need remove the child component from the parent. For traversing, i_cal_object_set_owner needs to be called after this API. See component.py in tests for details.</comment>
     </method>
+    <method name="i_cal_component_check_restrictions" corresponds="icalcomponent_check_restrictions" kind="other" since="1.0">
+    	<parameter type="ICalComponent *" name="comp" comment="The #ICalComponent to be checked"/>
+    	<returns type="int" comment="The number of restrictions in @comp"/>
+    	<comment xml:space="preserve">Check the number of restrictions in #ICalComponent</comment>
+    </method>
     <method name="i_cal_component_count_errors" corresponds="icalcomponent_count_errors" since="1.0">
         <parameter type="ICalComponent *" name="comp" comment="A #ICalComponent"/>
         <returns type="gint" comment="The count of errors."/>
@@ -183,6 +178,11 @@
         <parameter type="ICalComponentKind" name="kind" comment="A #ICalComponentKind."/>
         <returns type="const gchar *" annotation="transfer none" comment="The string representation of @kind."/>
         <comment xml:space="preserve">Convert a #ICalComponentKind to a string.</comment>
+    </method>
+    <method name="i_cal_component_get_first_real_component" corresponds="icalcomponent_get_first_real_component" since="1.0">
+        <parameter type="ICalComponent *" name="c" comment="A VCOMPONENT type of #ICalComponent."/>
+        <returns type="ICalComponent *" annotation="transfer full" translator_argus="(GObject *)c" comment="A reference to the first VEVENT, VTODO or VJOURNAL"/>
+        <comment xml:space="preserve">For VCOMPONENT: Return a reference to the first VEVENT, VTODO or VJOURNAL.</comment>
     </method>
     <method name="i_cal_component_get_span" corresponds="icalcomponent_get_span" since="1.0">
         <parameter type="ICalComponent *" name="comp" comment="A #ICalComponent"/>

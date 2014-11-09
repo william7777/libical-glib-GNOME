@@ -1517,6 +1517,21 @@
     	<returns type="const gchar *" annotation="transfer none" comment="Get the xlicmimecharset of #ICalProperty."/>
     	<comment>Get the xlicmimecharset of #ICalProperty.</comment>
     </method>
+    <method name="i_cal_property_new_xlicmimecid" corresponds="icalproperty_new_xlicmimecid" kind="constructor" since="1.0">
+    	<parameter type="const gchar *" name="v" comment="The xlicmimecid."/>
+    	<returns type="ICalProperty *" annotation="transfer full" comment="The newly create #ICalProperty"/>
+    	<comment xml:space="preserve">Create a new #ICalProperty.</comment>
+    </method>
+    <method name="i_cal_property_set_xlicmimecid" corresponds="icalproperty_set_xlicmimecid" kind="set" since="1.0">
+    	<parameter type="ICalProperty *" name="prop" comment="The #ICalProperty to be set"/>
+    	<parameter type="const gchar *" name="v" comment="The xlicmimecid."/>
+    	<comment>Set the xlicmimecid for the #ICalProperty.</comment>
+    </method>
+    <method name="i_cal_property_get_xlicmimecid" corresponds="icalproperty_get_xlicmimecid" kind="get" since="1.0">
+    	<parameter type="ICalProperty *" name="prop" comment="The #ICalProperty to be queried."/>
+    	<returns type="const gchar *" annotation="transfer none" comment="Get the xlicmimecid of #ICalProperty."/>
+    	<comment>Get the xlicmimecid of #ICalProperty.</comment>
+    </method>
     <method name="i_cal_property_new_xlicmimecontenttype" corresponds="icalproperty_new_xlicmimecontenttype" kind="constructor" since="1.0">
     	<parameter type="const gchar *" name="v" comment="The xlicmimecontenttype."/>
     	<returns type="ICalProperty *" annotation="transfer full" comment="The newly create #ICalProperty"/>

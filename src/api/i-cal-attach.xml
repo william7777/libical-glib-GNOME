@@ -1,11 +1,11 @@
 <structure namespace="ICal" name="Attach" native="icalattach" destroy_func="icalattach_unref">
     <method name="i_cal_attach_new_from_url" corresponds="icalattach_new_from_url" kind="constructor" since="1.0">
-        <parameter type="const gchar *" annotation="in" name="url" comment="The url from which the object is created"/>
-        <returns type="ICalAttach *" annotation="out, transfer full" comment="The newly created #ICalAttach from the @url" />
+        <parameter type="const gchar *" name="url" comment="The url from which the object is created"/>
+        <returns type="ICalAttach *" annotation="transfer full" comment="The newly created #ICalAttach from the @url" />
         <comment xml:space="preserve">Create a new #ICalAttach from the url</comment>
     </method>
     <method name="i_cal_attach_new_from_data" corresponds="icalattach_new_from_data" kind="constructor" since="1.0">
-        <parameter type="const gchar *" name="data" annotation="in" comment="The data used to create the #ICalAttach"/>
+        <parameter type="const gchar *" name="data" comment="The data used to create the #ICalAttach"/>
         <parameter type="GFunc" name="free_fn" translator="(icalattach_free_fn_t)" annotation="scope call, allow-none" comment="The function used to free the data when the create #ICalAttach is detroyed."/>
         <parameter type="void *" name="free_fn_data" annotation="allow-none" comment="The userdata used for the free function @free_fn"/>
         <returns type="ICalAttach *" annotation="transfer full" comment="The newly created #ICalAttach" />
