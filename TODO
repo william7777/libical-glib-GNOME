@@ -1,29 +1,15 @@
--Add all APIs and types in this project.
--Restructure the whole project so that different parts can be more decoupled.
-
-Detailed plan:
+TODO:
 -Convert all translator_args to owner_op or native_op for parameter
-
-
--Use dependers to remove the hassles
-string_property.remove_parameter (ICalGLib.ParameterKind.ALTREP_PARAMETER);
-
 -Test i_cal_mime_parse, i_cal_parser_parse
 
-
-CHECK:
--All the getters for the bare type.
--All the setters for the bare type.
--The destroy_func is supplied for all structures.
-
 Notes:
+-Ignore pvl and sspm since they are too low level.
 -Ignore all functions like 
 	icalproperty* icalproperty_vanew_acknowledged(struct icaltimetype v, ...);
 	icalcomponent* icalcomponent_vanew(icalcomponent_kind kind, ...);
 	icalproperty* icalproperty_vanew_XXX(const char* v, ...);
 	void icalproperty_add_parameters(struct icalproperty_impl *prop,va_list args);
 -Ignore anything relevant to struct icalattachtype since they are only declared by never defined.
--Ignore icalproperty_get_parent and icalproperty_get_set_parent defined in icalcomponent.c because they are only used by icalcomponent API.
 -Ignore 
 	/* Internal operations. They are private, and you should not be using them. */
 	icalcomponent* icalcomponent_get_parent(icalcomponent* component);
@@ -43,15 +29,13 @@ Notes:
 	                                         void *data),
 				      void *callback_data);
 				      
--Ignore 
-	
-	icalenum_XXX_to_string(x)
-	
+-Ignore the macros like:	
+	icalenum_XXX_to_string(x)	
 	#define icalenum_string_to_XXX(x)
 	Use original API instead.
 
 	
--Ignore some #define in icalerror. Use original instead.
+-Ignore some macros in icalerror. Use original instead.
 
 -Ignore because of no definition
 	icalproperty* icallangbind_get_property(icalcomponent *c, int n, const char* prop);
@@ -90,5 +74,3 @@ Notes:
 -ignore because of not a part of public API
 	const char *icaltzutil_get_zone_directory (void);
 	icalcomponent *icaltzutil_fetch_timezone (const char *location);
--pvl
--sspm
