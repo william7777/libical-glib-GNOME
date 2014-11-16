@@ -79,7 +79,8 @@ build_triplet = @build@
 host_triplet = @host@
 TESTS = component.py array.py attach.py duration-type.py error.py \
 	parameter.py value.py period-type.py property.py \
-	recurrence-type.py timezone.py $(am__EXEEXT_1)
+	recurrence-type.py timezone.py comprehensive.py \
+	$(am__EXEEXT_1)
 subdir = tests
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/test-driver
@@ -732,6 +733,13 @@ recurrence-type.py.log: recurrence-type.py
 timezone.py.log: timezone.py
 	@p='timezone.py'; \
 	b='timezone.py'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+comprehensive.py.log: comprehensive.py
+	@p='comprehensive.py'; \
+	b='comprehensive.py'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
