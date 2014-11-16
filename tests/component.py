@@ -8,7 +8,7 @@ event_str1 = \
     "UID:event-uid-123\n"                           \
     "SUMMARY;LANGUAGE=en-US:test1\n"                 \
     "DTSTART;TZID=Europe/Prague:20140306T090000\n"  \
-    "DTEND;TZID=Europe/Berlin:20140306T093000\n"    \
+    "DTEND;TZID=Europe/Prague:20140306T093000\n"    \
     "CLASS:PUBLIC\n"                                \
     "PRIORITY:5\n"                                  \
     "DTSTAMP:20140207T020756Z\n"                    \
@@ -77,10 +77,36 @@ event_str5 = \
     "SEQUENCE:0\n"                                  \
     "LOCATION;LANGUAGE=en-US:Location\n"            \
     "END:VCALENDAR\n"
+    
+#############################################################
+#The implementation of i_cal_component_foreach_tzid in Python
+def comp_foreach_tzid (comp, callback, data):
+	prop = ICalGLib.Component.get_first_property(comp, ICalGLib.PropertyKind.ANY_PROPERTY);
+	while prop != None:
+		kind = prop.isa();
+		if (kind == ICalGLib.PropertyKind.DTSTART_PROPERTY
+		or kind == ICalGLib.PropertyKind.DTEND_PROPERTY
+		or kind == ICalGLib.PropertyKind.DUE_PROPERTY
+		or kind == ICalGLib.PropertyKind.EXDATE_PROPERTY
+		or kind == ICalGLib.PropertyKind.RDATE_PROPERTY):
+			param = prop.get_first_parameter (ICalGLib.ParameterKind.TZID_PARAMETER);
+			if param != None:
+				callback (param, data);
+		prop = comp.get_next_property (ICalGLib.PropertyKind.ANY_PROPERTY);
+	
+	subcomp = comp.get_first_component(ICalGLib.ComponentKind.ANY_COMPONENT);
+	while (subcomp != None):
+		comp_foreach_tzid (subcomp, callback, data);
+		subcomp = comp.get_next_component();
+	
+def setParam (param, data):
+	ICalGLib.Parameter.set_tzid (param, data);
+
+#############################################################
 
 def main ():
 	#Test as_ical_string_r
-	comp = ICalGLib.Component.new_from_string (event_str1);
+	comp = ICalGLib.Component.new_from_string (event_str1);	
 	string = comp.as_ical_string_r ();
 
 	#Test new_clone
@@ -246,12 +272,8 @@ def main ():
 	comp.set_sequence (5);
 	assert (comp.get_sequence () == 5);
 	
-	
-	
-	
-	
-
-	
+	#Call comp_foreach_tzid
+	comp_foreach_tzid (comp, setParam, "America/Chicago");	
 
 if __name__=="__main__":
     main ()

@@ -17,7 +17,9 @@ ${lowerSnake}_init (${upperCamel} *self)
 ${new_full}
 {
 	${upperCamel} *object;$^${isBare}
-	${native} *clone;^$
+	${native} *clone;^$$^!${isBare}
+	if (native == NULL)
+		return NULL;^$
 	object = g_object_new (${upperSnake}_TYPE, NULL);$^${isBare}
 	clone = g_new (${native}, 1);
 	*clone = native;^$
