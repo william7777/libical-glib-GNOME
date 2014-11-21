@@ -24,3 +24,4 @@ struct _${upperCamel} {
 struct _${upperCamel}Class {
 	ICalObjectClass parent;
 };
+

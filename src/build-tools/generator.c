@@ -773,7 +773,9 @@ generate_code_from_template (FILE *in, FILE *out, Structure *structure, GHashTab
 					for (iter = g_list_first (structure->methods); iter != NULL; iter = g_list_next (iter)) {
 						method = get_source_method_body ((Method *)iter->data, structure->nameSpace);
 						fwrite (method, sizeof (gchar), strlen (method), out);
-						fwrite ("\n", sizeof (gchar), strlen ("\n"), out);
+						if (iter != g_list_last (structure->methods)) {
+							fwrite ("\n\n", sizeof (gchar), strlen ("\n\n"), out);
+						}
 						g_free (method);
 					}
 				} else if (g_strcmp0 (buffer, "enums") == 0) {
@@ -971,6 +973,9 @@ generate_source_includes (FILE *out, Structure *structure)
 		fwrite (includeName, sizeof (gchar), strlen (includeName), out);
 		fwrite (".h\"\n", sizeof (gchar), strlen (".h\"\n"), out);
 	}
+
+	//Assume that the source must have some includes and for aesthetic issue
+	fputc ('\n', out);
 	g_hash_table_destroy (includeNames);
 }
 
@@ -1510,7 +1515,7 @@ get_source_method_body (Method *method, const gchar *nameSpace)
 	} else {
 		printf ("WARNING: No function body for the method: %s\n", method->name);
 	}
-	g_stpcpy (buffer + strlen (buffer), "\n}\n");
+	g_stpcpy (buffer + strlen (buffer), "\n}");
 	
 	ret = g_new (gchar, strlen (buffer) + 1);
 	g_stpcpy (ret, buffer);

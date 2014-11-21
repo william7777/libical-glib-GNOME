@@ -21,14 +21,9 @@
 #define ${upperSnake}_H
 
 ${headerIncludes}
-
 G_BEGIN_DECLS
 
-${structure_boilerplate}
-${header_declaration}
-${forward_declaration}
-${enums}
-${protos}
+${structure_boilerplate}${header_declaration}${forward_declaration}${enums}${protos}
 G_END_DECLS
 
 #endif /* ${upperSnake}_H */
