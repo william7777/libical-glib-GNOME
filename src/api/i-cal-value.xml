@@ -63,13 +63,14 @@
     <method name="i_cal_value_encode_ical_string" corresponds="CUSTOM" since="1.0">
         <parameter type="const gchar *" name="szText" comment="A string."/>
         <returns type="gchar *" annotation="allow-none, transfer full" comment="The encoded string. NULL if fail."/>
-        <comment xml:space="preserve">Encode a character string in ical format, esacpe certain characters, etc.</comment>
+        <comment xml:space="preserve">Encode a character string in ical format, escape certain characters, etc.</comment>
         <custom>	gchar *szEncText;
 	gchar *buffer;
 	gint result;
-	g_return_val_if_fail (szText != NULL, 0);
-	szEncText = g_new (gchar, 2 * strlen (szText));
 
+	g_return_val_if_fail (szText != NULL, 0);
+
+	szEncText = g_new (gchar, 2 * strlen (szText) + 1);
 	result = icalvalue_encode_ical_string (szText, szEncText, 2*strlen (szText)-1);
 	if (result == 0) {
 		g_free (szEncText);
