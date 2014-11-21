@@ -19,7 +19,7 @@
 #define HEADER_TEMPLATE "header-template"
 #define INLINE_TRANSLATION "${translator} (${name})"
 #define SOURCE_TEMPLATE "source-template"
-#define COMMON_HEADER "common-header"
+#define COMMON_HEADER "i-cal-object"
 #define HEADER_STRUCTURE_BOILERPLATE_TEMPLATE "header-structure-boilerplate-template"
 #define SOURCE_STRUCTURE_BOILERPLATE_TEMPLATE "source-structure-boilerplate-template"
 #define ENUM_HEADER "ICAL"
