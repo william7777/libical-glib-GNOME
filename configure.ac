@@ -32,6 +32,10 @@ dnl Initialize maintainer mode
 dnl ****************************
 AM_MAINTAINER_MODE([enable])
 
+if test "x$enable_maintainer_mode" = "xyes" ; then
+	AC_DEFINE(ENABLE_MAINTAINER_MODE, 1, [Configured with enabled maintainer mode])
+fi
+
 AC_PROG_CC
 AC_PROG_CPP
 AC_C_INLINE
@@ -63,9 +67,17 @@ AC_SUBST(NO_UNDEFINED)
 dnl ***********************
 dnl Compiler Warning Flags
 dnl ***********************
+
+proposed_warning_flags=
+
+if test "x$enable_maintainer_mode" = "xyes" ; then
+	proposed_warning_flags="-Wall -Wextra -Wdeprecated-declarations"
+else
+	proposed_warning_flags="-Wno-deprecated-declarations"
+fi
+
 AS_COMPILER_FLAGS(WARNING_FLAGS,
-	"-Wall -Wextra
-	-Wdeprecated-declarations
+	"$proposed_warning_flags
 	-Wno-missing-field-initializers
 	-Wno-sign-compare
 	-Wno-unused-parameter
