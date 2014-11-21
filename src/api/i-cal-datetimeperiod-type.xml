@@ -18,8 +18,8 @@
     	<parameter type="ICalDatetimeperiodType *" name="dtp" comment="The #ICalDatetimeperiodType to be set"/>
     	<parameter type="ICalTimetype *" name="time" comment="The time attribute of @dtp."/>
     	<comment>Set the time attribute of #ICalDatetimeperiodType.</comment>
-    	<custom>	g_return_val_if_fail (dtp != NULL &amp;&amp; I_CAL_IS_DATETIMEPERIOD_TYPE (dtp), NULL);
-	g_return_val_if_fail (time != NULL &amp;&amp; I_CAL_IS_TIMETYPE (time), NULL);
+    	<custom>	g_return_if_fail (dtp != NULL &amp;&amp; I_CAL_IS_DATETIMEPERIOD_TYPE (dtp));
+	g_return_if_fail (time != NULL &amp;&amp; I_CAL_IS_TIMETYPE (time));
 	((struct icaldatetimeperiodtype *)i_cal_object_get_native ((ICalObject *)dtp))->time = *(struct icaltimetype *)i_cal_object_get_native ((ICalObject *)time);</custom>
     </method>
     <method name="i_cal_datetimeperiod_type_get_period" corresponds="CUSTOM" kind="get" since="1.0">
@@ -33,8 +33,8 @@
     	<parameter type="ICalDatetimeperiodType *" name="dtp" comment="The #ICalDatetimeperiodType to be set"/>
     	<parameter type="ICalPeriodType *" name="period" comment="The period attribute of @dtp."/>
     	<comment>Set the period attribute of #ICalDatetimeperiodType.</comment>
-    	<custom>	g_return_val_if_fail (dtp != NULL &amp;&amp; I_CAL_IS_DATETIMEPERIOD_TYPE (dtp), NULL);
-	g_return_val_if_fail (period != NULL &amp;&amp; I_CAL_IS_PERIOD_TYPE (period), NULL);
+    	<custom>	g_return_if_fail (dtp != NULL &amp;&amp; I_CAL_IS_DATETIMEPERIOD_TYPE (dtp));
+	g_return_if_fail (period != NULL &amp;&amp; I_CAL_IS_PERIOD_TYPE (period));
 	((struct icaldatetimeperiodtype *)i_cal_object_get_native ((ICalObject *)dtp))->period = *(struct icalperiodtype *)i_cal_object_get_native ((ICalObject *)period);</custom>
     </method>
 </structure>
