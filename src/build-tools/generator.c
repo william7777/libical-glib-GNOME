@@ -84,31 +84,6 @@ get_source_method_comment (Method *method)
 		}
 	}
 	
-	/* Processing return */
-	if (method->ret != NULL) {
-		buffer = g_strconcat (res, "\n *\n * Returns", NULL);
-		g_free (res);
-		res = buffer;
-		
-		for (jter = g_list_first (method->ret->annotations); jter != NULL; jter = g_list_next (jter)) {
-			anno = (gchar *)jter->data;
-			if (jter == g_list_first (method->ret->annotations)) {
-				buffer = g_strconcat (res, ": (", anno, ")", NULL);
-			} else {
-				buffer = g_strconcat (res, " (", anno, ")", NULL);
-			}
-			g_free (res);
-			res = buffer;
-		}
-		
-		if (method->ret->comment != NULL) {
-			buffer = g_strconcat (res, ": ", method->ret->comment, NULL);
-			
-			g_free (res);
-			res = buffer;
-		}
-	}
-	
 	/* Processing general comment */
 	if (method->comment != NULL) {
 		len = strlen (method->comment);
@@ -139,6 +114,31 @@ get_source_method_comment (Method *method)
 		res = buffer;
 	}
 	
+	/* Processing return */
+	if (method->ret != NULL) {
+		buffer = g_strconcat (res, "\n *\n * Returns", NULL);
+		g_free (res);
+		res = buffer;
+
+		for (jter = g_list_first (method->ret->annotations); jter != NULL; jter = g_list_next (jter)) {
+			anno = (gchar *)jter->data;
+			if (jter == g_list_first (method->ret->annotations)) {
+				buffer = g_strconcat (res, ": (", anno, ")", NULL);
+			} else {
+				buffer = g_strconcat (res, " (", anno, ")", NULL);
+			}
+			g_free (res);
+			res = buffer;
+		}
+
+		if (method->ret->comment != NULL) {
+			buffer = g_strconcat (res, ": ", method->ret->comment, NULL);
+
+			g_free (res);
+			res = buffer;
+		}
+	}
+
 	/* Processing the since */
 	buffer = g_strconcat (res, "\n *\n * Since: ", method->since, "\n *", NULL);
 	g_free (res);
