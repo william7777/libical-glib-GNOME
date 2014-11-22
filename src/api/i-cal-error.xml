@@ -1,5 +1,5 @@
 <structure namespace="ICal" name="Error">
-    <enum name="ICalErrorEnum">
+    <enum name="ICalErrorEnum" default_native="ICAL_UNKNOWN_ERROR">
         <element name="ICAL_NO_ERROR"/>
         <element name="ICAL_BADARG_ERROR"/>
         <element name="ICAL_NEWFAILED_ERROR"/>

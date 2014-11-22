@@ -1,5 +1,5 @@
 <structure namespace="ICal" name="Restriction">
-    <enum name="ICalRestrictionKind">
+    <enum name="ICalRestrictionKind" default_native="I_CAL_RESTRICTION_UNKNOWN">
         <element name="ICAL_RESTRICTION_NONE"/>
         <element name="ICAL_RESTRICTION_ZERO"/>	
         <element name="ICAL_RESTRICTION_ONE"/>

@@ -1360,12 +1360,17 @@ get_inline_parameter (Parameter *para)
 	*buffer = '\0';
 	translator = get_translator_for_parameter (para);
 	
+	if (para->native_op != NULL && translator == NULL) {
+		g_error ("No translator is found for parameter %s with type %s but native_op %s is supplied\n", para->name, para->type, para->native_op);
+	}
+
 	if (translator != NULL) {
 		g_stpcpy (buffer + strlen (buffer), translator);
 		g_stpcpy (buffer + strlen (buffer), " (");
 		if (para->translator == NULL)
 			g_stpcpy (buffer + strlen (buffer), "I_CAL_OBJECT (");
 	}
+
 	g_stpcpy (buffer + strlen (buffer), para->name);
 	
 	if (translator != NULL) {
@@ -1795,7 +1800,7 @@ generate_header_enum (FILE *out, Enumeration *enumeration)
 	if (enumeration->defaultNative != NULL) {
 		g_hash_table_insert (defaultValues, g_strdup (enumeration->name), g_strdup (enumeration->defaultNative));
 	} else {
-		g_hash_table_insert (defaultValues, g_strdup (enumeration->name), g_strdup ("0"));
+		g_error ("Please supply a default value for enum type %s by default_native\n", enumeration->name);
 	}
 
 	fwrite ("typedef enum {", sizeof (gchar), strlen ("typedef enum {"), out);
