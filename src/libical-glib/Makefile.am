@@ -11,44 +11,44 @@ i-cal-object.h: i-cal-object.h.in
 libical-glib.h: libical-glib.h.in
 	cp $< $@
 	
-allFileNames = \
-	i-cal-enums \
-	i-cal-timezone \
-	i-cal-component \
-	i-cal-property \
-	i-cal-timetype \
-	i-cal-time \
+all_file_names = \
 	i-cal-array \
 	i-cal-attach \
-	i-cal-duration-type \
-	i-cal-error \
-	i-cal-memory \
-	i-cal-mime \
-	i-cal-parser \
-	i-cal-value \
-	i-cal-derived-value \
-	i-cal-parameter \
-	i-cal-period-type \
-	i-cal-recur \
-	i-cal-recurrence-type \
-	i-cal-recur-iterator \
-	i-cal-restriction \
-	i-cal-geo-type \
-	i-cal-datetimeperiod-type \
-	i-cal-reqstat-type \
-	i-cal-trigger-type \
-	i-cal-timezone-phase \
-	i-cal-timezonetype \
-	i-cal-unknowntokenhandling \
-	i-cal-langbind \
-	i-cal-time-span \
 	i-cal-comp-iter \
+	i-cal-component \
+	i-cal-datetimeperiod-type \
 	i-cal-derived-parameter \
 	i-cal-derived-property \
+	i-cal-derived-value \
+	i-cal-duration-type \
+	i-cal-enums \
+	i-cal-error \
+	i-cal-geo-type \
+	i-cal-langbind \
+	i-cal-memory \
+	i-cal-mime \
+	i-cal-parameter \
+	i-cal-parser \
+	i-cal-period-type \
+	i-cal-property \
+	i-cal-recur \
+	i-cal-recur-iterator \
+	i-cal-recurrence-type \
+	i-cal-reqstat-type \
+	i-cal-restriction \
+	i-cal-time \
+	i-cal-time-span \
+	i-cal-timetype \
+	i-cal-timezone \
+	i-cal-timezone-phase \
+	i-cal-timezonetype \
+	i-cal-trigger-type \
+	i-cal-unknowntokenhandling \
+	i-cal-value \
 	$(NULL)
 	
-$(addsuffix .h, $(allFileNames)) $(addsuffix .c, $(allFileNames)):
-	$(top_builddir)/src/build-tools/src-generator "$(top_builddir)/src/build-tools" "$(top_builddir)/src/api" $(addsuffix .xml, $(allFileNames))
+$(addsuffix .h, $(all_file_names)) $(addsuffix .c, $(all_file_names)): $(addprefix $(top_srcdir)/src/api/, $(addsuffix .xml, $(all_file_names)))
+	$(top_builddir)/src/build-tools/src-generator "$(top_builddir)/src/build-tools" "$(top_builddir)/src/api" $(addsuffix .xml, $(all_file_names))
 
 lib_LTLIBRARIES = libical-glib-1.0.la
 
@@ -76,45 +76,45 @@ libical_glib_1_0_la_LDFLAGS = -avoid-version $(NO_UNDEFINED) \
 
 libical_glib_1_0_la_SOURCES = \
 	i-cal-object.c \
-	i-cal-enums.c \
-	i-cal-timezone.c \
-	i-cal-component.c \
-	i-cal-property.c \
-	i-cal-timetype.c \
-	i-cal-time.c \
 	i-cal-array.c \
 	i-cal-attach.c \
-	i-cal-duration-type.c \
-	i-cal-error.c \
-	i-cal-memory.c \
-	i-cal-mime.c \
-	i-cal-parser.c \
-	i-cal-value.c \
-	i-cal-derived-value.c \
-	i-cal-parameter.c \
-	i-cal-period-type.c \
-	i-cal-recur.c \
-	i-cal-recurrence-type.c \
-	i-cal-recur-iterator.c \
-	i-cal-restriction.c \
-	i-cal-geo-type.c \
-	i-cal-datetimeperiod-type.c \
-	i-cal-reqstat-type.c \
-	i-cal-trigger-type.c \
-	i-cal-timezone-phase.c \
-	i-cal-timezonetype.c \
-	i-cal-unknowntokenhandling.c \
-	i-cal-langbind.c \
-	i-cal-time-span.c \
 	i-cal-comp-iter.c \
+	i-cal-component.c \
+	i-cal-datetimeperiod-type.c \
 	i-cal-derived-parameter.c \
 	i-cal-derived-property.c \
+	i-cal-derived-value.c \
+	i-cal-duration-type.c \
+	i-cal-enums.c \
+	i-cal-error.c \
+	i-cal-geo-type.c \
+	i-cal-langbind.c \
+	i-cal-memory.c \
+	i-cal-mime.c \
+	i-cal-parameter.c \
+	i-cal-parser.c \
+	i-cal-period-type.c \
+	i-cal-property.c \
+	i-cal-recur.c \
+	i-cal-recur-iterator.c \
+	i-cal-recurrence-type.c \
+	i-cal-reqstat-type.c \
+	i-cal-restriction.c \
+	i-cal-time.c \
+	i-cal-time-span.c \
+	i-cal-timetype.c \
+	i-cal-timezone.c \
+	i-cal-timezone-phase.c \
+	i-cal-timezonetype.c \
+	i-cal-trigger-type.c \
+	i-cal-unknowntokenhandling.c \
+	i-cal-value.c \
 	$(NULL)
 
 privinclude_HEADERS = \
 	libical-glib.h \
 	i-cal-object.h \
-	$(addsuffix .h, $(allFileNames)) \
+	$(addsuffix .h, $(all_file_names)) \
 	$(NULL)
 
 BUILT_SOURCES += \
