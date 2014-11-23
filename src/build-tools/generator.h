@@ -17,6 +17,7 @@
 
 
 #define HEADER_TEMPLATE "header-template"
+#define HEADER_HEADER_TEMPLATE "header-header-template"
 #define INLINE_TRANSLATION "${translator} (${name})"
 #define SOURCE_TEMPLATE "source-template"
 #define COMMON_HEADER "i-cal-object"
@@ -97,5 +98,6 @@ void generate_conditional (FILE *out, Structure *structure, gchar *statement, GH
 void generate_code_from_template (FILE *in, FILE *out, Structure *structure, GHashTable *table);
 void generate_header_and_source (Structure *structure, gchar * dir);
 void generate_header_header_declaration (FILE *out, Structure *structure);
+void generate_header_header_file (GList *structures);
 
 #endif	/* GENERATOR_H */

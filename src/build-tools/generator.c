@@ -907,9 +907,9 @@ generate_header_includes (FILE *out, Structure *structure)
 
 	for (g_hash_table_iter_init (&iter_table, includeNames); g_hash_table_iter_next (&iter_table, &key, &value);) {
 		includeName = (gchar *)key;
-		fwrite ("#include \"", sizeof (gchar), strlen ("#include \""), out);
+		fwrite ("#include <libical-glib/", sizeof (gchar), strlen ("#include <libical-glib/"), out);
 		fwrite (includeName, sizeof (gchar), strlen (includeName), out);
-		fwrite (".h\"\n", sizeof (gchar), strlen (".h\"\n"), out);
+		fwrite (".h>\n", sizeof (gchar), strlen (".h>\n"), out);
 	}
 
 	for (iter = g_list_first (structure->includes); iter != NULL; iter = g_list_next (iter)) {
@@ -1976,7 +1976,7 @@ static gint generate_library (gint count, char **fileNames) {
 	type2structure = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
 	initialize_default_value_table ();
 	structures = NULL;
-	
+
 	for (iter_general = 0; iter_general < count; iter_general++){
 		path = g_build_filename (apis_dir, fileNames[iter_general], NULL);
 		doc = xmlParseFile (path);
@@ -2017,6 +2017,9 @@ static gint generate_library (gint count, char **fileNames) {
 		
 	}
 
+	//Generate libical-glib.h
+	generate_header_header_file (structures);
+
 	for (iter_list = g_list_first (structures); iter_list != NULL; iter_list = g_list_next (iter_list)) {
 		structure = (Structure *)iter_list->data;
 		generate_header_and_source (structure, (char*)"");
@@ -2052,6 +2055,68 @@ generate_header_header_declaration (FILE *out, Structure *structure)
 		}
 		declaration = NULL;
 	}
+}
+
+void
+generate_header_header_file (GList *structures)
+{
+	FILE *out;
+	FILE *in;
+	gchar c;
+	gchar *buffer;
+	GList *iter;
+	gint len;
+	gchar *header;
+	gchar *upperCamel;
+	gchar *lowerTrain;
+	Structure *structure;
+
+	g_return_if_fail (structures != NULL);
+
+	in = open_file (templates_dir, HEADER_HEADER_TEMPLATE);
+	out = fopen ("libical-glib.h", "w");
+
+	buffer = g_new (gchar, BUFFER_SIZE);
+	*buffer = '\0';
+
+	while ((c = fgetc (in)) != EOF) {
+		if (c == '$') {
+			if ((c = fgetc (in)) != '{' && c != '^') {
+				printf ("The following char is not {");
+				return;
+			}
+
+
+			while ((c = fgetc (in)) != '}') {
+				len = strlen (buffer);
+				buffer[len] = c;
+				buffer[len+1] = '\0';
+			}
+
+			if (g_strcmp0 (buffer, "allHeaders") == 0) {
+				for (iter = g_list_first (structures); iter != NULL; iter = g_list_next (iter)) {
+					structure = (Structure *)iter->data;
+					upperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
+					lowerTrain = get_lower_train_from_upper_camel (upperCamel);
+					header = g_strconcat ("#include <libical-glib/", lowerTrain, ".h>\n", NULL);
+					fwrite (header, sizeof (gchar), strlen (header), out);
+					g_free (header);
+					g_free (upperCamel);
+					g_free (lowerTrain);
+					structure = NULL;
+				}
+			} else {
+				printf ("The string %s is not recognized, please check the header-header-template\n", buffer);
+				fflush (NULL);
+				return;
+			}
+			buffer[0] = '\0';
+		} else {
+			fputc (c, out);
+		}
+	}
+
+	g_free (buffer);
 }
 
 int

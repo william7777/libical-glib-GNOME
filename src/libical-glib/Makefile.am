@@ -7,9 +7,6 @@ i-cal-object.c: i-cal-object.c.in
 
 i-cal-object.h: i-cal-object.h.in
 	cp $< $@
-
-libical-glib.h: libical-glib.h.in
-	cp $< $@
 	
 all_file_names = \
 	i-cal-array \

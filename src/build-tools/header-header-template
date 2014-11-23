@@ -12,18 +12,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
-/* 
-#if !defined (__LIBICAL_GLIB_H_INSIDE__) && !defined (LIBICAL_GLIB_COMPILATION)
-#error "Only <libical-glib/libical-glib.h> can be included directly."
-#endif
-*/
-#ifndef ${upperSnake}_H
-#define ${upperSnake}_H
 
-${headerIncludes}
-G_BEGIN_DECLS
+#ifndef LIBICAL_GLIB_H
+#define LIBICAL_GLIB_H
 
-${structure_boilerplate}${header_declaration}${forward_declaration}${enums}${protos}
-G_END_DECLS
+#include <glib-object.h>
 
-#endif /* ${upperSnake}_H */
+#define __LIBICAL_GLIB_H_INSIDE__
+
+${allHeaders}
+#undef __LIBICAL_GLIB_H_INSIDE__
+
+#endif /* LIBICAL_GLIB_H */
