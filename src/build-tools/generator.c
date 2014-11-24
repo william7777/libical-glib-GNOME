@@ -865,10 +865,16 @@ generate_header_includes (FILE *out, Structure *structure)
 
 	g_return_if_fail (out != NULL && structure != NULL);
 
-	fwrite ("#include \"", sizeof (gchar), strlen ("#include \""), out);
-	fwrite (COMMON_HEADER, sizeof (gchar), strlen (COMMON_HEADER), out);
-	fwrite (".h\"\n", sizeof (gchar), strlen (".h\"\n"), out);
+	for (iter = g_list_first (structure->includes); iter != NULL; iter = g_list_next (iter)) {
+		includeName = (gchar *)iter->data;
+		fwrite ("#include <", sizeof (gchar), strlen ("#include <"), out);
+		fwrite (includeName, sizeof (gchar), strlen (includeName), out);
+		fwrite (">\n", sizeof (gchar), strlen (">\n"), out);
+	}
 
+	fwrite ("#include <", sizeof (gchar), strlen ("#include <"), out);
+	fwrite (COMMON_HEADER, sizeof (gchar), strlen (COMMON_HEADER), out);
+	fwrite (".h>\n", sizeof (gchar), strlen (".h>\n"), out);
 
 	g_return_if_fail (out != NULL && structure != NULL);
 
@@ -911,16 +917,7 @@ generate_header_includes (FILE *out, Structure *structure)
 		fwrite (includeName, sizeof (gchar), strlen (includeName), out);
 		fwrite (".h>\n", sizeof (gchar), strlen (".h>\n"), out);
 	}
-
-	for (iter = g_list_first (structure->includes); iter != NULL; iter = g_list_next (iter)) {
-		includeName = (gchar *)iter->data;
-		fwrite ("#include \"", sizeof (gchar), strlen ("#include \""), out);
-		fwrite (includeName, sizeof (gchar), strlen (includeName), out);
-		fwrite (".h\"\n", sizeof (gchar), strlen (".h\"\n"), out);
-	}
 	g_hash_table_destroy (includeNames);
-
-
 }
 
 void
@@ -944,9 +941,9 @@ generate_source_includes (FILE *out, Structure *structure)
 	upperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
 	lowerTrain = get_lower_train_from_upper_camel (upperCamel);
 	g_free (upperCamel);
-	fwrite ("#include \"", sizeof (gchar), strlen ("#include \""), out);
+	fwrite ("#include <libical-glib/", sizeof (gchar), strlen ("#include <libical-glib/"), out);
 	fwrite (lowerTrain, sizeof (gchar), strlen (lowerTrain), out);
-	fwrite (".h\"\n", sizeof (gchar), strlen (".h\"\n"), out);
+	fwrite (".h>\n", sizeof (gchar), strlen (".h>\n"), out);
 	g_free (lowerTrain);
 		
 	for (g_hash_table_iter_init (&iter_table, structure->dependencies); g_hash_table_iter_next (&iter_table, &key, &value);) {
@@ -969,9 +966,9 @@ generate_source_includes (FILE *out, Structure *structure)
 	
 	for (g_hash_table_iter_init (&iter_table, includeNames); g_hash_table_iter_next (&iter_table, &key, &value);) {
 		includeName = (gchar *)key;
-		fwrite ("#include \"", sizeof (gchar), strlen ("#include \""), out);
+		fwrite ("#include <libical-glib/", sizeof (gchar), strlen ("#include <libical-glib/"), out);
 		fwrite (includeName, sizeof (gchar), strlen (includeName), out);
-		fwrite (".h\"\n", sizeof (gchar), strlen (".h\"\n"), out);
+		fwrite (".h>\n", sizeof (gchar), strlen (".h>\n"), out);
 	}
 
 	//Assume that the source must have some includes and for aesthetic issue

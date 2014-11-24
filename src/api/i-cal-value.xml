@@ -1,4 +1,4 @@
-<structure namespace="ICal" name="Value" native="icalvalue" destroy_func="icalvalue_free">
+<structure namespace="ICal" name="Value" native="icalvalue" destroy_func="icalvalue_free" includes="string.h">
     <method name="i_cal_value_new" corresponds="icalvalue_new" kind="constructor" since="1.0">
         <parameter type="ICalValueKind" name="kind" comment="A #ICalValueKind"/>
         <returns type="ICalValue *" annotation="transfer full" comment="The newly created #ICalValue."/>

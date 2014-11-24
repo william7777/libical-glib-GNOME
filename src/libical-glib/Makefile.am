@@ -54,7 +54,7 @@ libical_glib_1_0_la_CPPFLAGS = \
 	-I$(top_srcdir)/src \
 	-I$(top_builddir)/src \
 	-DG_LOG_DOMAIN=\"libical-glib\" \
-	-DLIBICAL_GLIB_COMPILATION=1 \
+	-DLIBICAL_GLIB_COMPILATION \
 	$(GLIB_CFLAGS) \
 	$(GOBJECT2_CFLAGS) \
 	$(LIBICAL_CFLAGS) \
@@ -141,6 +141,7 @@ ICalGLib_1_0_gir_CFLAGS = \
 	$(INCLUDES) \
 	-I$(top_srcdir)/src \
 	-I$(top_builddir)/src \
+	-DLIBICAL_GLIB_COMPILATION \
 	$(GLIB_CFLAGS) \
 	$(GOBJECT2_CFLAGS) \
 	$(LIBICAL_CFLAGS) \

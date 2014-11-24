@@ -1,4 +1,4 @@
-<structure namespace="ICal" name="DatetimeperiodType" native="struct icaldatetimeperiodtype" is_bare="true" default_native="i_cal_datetimeperiod_type_new_default ()" includes="i-cal-timetype, i-cal-period-type">
+<structure namespace="ICal" name="DatetimeperiodType" native="struct icaldatetimeperiodtype" is_bare="true" default_native="i_cal_datetimeperiod_type_new_default ()" includes="libical-glib/i-cal-timetype.h, libical-glib/i-cal-period-type.h">
 	<method name="i_cal_datetimeperiod_type_new_default" corresponds="CUSTOM" annotation="skip" kind="constructor" since="1.0">
         <returns type="struct icaldatetimeperiodtype" annotation="transfer full" comment="The newly created #ICalDatetimeperiodType" />
         <comment xml:space="preserve">Create a new default #ICalDatetimeperiodType</comment>

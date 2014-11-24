@@ -165,4 +165,5 @@ AC_OUTPUT
 AC_MSG_NOTICE([
 	Introspection:		$enable_introspection
 	Code coverage (gcov):	$enable_code_coverage
+	Gtk-doc:		$enable_gtk_doc
 ])

@@ -12,22 +12,19 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
-/* 
+
 #if !defined (__LIBICAL_GLIB_H_INSIDE__) && !defined (LIBICAL_GLIB_COMPILATION)
 #error "Only <libical-glib/libical-glib.h> can be included directly."
 #endif
-*/ 
+
 #ifndef I_CAL_OBJECT_H
 #define I_CAL_OBJECT_H
 
-#include <glib-object.h>
-#include <glib-2.0/glib.h>
-#include <gobject/gobject.h>
 #include <stdio.h>
+#include <glib.h>
+#include <glib-object.h>
 #include <libical/ical.h>
-#include "string.h"
 
-/* Standard GObject macros */
 #define I_CAL_TYPE_OBJECT \
 	(i_cal_object_get_type ())
 #define I_CAL_OBJECT(obj) \
@@ -79,7 +76,7 @@ void		i_cal_object_set_native_destroy_func
 void		i_cal_object_set_owner		(ICalObject *iobject,
 						 GObject *owner);
 GObject *	i_cal_object_ref_owner		(ICalObject *iobject);
-void	i_cal_object_remove_owner		(ICalObject *iobject);
+void		i_cal_object_remove_owner	(ICalObject *iobject);
 void		i_cal_object_add_depender	(ICalObject *iobject,
 						 GObject *depender);
 void		i_cal_object_remove_depender	(ICalObject *iobject,

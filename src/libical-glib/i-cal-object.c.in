@@ -17,8 +17,6 @@
 #include <config.h>
 #endif
 
-#include <glib.h>
-
 #include "i-cal-object.h"
 
 #define LOCK_PROPS(x) g_mutex_lock (&((x)->priv->props_lock))

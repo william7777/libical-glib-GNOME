@@ -1,4 +1,4 @@
-<structure namespace="ICal" name="TimeSpan" native="struct icaltime_span" is_bare="true" default_native="icaltime_span_new (i_cal_timetype_new_default (), i_cal_timetype_new_default (), 0)" includes="i-cal-timetype">
+<structure namespace="ICal" name="TimeSpan" native="struct icaltime_span" is_bare="true" default_native="icaltime_span_new (i_cal_timetype_new_default (), i_cal_timetype_new_default (), 0)" includes="libical-glib/i-cal-timetype.h">
 	<method name="i_cal_time_span_get_start" corresponds="CUSTOM" kind="get" since="1.0">
 		<parameter type="ICalTimeSpan *" name="timespan" comment="The #ICalTimeSpan to be queried."/>
         <returns type="time_t" comment="The start." />

@@ -1,4 +1,3 @@
-/* Standard GObject macros */
 #define ${upperSnake}_TYPE \
         (${lowerSnake}_get_type ())
 #define ${upperSnake}(obj) \
