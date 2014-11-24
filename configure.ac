@@ -127,10 +127,16 @@ PKG_CHECK_MODULES(LIBICAL, [libical >= libical_minimum_version])
 PKG_CHECK_MODULES(LIBXML,  [libxml-2.0 >= libxml_minimum_version])
 PKG_CHECK_MODULES(GOBJECT2, gobject-2.0)
 
-dnl *************
+dnl ******************************
 dnl Gtk Doc stuff
-dnl *************
-GTK_DOC_CHECK(1.9)
+dnl ******************************
+# check for gtk-doc
+m4_ifdef([GTK_DOC_CHECK], [
+GTK_DOC_CHECK([1.14],[--flavour no-tmpl])
+],[
+AM_CONDITIONAL([ENABLE_GTK_DOC], false)
+])
+AC_CONFIG_MACRO_DIR(m4)
 
 dnl ******************************
 dnl Special directories
@@ -150,6 +156,9 @@ src/Makefile
 src/build-tools/Makefile
 src/libical-glib/Makefile
 tests/Makefile
+docs/Makefile
+docs/reference/Makefile
+docs/reference/libical-glib/Makefile
 ])
 AC_OUTPUT
 

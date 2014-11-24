@@ -11,12 +11,14 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration buildProperties="" id="org.eclipse.linuxtools.cdt.autotools.core.toolChain.1253008685" name="Build (GNU)" parent="org.eclipse.cdt.build.core.emptycfg">
+				<configuration buildProperties="" description="" id="org.eclipse.linuxtools.cdt.autotools.core.toolChain.1253008685" name="Build (GNU)" parent="org.eclipse.cdt.build.core.emptycfg">
 					<folderInfo id="org.eclipse.linuxtools.cdt.autotools.core.toolChain.1253008685.82803763" name="/" resourcePath="">
 						<toolChain id="org.eclipse.linuxtools.cdt.autotools.core.toolChain.1413311745" name="GNU Autotools Toolchain" superClass="org.eclipse.linuxtools.cdt.autotools.core.toolChain">
 							<targetPlatform id="org.eclipse.linuxtools.cdt.autotools.core.toolchain.targetPlatform.1287978725" isAbstract="false" name="GNU Autotools Target Platform" superClass="org.eclipse.linuxtools.cdt.autotools.core.toolchain.targetPlatform"/>
-							<builder id="org.eclipse.linuxtools.cdt.autotools.core.toolchain.builder.403488436" managedBuildOn="false" name="null.Build (GNU)" superClass="org.eclipse.linuxtools.cdt.autotools.core.toolchain.builder"/>
-							<tool id="org.eclipse.linuxtools.cdt.autotools.core.gnu.toolchain.tool.configure.1025588369" name="configure" superClass="org.eclipse.linuxtools.cdt.autotools.core.gnu.toolchain.tool.configure"/>
+							<builder id="org.eclipse.linuxtools.cdt.autotools.core.toolchain.builder.403488436" keepEnvironmentInBuildfile="false" managedBuildOn="false" superClass="org.eclipse.linuxtools.cdt.autotools.core.toolchain.builder"/>
+							<tool id="org.eclipse.linuxtools.cdt.autotools.core.gnu.toolchain.tool.configure.1025588369" name="configure" superClass="org.eclipse.linuxtools.cdt.autotools.core.gnu.toolchain.tool.configure">
+								<option id="org.eclipse.linuxtools.cdt.autotools.core.option.configure.name.1587377438" name="Name" superClass="org.eclipse.linuxtools.cdt.autotools.core.option.configure.name" value="org.eclipse.linuxtools.cdt.autotools.core.toolChain.1253008685" valueType="string"/>
+							</tool>
 							<tool id="org.eclipse.linuxtools.cdt.autotools.core.toolchain.tool.autogen.1299801385" name="autogen.sh" superClass="org.eclipse.linuxtools.cdt.autotools.core.toolchain.tool.autogen"/>
 							<tool id="org.eclipse.linuxtools.cdt.autotools.core.toolchain.tool.gcc.509765140" name="GCC C Compiler" superClass="org.eclipse.linuxtools.cdt.autotools.core.toolchain.tool.gcc">
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.32513785" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
@@ -26,6 +28,8 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<fileInfo id="org.eclipse.linuxtools.cdt.autotools.core.toolChain.1253008685.1050789616" name="Makefile.am" rcbsApplicability="disable" resourcePath="docs/Makefile.am" toolsToInvoke=""/>
+					<fileInfo id="org.eclipse.linuxtools.cdt.autotools.core.toolChain.1253008685.1693104008" name="Makefile.am" rcbsApplicability="disable" resourcePath="src/Makefile.am" toolsToInvoke=""/>
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
@@ -533,4 +537,5 @@
 		</buildTargets>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+	<storageModule moduleId="refreshScope"/>
 </cproject>

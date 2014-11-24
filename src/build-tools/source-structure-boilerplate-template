@@ -13,6 +13,14 @@ ${lowerSnake}_init (${upperCamel} *self)
 
 /**
  * ${lowerSnake}_new_full: (skip)
+ * @native: The native libical object.$^!${isBare}
+ * @owner: The parent.^$
+ *
+ * Create a new libical-glib object from the native libical object and the owner.
+ * 
+ * Returns: (transfer full): The newly create libical-glib object.
+ *
+ * Since: 1.0
  **/
 ${new_full}
 {

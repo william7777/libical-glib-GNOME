@@ -59,10 +59,10 @@
 	return icalparser_get_line ((icalparser *)i_cal_object_get_native ((ICalObject *)parser), func);</custom>
     </method>
     <method name="i_cal_parser_string_line_generator" corresponds="icalparser_string_line_generator" since="1.0">
-        <parameter type="gchar *" name="out" comment=""/>
-        <parameter type="size_t" name="buf_size" comment=""/>
-        <parameter type="void *" name="d" comment=""/>
-        <returns type="gchar *" annotation="transfer full" comment=""/>
+        <parameter type="gchar *" name="out" comment="The input."/>
+        <parameter type="size_t" name="buf_size" comment="The size of the buffer."/>
+        <parameter type="void *" name="d" comment="The data to be supplied."/>
+        <returns type="gchar *" annotation="transfer full" comment="The generated line."/>
         <comment xml:space="preserve">The string line generator used as line_gen_func</comment>
     </method>
 </structure>

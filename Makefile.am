@@ -13,7 +13,11 @@ pkgconfig_DATA = $(pkgconfig_in_files:.pc.in=-$(INTERFACE_VERSION).pc)
 
 NULL =
 
-SUBDIRS = src tests
+SUBDIRS = \
+	src \
+	tests \
+	docs \
+	$(NULL)
 
 EXTRA_DIST =  \
 	$(pkgconfig_DATA) \
