@@ -147,12 +147,12 @@ i_cal_component_new_xstandard
 i_cal_component_new_xdaylight
 i_cal_component_new_vagenda
 i_cal_component_new_vquery
+ICalCompIter
 ICalTimetype
 ICalDurationType
 ICalTimezone
-ICalTimeSpan
 ICalProperty
-ICalCompIter
+ICalTimeSpan
 <SUBSECTION Standard>
 I_CAL_COMPONENT
 I_CAL_COMPONENT_CLASS
@@ -611,16 +611,16 @@ i_cal_property_get_xlicmimefilename
 i_cal_property_new_xlicmimeoptinfo
 i_cal_property_set_xlicmimeoptinfo
 i_cal_property_get_xlicmimeoptinfo
+ICalGeoType
+ICalDurationType
+ICalDatetimeperiodType
 ICalTimetype
 ICalTriggerType
-ICalDurationType
-ICalAttach
 ICalReqstatType
-ICalRecurrenceType
 ICalProperty
-ICalGeoType
-ICalDatetimeperiodType
+ICalAttach
 ICalPeriodType
+ICalRecurrenceType
 </SECTION>
 
 <SECTION>
@@ -727,15 +727,15 @@ i_cal_value_set_carlevel
 i_cal_value_new_carlevel
 i_cal_value_get_carlevel
 ICalDurationType
-ICalAttach
-ICalReqstatType
-ICalTimetype
-ICalTriggerType
 ICalGeoType
-ICalValue
-ICalRecurrenceType
-ICalPeriodType
+ICalTimetype
 ICalDatetimeperiodType
+ICalValue
+ICalTriggerType
+ICalPeriodType
+ICalAttach
+ICalRecurrenceType
+ICalReqstatType
 </SECTION>
 
 <SECTION>
@@ -836,8 +836,8 @@ i_cal_langbind_get_next_component
 i_cal_langbind_property_eval_string_r
 i_cal_langbind_string_to_open_flag
 i_cal_langbind_quote_as_ical_r
-ICalProperty
 ICalComponent
+ICalProperty
 ICalParameter
 </SECTION>
 
@@ -1023,8 +1023,8 @@ i_cal_property_kind_and_string_to_enum
 i_cal_property_string_to_status
 i_cal_property_status_to_string
 i_cal_property_enum_belongs_to_property
-ICalParameter
 ICalValue
+ICalParameter
 <SUBSECTION Standard>
 I_CAL_IS_PROPERTY
 I_CAL_IS_PROPERTY_CLASS
@@ -1177,9 +1177,9 @@ i_cal_time_days_is_leap_year
 i_cal_time_span_new
 i_cal_time_span_overlaps
 i_cal_time_span_contains
-ICalTimetype
 ICalTimeSpan
 ICalTimezone
+ICalTimetype
 </SECTION>
 
 <SECTION>
@@ -1277,8 +1277,8 @@ i_cal_timezone_free_zone_directory
 i_cal_timezone_release_zone_tab
 i_cal_timezone_dump_changes
 i_cal_timezone_array_element_at
-ICalArray
 ICalComponent
+ICalArray
 ICalTimetype
 <SUBSECTION Standard>
 I_CAL_IS_TIMEZONE
@@ -1355,8 +1355,8 @@ i_cal_trigger_type_get_time
 i_cal_trigger_type_set_time
 i_cal_trigger_type_get_duration
 i_cal_trigger_type_set_duration
-ICalTimetype
 ICalDurationType
+ICalTimetype
 <SUBSECTION Standard>
 I_CAL_IS_TRIGGER_TYPE
 I_CAL_IS_TRIGGER_TYPE_CLASS

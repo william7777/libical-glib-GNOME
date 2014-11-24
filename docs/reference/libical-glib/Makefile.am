@@ -12,7 +12,7 @@ DOC_SOURCE_DIR = $(top_srcdir)/src/libical-glib
 HTML_DIR = $(datadir)/gtk-doc/html
 
 # Extra options to supply to gtkdoc-scan
-SCAN_OPTIONS = --rebuild-types --deprecated-guards="LIBICAL_GLIB_DISABLE_DEPRECATED"
+SCAN_OPTIONS = --deprecated-guards="LIBICAL_GLIB_DISABLE_DEPRECATED"
 
 # Extra options to pass to gtkdoc-scangobj
 SCANGOBJ_OPTIONS =
@@ -58,6 +58,7 @@ EXTRA_DIST += \
 	$(content_files) \
 	$(DOC_MODULE)-docs.sgml \
 	$(DOC_MODULE)-sections.txt \
+	$(DOC_MODULE).hierachy \
 	$(NULL)
 
 #TESTS = $(GTKDOC_CHECK)
