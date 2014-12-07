@@ -179,7 +179,7 @@ i_cal_object_class_init (ICalObjectClass *class)
 	 * ICalObject:is-global-memory:
 	 *
 	 * Whether the native libical structure is from a global shared memory.
-	 * If #TRUE, then it is not freed on #ICalObject's finalize.
+	 * If TRUE, then it is not freed on #ICalObject's finalize.
 	 **/
 	g_object_class_install_property (
 		object_class,
@@ -289,7 +289,7 @@ i_cal_object_get_native (ICalObject *iobject)
  * @iobject: an #ICalObject
  *
  * Obtain native libical structure pointer associated with this @iobject and sets the one
- * at @iobject to #NULL, thus it's invalid since now on.
+ * at @iobject to NULL, thus it's invalid since now on.
  *
  * Returns: (transfer full): Native libical structure pointer associated with this @iobject.
  *
@@ -435,11 +435,11 @@ i_cal_object_set_owner (ICalObject *iobject,
  * @iobject: an #ICalObject
  *
  * Obtain current owner of the native libical structure. The returned pointer,
- * if not #NULL, is referenced for thread safety. Unref it with g_object_unref()
+ * if not NULL, is referenced for thread safety. Unref it with g_object_unref
  * when done with it.
  *
  * Returns: (transfer full) (allow-none): Current owner of the libical
- *    native structure. returns #NULL, when there is no owner.
+ *    native structure. returns NULL, when there is no owner.
  *
  * Since: 1.0
  **/

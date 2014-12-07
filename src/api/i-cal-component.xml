@@ -56,7 +56,7 @@
     <method name="i_cal_component_count_properties" corresponds="icalcomponent_count_properties" since="1.0">
         <parameter type="ICalComponent *" name="component" comment="The #ICalComponent."/>
         <parameter type="ICalPropertyKind" name="kind" comment="A #ICalPropertyKind."/>
-        <returns type="gint" comment="The number of #ICalProperties."/>
+        <returns type="gint" comment="The number of #ICalProperty."/>
         <comment xml:space="preserve">Count the #ICalProperty in #ICalComponent.</comment>
     </method>
     <method name="i_cal_component_get_current_property" corresponds="icalcomponent_get_current_property" since="1.0">

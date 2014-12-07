@@ -45,16 +45,29 @@
 
 G_BEGIN_DECLS
 
+/**
+ * ICalObject:
+ *
+ * This is an ICalObject instance struct.
+ */
 typedef struct _ICalObject ICalObject;
+
+/**
+ * ICalObject:
+ *
+ * This is an ICalObject class struct.
+ */
 typedef struct _ICalObjectClass ICalObjectClass;
 typedef struct _ICalObjectPrivate ICalObjectPrivate;
 
 struct _ICalObject {
+	/*< private >*/
 	GObject parent;
 	ICalObjectPrivate *priv;
 };
 
 struct _ICalObjectClass {
+	/*< private >*/
 	GObjectClass parent_class;
 };
 

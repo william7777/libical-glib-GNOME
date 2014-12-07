@@ -32,7 +32,7 @@
     </method>
     <method name="i_cal_parser_parse" corresponds="CUSTOM" since="1.0">
         <parameter type="ICalParser *" name="parser" comment="The parser used to parse the string and output the #ICalComponent."/>
-        <parameter type="gchar *" name="(*func)(gchar *,size_t,void *)" comment="The function used to parse."/>
+        <parameter type="gchar *" name="(*func)(gchar *,size_t,void *)" comment="FULL: @func: The function used to parse."/>
         <returns type="ICalComponent *" annotation="transfer full" comment="The component output by the parser."/>
         <comment xml:space="preserve">icalparser_parse takes a string that holds the text ( in RFC 2445 format ) and returns a pointer to an icalcomponent. The caller owns the memory. line_gen_func is a pointer to a function that returns one content line per invocation</comment>
         <custom>	g_return_val_if_fail (parser != NULL &amp;&amp; func != NULL, NULL);
@@ -51,7 +51,7 @@
     </method>
     <method name="i_cal_parser_get_line" corresponds="CUSTOM" since="1.0">
         <parameter type="ICalParser *" name="parser" comment="The parser to be queried."/>
-        <parameter type="gchar *" name="(*func)(gchar *,size_t,void *)" comment="A line generator function."/>
+        <parameter type="gchar *" name="(*func)(gchar *,size_t,void *)" comment="FULL: @func: A line generator function."/>
         <returns type="gchar *" annotation="transfer full" comment="A single iCal content line."/>
         <comment xml:space="preserve">Given a line generator function, return a single iCal content line.</comment>
         <custom>	g_return_val_if_fail (parser != NULL &amp;&amp; func != NULL, NULL);

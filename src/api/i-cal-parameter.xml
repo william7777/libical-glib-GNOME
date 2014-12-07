@@ -91,7 +91,7 @@
         <comment xml:space="preserve">Convert the #ICalParameter to the string representation</comment>
     </method>
     <method name="i_cal_parameter_string_to_kind" corresponds="icalparameter_string_to_kind" kind="others" since="1.0">
-        <parameter type="const gchar *" name="string" comment="The string representation of the #ICal"/>
+        <parameter type="const gchar *" name="string" comment="The string representation of the #ICalParameter"/>
         <returns type="ICalParameterKind" comment="The #ICalParameterKind converted from @string" />
         <comment xml:space="preserve">Convert a string to the #ICalParameterKind</comment>
     </method>

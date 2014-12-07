@@ -14,7 +14,8 @@ ${lowerSnake}_init (${upperCamel} *self)
 /**
  * ${lowerSnake}_new_full: (skip)
  * @native: The native libical object.$^!${isBare}
- * @owner: The parent.^$
+ * @owner: The parent.^$$^${isPossibleGlobal}
+ * @is_global_memory: Whether it is allocated in the global memory.^$
  *
  * Create a new libical-glib object from the native libical object and the owner.
  * 

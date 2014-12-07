@@ -83,13 +83,13 @@
     <method name="i_cal_property_get_first_parameter" corresponds="icalproperty_get_first_parameter" since="1.0">
         <parameter type="ICalProperty *" name="prop" comment="The #ICalProperty to be queried."/>
         <parameter type="ICalParameterKind" name="kind" comment="The target kind of #ICalParameter to be retrieved."/>
-        <returns type="ICalParameter *" annotation="transfer full" translator_argus="(GObject *)prop" comment="The first #ICalPrameter of @prop."/>
+        <returns type="ICalParameter *" annotation="transfer full" translator_argus="(GObject *)prop" comment="The first #ICalParameter of @prop."/>
         <comment xml:space="preserve">Get the first #ICalParameter from the parent #ICalProperty.</comment>
     </method>
     <method name="i_cal_property_get_next_parameter" corresponds="icalproperty_get_next_parameter" since="1.0">
         <parameter type="ICalProperty *" name="prop" comment="The #ICalProperty to be queried."/>
         <parameter type="ICalParameterKind" name="kind" comment="The target kind of #ICalParameter to be retrieved."/>
-        <returns type="ICalParameter *" annotation="transfer full" translator_argus="(GObject *)prop" comment="The next #ICalPrameter of @prop."/>
+        <returns type="ICalParameter *" annotation="transfer full" translator_argus="(GObject *)prop" comment="The next #ICalParameter of @prop."/>
         <comment xml:space="preserve">Get the next #ICalParameter from the parent #ICalProperty.</comment>
     </method>
     <method name="i_cal_property_set_value" corresponds="icalproperty_set_value" since="1.0">

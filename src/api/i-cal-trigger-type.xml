@@ -2,12 +2,12 @@
     <method name="i_cal_trigger_type_from_int" corresponds="icaltriggertype_from_int" kind="constructor" since="">
         <parameter type="const gint" name="reltime" comment="An integer."/>
         <returns type="ICalTriggerType *" annotation="transfer full" comment="The newly created #ICalTriggerType."/>
-        <comment xml:space="preserve">Create a #ICalTrigertype from integer.</comment>
+        <comment xml:space="preserve">Create a #ICalTriggerType from integer.</comment>
     </method>
     <method name="i_cal_trigger_type_from_string" corresponds="icaltriggertype_from_string" kind="constructor" since="">
         <parameter type="const gchar *" name="str" comment="A string."/>
         <returns type="ICalTriggerType *" annotation="transfer full" comment="The newly created #ICalTriggerType."/>
-        <comment xml:space="preserve">Create a #ICalTrigertype from a string.</comment>
+        <comment xml:space="preserve">Create a #ICalTriggerType from a string.</comment>
     </method>
     <method name="i_cal_trigger_type_is_null_trigger" corresponds="icaltriggertype_is_null_trigger" since="">
         <parameter type="ICalTriggerType *" name="tr" comment="A #ICalTriggerType."/>
