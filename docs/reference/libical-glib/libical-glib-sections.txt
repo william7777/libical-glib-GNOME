@@ -62,6 +62,7 @@ i_cal_comp_iter_get_type
 <SECTION>
 <FILE>i-cal-component</FILE>
 <TITLE>ICalComponent</TITLE>
+<INCLUDE>i-cal-comp-iter, i-cal-duration-type, i-cal-property, i-cal-timetype, i-cal-timezone, i-cal-time-span</INCLUDE>
 I_CAL_COMPONENT_TYPE
 ICalComponent
 ICalComponentClass
@@ -147,12 +148,6 @@ i_cal_component_new_xstandard
 i_cal_component_new_xdaylight
 i_cal_component_new_vagenda
 i_cal_component_new_vquery
-ICalCompIter
-ICalTimetype
-ICalDurationType
-ICalTimezone
-ICalProperty
-ICalTimeSpan
 <SUBSECTION Standard>
 I_CAL_COMPONENT
 I_CAL_COMPONENT_CLASS
@@ -164,6 +159,7 @@ i_cal_component_get_type
 <SECTION>
 <FILE>i-cal-datetimeperiod-type</FILE>
 <TITLE>ICalDatetimeperiodType</TITLE>
+<INCLUDE>i-cal-period-type, i-cal-timetype</INCLUDE>
 I_CAL_DATETIMEPERIOD_TYPE_TYPE
 ICalDatetimeperiodType
 ICalDatetimeperiodTypeClass
@@ -173,8 +169,6 @@ i_cal_datetimeperiod_type_get_time
 i_cal_datetimeperiod_type_set_time
 i_cal_datetimeperiod_type_get_period
 i_cal_datetimeperiod_type_set_period
-ICalTimetype
-ICalPeriodType
 <SUBSECTION Standard>
 I_CAL_DATETIMEPERIOD_TYPE
 I_CAL_DATETIMEPERIOD_TYPE_CLASS
@@ -185,6 +179,7 @@ i_cal_datetimeperiod_type_get_type
 
 <SECTION>
 <FILE>i-cal-derived-parameter</FILE>
+<INCLUDE>i-cal-parameter</INCLUDE>
 ICalParameterKind
 ICalParameterAction
 ICalParameterCutype
@@ -308,11 +303,11 @@ i_cal_parameter_set_xliccomparetype
 i_cal_parameter_new_xlicerrortype
 i_cal_parameter_get_xlicerrortype
 i_cal_parameter_set_xlicerrortype
-ICalParameter
 </SECTION>
 
 <SECTION>
 <FILE>i-cal-derived-property</FILE>
+<INCLUDE>i-cal-attach, i-cal-datetimeperiod-type, i-cal-duration-type, i-cal-geo-type, i-cal-period-type, i-cal-property, i-cal-recurrence-type, i-cal-reqstat-type, i-cal-timetype, i-cal-trigger-type</INCLUDE>
 ICalPropertyKind
 i_cal_property_new_acknowledged
 i_cal_property_set_acknowledged
@@ -611,20 +606,11 @@ i_cal_property_get_xlicmimefilename
 i_cal_property_new_xlicmimeoptinfo
 i_cal_property_set_xlicmimeoptinfo
 i_cal_property_get_xlicmimeoptinfo
-ICalGeoType
-ICalDurationType
-ICalDatetimeperiodType
-ICalTimetype
-ICalTriggerType
-ICalReqstatType
-ICalProperty
-ICalAttach
-ICalPeriodType
-ICalRecurrenceType
 </SECTION>
 
 <SECTION>
 <FILE>i-cal-derived-value</FILE>
+<INCLUDE>i-cal-attach, i-cal-duration-type, i-cal-geo-type, i-cal-datetimeperiod-type, i-cal-property, i-cal-period-type, i-cal-reqstat-type, i-cal-recurrence-type, i-cal-timetype, i-cal-trigger-type, i-cal-value</INCLUDE>
 ICalValueKind
 ICalPropertyAction
 ICalPropertyCarlevel
@@ -726,16 +712,6 @@ i_cal_value_get_querylevel
 i_cal_value_set_carlevel
 i_cal_value_new_carlevel
 i_cal_value_get_carlevel
-ICalDurationType
-ICalGeoType
-ICalTimetype
-ICalDatetimeperiodType
-ICalValue
-ICalTriggerType
-ICalPeriodType
-ICalAttach
-ICalRecurrenceType
-ICalReqstatType
 </SECTION>
 
 <SECTION>
@@ -824,6 +800,7 @@ i_cal_geo_type_get_type
 
 <SECTION>
 <FILE>i-cal-langbind</FILE>
+<INCLUDE>i-cal-component, i-cal-parameter, i-cal-property</INCLUDE>
 i_cal_langbind_new_array
 i_cal_langbind_free_array
 i_cal_langbind_access_array
@@ -836,9 +813,6 @@ i_cal_langbind_get_next_component
 i_cal_langbind_property_eval_string_r
 i_cal_langbind_string_to_open_flag
 i_cal_langbind_quote_as_ical_r
-ICalComponent
-ICalProperty
-ICalParameter
 </SECTION>
 
 <SECTION>
@@ -857,8 +831,8 @@ i_cal_memory_strdup
 
 <SECTION>
 <FILE>i-cal-mime</FILE>
+<INCLUDE>i-cal-component</INCLUDE>
 i_cal_mime_parse
-ICalComponent
 </SECTION>
 
 <SECTION>
@@ -925,6 +899,7 @@ i_cal_parameter_get_type
 <SECTION>
 <FILE>i-cal-parser</FILE>
 <TITLE>ICalParser</TITLE>
+<INCLUDE>i-cal-component</INCLUDE>
 I_CAL_PARSER_TYPE
 ICalParser
 ICalParserClass
@@ -940,7 +915,6 @@ i_cal_parser_set_gen_data
 i_cal_parser_parse_string
 i_cal_parser_get_line
 i_cal_parser_string_line_generator
-ICalComponent
 <SUBSECTION Standard>
 I_CAL_IS_PARSER
 I_CAL_IS_PARSER_CLASS
@@ -952,6 +926,7 @@ i_cal_parser_get_type
 <SECTION>
 <FILE>i-cal-period-type</FILE>
 <TITLE>ICalPeriodType</TITLE>
+<INCLUDE>i-cal-duration-type, i-cal-timetype</INCLUDE>
 I_CAL_PERIOD_TYPE_TYPE
 ICalPeriodType
 ICalPeriodTypeClass
@@ -967,8 +942,6 @@ i_cal_period_type_as_ical_string_r
 i_cal_period_type_null_period
 i_cal_period_type_is_null_period
 i_cal_period_type_is_valid_period
-ICalDurationType
-ICalTimetype
 <SUBSECTION Standard>
 I_CAL_IS_PERIOD_TYPE
 I_CAL_IS_PERIOD_TYPE_CLASS
@@ -980,6 +953,7 @@ i_cal_period_type_get_type
 <SECTION>
 <FILE>i-cal-property</FILE>
 <TITLE>ICalProperty</TITLE>
+<INCLUDE>i-cal-parameter, i-cal-value</INCLUDE>
 I_CAL_PROPERTY_TYPE
 ICalProperty
 ICalPropertyClass
@@ -1023,8 +997,6 @@ i_cal_property_kind_and_string_to_enum
 i_cal_property_string_to_status
 i_cal_property_status_to_string
 i_cal_property_enum_belongs_to_property
-ICalValue
-ICalParameter
 <SUBSECTION Standard>
 I_CAL_IS_PROPERTY
 I_CAL_IS_PROPERTY_CLASS
@@ -1042,6 +1014,7 @@ i_cal_recur_string_to_weekday
 <SECTION>
 <FILE>i-cal-recur-iterator</FILE>
 <TITLE>ICalRecurIterator</TITLE>
+<INCLUDE>i-cal-recurrence-type, i-cal-timetype</INCLUDE>
 I_CAL_RECUR_ITERATOR_TYPE
 ICalRecurIterator
 ICalRecurIteratorClass
@@ -1049,8 +1022,6 @@ i_cal_recur_iterator_new_full
 i_cal_recur_iterator_new
 i_cal_recur_iterator_next
 i_cal_recur_iterator_free
-ICalTimetype
-ICalRecurrenceType
 <SUBSECTION Standard>
 I_CAL_IS_RECUR_ITERATOR
 I_CAL_IS_RECUR_ITERATOR_CLASS
@@ -1062,6 +1033,7 @@ i_cal_recur_iterator_get_type
 <SECTION>
 <FILE>i-cal-recurrence-type</FILE>
 <TITLE>ICalRecurrenceType</TITLE>
+<INCLUDE>i-cal-timetype</INCLUDE>
 I_CAL_RECURRENCE_TYPE_TYPE
 ICalRecurrenceType
 ICalRecurrenceTypeClass
@@ -1102,7 +1074,6 @@ i_cal_recurrence_type_get_by_month
 i_cal_recurrence_type_set_by_month
 i_cal_recurrence_type_get_by_set_pos
 i_cal_recurrence_type_set_by_set_pos
-ICalTimetype
 <SUBSECTION Standard>
 I_CAL_IS_RECURRENCE_TYPE
 I_CAL_IS_RECURRENCE_TYPE_CLASS
@@ -1135,14 +1106,15 @@ i_cal_reqstat_type_get_type
 
 <SECTION>
 <FILE>i-cal-restriction</FILE>
+<INCLUDE>i-cal-component</INCLUDE>
 ICalRestrictionKind
 i_cal_restriction_compare
 i_cal_restriction_check
-ICalComponent
 </SECTION>
 
 <SECTION>
 <FILE>i-cal-time</FILE>
+<INCLUDE>i-cal-time-span, i-cal-timetype, i-cal-timezone</INCLUDE>
 i_cal_time_null_time
 i_cal_time_null_date
 i_cal_time_current_time_with_zone
@@ -1177,9 +1149,6 @@ i_cal_time_days_is_leap_year
 i_cal_time_span_new
 i_cal_time_span_overlaps
 i_cal_time_span_contains
-ICalTimeSpan
-ICalTimezone
-ICalTimetype
 </SECTION>
 
 <SECTION>
@@ -1206,6 +1175,7 @@ i_cal_time_span_get_type
 <SECTION>
 <FILE>i-cal-timetype</FILE>
 <TITLE>ICalTimetype</TITLE>
+<INCLUDE>i-cal-timezone</INCLUDE>
 I_CAL_TIMETYPE_TYPE
 ICalTimetype
 ICalTimetypeClass
@@ -1231,7 +1201,6 @@ i_cal_timetype_set_is_date
 i_cal_timetype_is_daylight
 i_cal_timetype_set_is_daylight
 i_cal_timetype_get_zone
-ICalTimezone
 <SUBSECTION Standard>
 I_CAL_IS_TIMETYPE
 I_CAL_IS_TIMETYPE_CLASS
@@ -1243,6 +1212,7 @@ i_cal_timetype_get_type
 <SECTION>
 <FILE>i-cal-timezone</FILE>
 <TITLE>ICalTimezone</TITLE>
+<INCLUDE>i-cal-array, i-cal-component, i-cal-timetype</INCLUDE>
 I_CAL_TIMEZONE_TYPE
 ICalTimezone
 ICalTimezoneClass
@@ -1277,9 +1247,6 @@ i_cal_timezone_free_zone_directory
 i_cal_timezone_release_zone_tab
 i_cal_timezone_dump_changes
 i_cal_timezone_array_element_at
-ICalComponent
-ICalArray
-ICalTimetype
 <SUBSECTION Standard>
 I_CAL_IS_TIMEZONE
 I_CAL_IS_TIMEZONE_CLASS
@@ -1291,6 +1258,7 @@ i_cal_timezone_get_type
 <SECTION>
 <FILE>i-cal-timezone-phase</FILE>
 <TITLE>ICalTimezonePhase</TITLE>
+<INCLUDE>i-cal-timetype, i-cal-datetypeperiod-type</INCLUDE>
 I_CAL_TIMEZONE_PHASE_TYPE
 ICalTimezonePhase
 ICalTimezonePhaseClass
@@ -1309,8 +1277,6 @@ i_cal_timezone_phase_get_comment
 i_cal_timezone_phase_get_rdate
 i_cal_timezone_phase_set_rdate
 i_cal_timezone_phase_get_rrule
-ICalDatetimeperiodType
-ICalTimetype
 <SUBSECTION Standard>
 I_CAL_IS_TIMEZONE_PHASE
 I_CAL_IS_TIMEZONE_PHASE_CLASS
@@ -1322,6 +1288,7 @@ i_cal_timezone_phase_get_type
 <SECTION>
 <FILE>i-cal-timezonetype</FILE>
 <TITLE>ICalTimezonetype</TITLE>
+<INCLUDE>i-cal-timetype</INCLUDE>
 I_CAL_TIMEZONETYPE_TYPE
 ICalTimezonetype
 ICalTimezonetypeClass
@@ -1331,7 +1298,6 @@ i_cal_timezonetype_get_tzid
 i_cal_timezonetype_get_tzurl
 i_cal_timezonetype_get_last_mod
 i_cal_timezonetype_set_last_mod
-ICalTimetype
 <SUBSECTION Standard>
 I_CAL_IS_TIMEZONETYPE
 I_CAL_IS_TIMEZONETYPE_CLASS
@@ -1343,6 +1309,7 @@ i_cal_timezonetype_get_type
 <SECTION>
 <FILE>i-cal-trigger-type</FILE>
 <TITLE>ICalTriggerType</TITLE>
+<INCLUDE>i-cal-duration-type, i-cal-timetype</INCLUDE>
 I_CAL_TRIGGER_TYPE_TYPE
 ICalTriggerType
 ICalTriggerTypeClass
@@ -1355,8 +1322,6 @@ i_cal_trigger_type_get_time
 i_cal_trigger_type_set_time
 i_cal_trigger_type_get_duration
 i_cal_trigger_type_set_duration
-ICalDurationType
-ICalTimetype
 <SUBSECTION Standard>
 I_CAL_IS_TRIGGER_TYPE
 I_CAL_IS_TRIGGER_TYPE_CLASS
