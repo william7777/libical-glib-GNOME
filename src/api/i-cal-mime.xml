@@ -1,6 +1,6 @@
 <structure namespace="ICal" name="Mime">
     <method name="i_cal_mime_parse" corresponds="CUSTOM" since="1.0">
-        <parameter type="gchar *" name="(*func)(gchar *,size_t,void *)" comment="The parsing function."/>
+        <parameter type="gchar *" name="(*func)(gchar *,size_t,void *)" comment="FULL: @func: The parsing function."/>
         <parameter type="void *" name="data" comment="The source to be parsed."/>
         <returns type="ICalComponent *" annotation="transfer full" comment="The #ICalComponent parsed from @data"/>
         <comment xml:space="preserve">Parse from the data to #ICalComponent.</comment>

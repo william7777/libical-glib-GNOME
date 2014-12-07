@@ -35,6 +35,8 @@ get_source_method_comment (Method *method)
 	gint len;
 	gint count;
 	gint cursor;
+	gchar *full_flag;
+	gchar *full_comment;
 	
 	g_return_val_if_fail (method != NULL, NULL);
 	
@@ -56,31 +58,51 @@ get_source_method_comment (Method *method)
 	/* Processing the parameters */
 	if (method->parameters != NULL) {
 		for (iter_list = g_list_first (method->parameters); iter_list != NULL; iter_list = g_list_next (iter_list)) {
-			buffer = g_strconcat (res, "\n * @", NULL);
-			g_free (res);
-			res = buffer;
-		
 			para = (Parameter *)iter_list->data;
-			buffer = g_strconcat (res, para->name,  NULL);
-			g_free (res);
-			res = buffer;
 
-			for (jter = g_list_first (para->annotations); jter != NULL; jter = g_list_next (jter)) {
-				anno = (gchar *)jter->data;
-				if (jter == g_list_first (para->annotations)) {
-					buffer = g_strconcat (res, ": (", anno, ")", NULL);
-				} else {
-					buffer = g_strconcat (res, " (", anno, ")", NULL);
+			full_flag = g_new (gchar, strlen ("FULL: ") + 1);
+			g_stpcpy (full_flag, "FULL: ");
+			for (iter = 0; iter < strlen (full_flag) && iter < strlen (para->comment); iter++) {
+				if (full_flag[iter] != para->comment[iter]) {
+					break;
 				}
-				g_free (res);
-				res = buffer;
 			}
 
-			if (para->comment != NULL) {
-				buffer = g_strconcat (res, ": ", para->comment, NULL);
+			if (iter == strlen (full_flag)) {
+				full_comment = g_new (gchar, strlen (para->comment) - strlen (full_flag) + 1);
+				stpcpy (full_comment, para->comment + strlen(full_flag));
+				buffer = g_strconcat (res, "\n * ", full_comment, NULL);
 				g_free (res);
 				res = buffer;
+				g_free (full_comment);
+			} else {
+				buffer = g_strconcat (res, "\n * @", NULL);
+				g_free (res);
+				res = buffer;
+
+				para = (Parameter *)iter_list->data;
+				buffer = g_strconcat (res, para->name,  NULL);
+				g_free (res);
+				res = buffer;
+
+				for (jter = g_list_first (para->annotations); jter != NULL; jter = g_list_next (jter)) {
+					anno = (gchar *)jter->data;
+					if (jter == g_list_first (para->annotations)) {
+						buffer = g_strconcat (res, ": (", anno, ")", NULL);
+					} else {
+						buffer = g_strconcat (res, " (", anno, ")", NULL);
+					}
+					g_free (res);
+					res = buffer;
+				}
+
+				if (para->comment != NULL) {
+					buffer = g_strconcat (res, ": ", para->comment, NULL);
+					g_free (res);
+					res = buffer;
+				}
 			}
+			g_free (full_flag);
 		}
 	}
 	
@@ -1791,6 +1813,8 @@ generate_header_enum (FILE *out, Enumeration *enumeration)
 	gchar *nativeName;
 	int i;	
 	gchar *newName;
+	gchar *comment;
+	gchar *tmp;
 	
 	g_return_if_fail (out != NULL && enumeration != NULL);
 	
@@ -1800,6 +1824,28 @@ generate_header_enum (FILE *out, Enumeration *enumeration)
 		g_error ("Please supply a default value for enum type %s by default_native\n", enumeration->name);
 	}
 
+	/*Generate the comment block*/
+	if (enumeration->comment != NULL) {
+		comment = g_strdup ("/**");
+		tmp = g_strconcat (comment, "\n * ", enumeration->name, ":", NULL);
+		g_free (comment);
+		comment = tmp;
+
+		tmp = g_strconcat (comment, "\n * ", enumeration->comment, NULL);
+		g_free (comment);
+		comment = tmp;
+
+		tmp = g_strconcat (comment, "\n */\n", NULL);
+		g_free (comment);
+		comment = tmp;
+
+		fwrite (comment, sizeof (gchar), strlen (comment), out);
+		g_free (comment);
+		comment = NULL;
+		tmp = NULL;
+	}
+
+	/*Generate the declaration*/
 	fwrite ("typedef enum {", sizeof (gchar), strlen ("typedef enum {"), out);
 	
 	for (iter = g_list_first (enumeration->elements); iter != NULL; iter = g_list_next (iter)) {

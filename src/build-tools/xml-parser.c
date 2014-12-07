@@ -220,6 +220,7 @@ enumeration_new ()
 	enumeration->elements = NULL;
 	enumeration->name = NULL;
 	enumeration->defaultNative = NULL;
+	enumeration->comment = NULL;
 	
 	return enumeration;
 }
@@ -237,6 +238,7 @@ enumeration_free (Enumeration *enumeration)
 	g_list_free (enumeration->elements);
 	g_free (enumeration->name);
 	g_free (enumeration->defaultNative);
+	g_free (enumeration->comment);
 	enumeration = NULL;
 }
 
@@ -452,6 +454,8 @@ parse_enumeration (xmlNode *node, Enumeration *enumeration)
 			enumeration->name = (gchar *)xmlNodeListGetString (attr->doc, attr->children, 1);
 		} else if (xmlStrcmp (attr->name, (xmlChar *)"default_native") == 0) {
 			enumeration->defaultNative = (gchar *)xmlNodeListGetString (attr->doc, attr->children, 1);
+		} else if (xmlStrcmp (attr->name, (xmlChar *)"comment") == 0) {
+			enumeration->comment = (gchar *)xmlNodeListGetString (attr->doc, attr->children, 1);
 		} else {
 			printf ("The node named %s in enum cannot be parsed\n", attr->name);
 		}
