@@ -53,7 +53,7 @@ G_BEGIN_DECLS
 typedef struct _ICalObject ICalObject;
 
 /**
- * ICalObject:
+ * ICalObjectClass:
  *
  * This is an ICalObject class struct.
  */

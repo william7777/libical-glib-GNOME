@@ -1766,10 +1766,11 @@ generate_header_and_source (Structure *structure, gchar * dir)
 	*headerName = '\0';
 	sourceName = g_new (gchar, BUFFER_SIZE);
 	*sourceName = '\0';
-	upperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
 
+	upperCamel = g_strconcat (structure->nameSpace, structure->name, NULL);
 	lowerTrain = get_lower_train_from_upper_camel (upperCamel);
 	g_free (upperCamel);
+
 	g_stpcpy (headerName + strlen (headerName), dir);
 	g_stpcpy (headerName + strlen (headerName), lowerTrain);
 	g_stpcpy (headerName + strlen (headerName), ".h");
@@ -2003,8 +2004,7 @@ static gint generate_library (gint count, char **fileNames) {
 	xmlDoc *doc;
 	xmlNode *node;
 	Structure *structure;
-	gchar *path;	
-	GList *iter_enum;
+	gchar *path;
 	Enumeration *enumeration;
 	gchar *buffer;
 	GList *structures;
@@ -2015,54 +2015,70 @@ static gint generate_library (gint count, char **fileNames) {
 	
 	buffer = g_new (gchar, BUFFER_SIZE);
 	*buffer = '\0';
+
+	/* Cache the type and its kind, like ICalComponnet--->std or ICalPropertyKind--->enum */
 	type2kind = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
+	/* Cache the type and the structure where it is defined, like ICalComponent--->Structure_storing_ICalComponent */
 	type2structure = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
+
 	initialize_default_value_table ();
 	structures = NULL;
 
+	/* Parse the all the XML files into the Structure */
 	for (iter_general = 0; iter_general < count; iter_general++){
 		path = g_build_filename (apis_dir, fileNames[iter_general], NULL);
 		doc = xmlParseFile (path);
-		g_free (path);
-		
 		if (doc == NULL) {
-			printf ("Get Doc Error\n");
+			printf ("The doc %s cannot be parsed.\n", path);
 			return 1;
 		}
+		g_free (path);
 
 		node = xmlDocGetRootElement (doc);
 		if (node == NULL) {
-			printf ("Get root node fail\n");
+			printf ("The root node cannot be retrieved from the doc\n");
 			return 1;
 		}
+
 		structure = structure_new ();
-		parse_structure (node, structure);
+		if (!parse_structure (node, structure)) {
+			printf ("The node cannot be parsed into a structure.\n");
+			return 1;
+		}
 		
 		if (structure->native != NULL) {
 			g_hash_table_insert (type2kind, g_strconcat (structure->nameSpace, structure->name, NULL), (void *)"std");
 			g_hash_table_insert (type2structure, g_strconcat (structure->nameSpace, structure->name, NULL), structure);
-			if (structure->isBare && structure->defaultNative != NULL) {
-				g_hash_table_insert (defaultValues, g_strconcat (structure->nameSpace, structure->name, NULL), g_strdup (structure->defaultNative));
+			if (structure->isBare) {
+				if (structure->defaultNative != NULL) {
+					g_hash_table_insert (defaultValues, g_strconcat (structure->nameSpace, structure->name, NULL), g_strdup (structure->defaultNative));
+				} else {
+					printf ("Please supply a default value for the bare structure %s\n", structure->name);
+					return 1;
+				}
 			}
 		}
 		
-		for (iter_enum = g_list_first (structure->enumerations); iter_enum != NULL; iter_enum = g_list_next (iter_enum)) {
-			enumeration = (Enumeration *)iter_enum->data;
+		for (iter_list = g_list_first (structure->enumerations); iter_list != NULL; iter_list = g_list_next (iter_list)) {
+			enumeration = (Enumeration *)iter_list->data;
 			g_hash_table_insert (type2kind, g_strdup (enumeration->name), (void *)"enum");
 			g_hash_table_insert (type2structure, g_strdup (enumeration->name), structure);
 
 			if (enumeration->defaultNative != NULL) {
 				g_hash_table_insert (defaultValues, g_strdup (enumeration->name), g_strdup (enumeration->defaultNative));
+			} else {
+				printf ("Please supply a default value for enum %s\n", enumeration->name);
+				return 1;
 			}
 		}
 		structures = g_list_append (structures, structure);
 		xmlFreeDoc (doc);
-		
 	}
 
-	//Generate libical-glib.h
+	/* Generate the common header for all the headers, which is libical-glib.h for here */
 	generate_header_header_file (structures);
 
+	/* Generate all the header and source files for each structure */
 	for (iter_list = g_list_first (structures); iter_list != NULL; iter_list = g_list_next (iter_list)) {
 		structure = (Structure *)iter_list->data;
 		generate_header_and_source (structure, (char*)"");
@@ -2175,7 +2191,9 @@ main (int argc,
 		return 1;
 	}
 
+	/* The directory to search for templates */
 	templates_dir = argv[1];
+	/* The directory to search for XML files */
 	apis_dir = argv[2];
 
 	fileNames = g_new (gchar *, argc-3);
@@ -2189,5 +2207,6 @@ main (int argc,
 		fileNames[iter_general] = NULL;
 	}
 	g_free (fileNames);
+
 	return res;
 }
