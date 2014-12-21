@@ -503,6 +503,7 @@ get_source_method_proto_set_native (Structure *structure)
 	method_free (set_native);
 	return res;
 }
+
 gchar *
 get_source_method_proto_set_is_global (Structure *structure)
 {
@@ -536,6 +537,7 @@ get_source_method_proto_set_is_global (Structure *structure)
 	method_free (set_is_global);
 	return res;
 }
+
 gchar *
 get_source_method_proto_set_property (Structure *structure)
 {
@@ -651,64 +653,67 @@ generate_header_method_proto (FILE *out, Method *method)
 	GList *iter_list;
 	Parameter *para;
 	gint count;
-	gchar *padding;
+	gchar *buffer;
 	gint iter;
 	gint len;
 	
-	padding = g_new (gchar, BUFFER_SIZE);	
-	*padding = '\0';
+	buffer = g_new (gchar, BUFFER_SIZE);
+	*buffer = '\0';
 	
 	/* Generate the method return */
 	if (method->ret == NULL) {
-		fwrite ("void\t\t", sizeof (char), strlen ("void\t\t"), out);
+		fwrite ("void", sizeof (char), strlen ("void"), out);
+		for (iter = 0; iter < RET_TAB_COUNT; iter++) {
+			fwrite ("\t", sizeof (char), strlen ("\t"), out);
+		}
 	} else {
 		count = strlen (method->ret->type)/TAB_SIZE;
-		*padding = '\0';
+		*buffer = '\0';
 		if (count >= RET_TAB_COUNT) {
-			padding[0] = '\n';
-			padding[1] = '\0';
+			buffer[0] = '\n';
+			buffer[1] = '\0';
 			count = 0;
 		}
 		for (iter = count; iter < RET_TAB_COUNT; iter++) {
-			len = strlen (padding);
-			padding[len] = '\t';
-			padding[len+1] = '\0';
+			len = strlen (buffer);
+			buffer[len] = '\t';
+			buffer[len+1] = '\0';
 		}
 		
 		fwrite (method->ret->type, sizeof (char), strlen (method->ret->type), out);
 		if (method->ret->type[strlen (method->ret->type) - 1] != '*')
 			fputc (' ', out);
-		fwrite (padding, sizeof (gchar), strlen (padding), out);
+		fwrite (buffer, sizeof (gchar), strlen (buffer), out);
 	}
 	
 	/* Generate the method name */
 	count = strlen (method->name)/TAB_SIZE;
-	*padding = '\0';
+	*buffer = '\0';
 	if (count >= METHOD_NAME_TAB_COUNT) {
-		padding[0] = '\n';
-		padding[1] = '\0';
+		buffer[0] = '\n';
+		buffer[1] = '\0';
 		count = 0;
 		for (iter = count; iter < RET_TAB_COUNT + METHOD_NAME_TAB_COUNT; iter++) {
-			len = strlen (padding);
-			padding[len] = '\t';
-			padding[len+1] = '\0';
+			len = strlen (buffer);
+			buffer[len] = '\t';
+			buffer[len+1] = '\0';
 		}
 	} else {
 		for (iter = count; iter < METHOD_NAME_TAB_COUNT; iter++) {
-			len = strlen (padding);
-			padding[len] = '\t';
-			padding[len+1] = '\0';
+			len = strlen (buffer);
+			buffer[len] = '\t';
+			buffer[len+1] = '\0';
 		}
 	}
 
 	fwrite (method->name, sizeof (char), strlen (method->name), out);
-	fwrite (padding, sizeof (gchar), strlen (padding), out);
+	fwrite (buffer, sizeof (gchar), strlen (buffer), out);
 	
 	/* Generate all the parameters */
 	for (iter = 0; iter < RET_TAB_COUNT + METHOD_NAME_TAB_COUNT; iter++) {
-		padding[iter] = '\t';
+		buffer[iter] = '\t';
 	}
-	padding[iter] = '\0';
+	buffer[iter] = '\0';
 	
 	if (method->parameters == NULL) {
 		fwrite ("(void);", sizeof (gchar), strlen ("(void);"), out);
@@ -719,7 +724,7 @@ generate_header_method_proto (FILE *out, Method *method)
 				fwrite ("(", sizeof (char), strlen ("("), out);
 			else {
 				fwrite (",\n", sizeof (char), strlen (",\n"), out);
-				fwrite (padding, sizeof (gchar), strlen (padding), out);
+				fwrite (buffer, sizeof (gchar), strlen (buffer), out);
 				fputc (' ', out);
 			}
 			fwrite ((char *)para->type, sizeof (char), strlen (para->type), out);
@@ -730,7 +735,7 @@ generate_header_method_proto (FILE *out, Method *method)
 		fwrite (");", sizeof (char), strlen (");"), out);
 	}
 	fputc ('\n', out);
-	g_free (padding);
+	g_free (buffer);
 }
 
 void
@@ -842,9 +847,7 @@ generate_header (FILE *out, Structure *structure, GHashTable* table)
 	g_return_if_fail (out != NULL && structure != NULL && table != NULL);
 
 	in = open_file (templates_dir, HEADER_TEMPLATE);
-	
 	generate_code_from_template (in, out, structure, table);
-
 	fclose (in);
 }
 
@@ -856,9 +859,7 @@ generate_header_structure_boilerplate (FILE *out, Structure *structure, GHashTab
 	g_return_if_fail (out != NULL && structure != NULL && table != NULL);
 	
 	in = open_file (templates_dir, HEADER_STRUCTURE_BOILERPLATE_TEMPLATE);
-	
 	generate_code_from_template (in, out, structure, table);
-
 	fclose (in);
 }
 
@@ -986,7 +987,6 @@ generate_source_includes (FILE *out, Structure *structure)
 		fwrite (".h>\n", sizeof (gchar), strlen (".h>\n"), out);
 	}
 
-	//Assume that the source must have some includes and for aesthetic issue
 	fputc ('\n', out);
 	g_hash_table_destroy (includeNames);
 }
@@ -995,11 +995,10 @@ void
 generate_header_forward_declaration (FILE *out, Structure *structure)
 {
 	gchar *typeName;
+	gchar *typeKind;
 	Structure *parentStructure;
 	gchar *upperCamel;
 	gchar *ownUpperCamel;
-	gchar *includeName;
-	gchar *typeType;
 	GHashTable *includeNames;
 	GHashTableIter iter_table;
 	gpointer key;
@@ -1021,29 +1020,31 @@ generate_header_forward_declaration (FILE *out, Structure *structure)
 				g_free (ownUpperCamel);
 				continue;
 			}
-			/* Temporary solution. To be rewritten */	
-			if (g_strcmp0 (upperCamel, typeName) == 0) {
-				g_hash_table_insert (includeNames, typeName, (char *)"structure");
-			} else {
-				g_hash_table_insert (includeNames, typeName, (char *)"enum");
+
+			typeKind = g_hash_table_lookup (type2kind, typeName);
+			if (g_strcmp0 (typeKind, "std") == 0) {
+				g_hash_table_insert (includeNames, typeName, (gchar *)"std");
 			}
 			g_free (upperCamel);
 			g_free (ownUpperCamel);
 		}
 	}
 	
+	typeName = NULL;
+
 	for (g_hash_table_iter_init (&iter_table, includeNames); g_hash_table_iter_next (&iter_table, &key, &value);) {
-		includeName = (gchar *)key;
-		typeType = (gchar *)value;
-		if (g_strcmp0 (typeType, "structure") == 0) {
-			fwrite ("typedef struct _", sizeof (gchar), strlen ("typedef struct _"), out);
-			fwrite (includeName, sizeof (gchar), strlen (includeName), out);
-			fputc (' ', out);
-			fwrite (includeName, sizeof (gchar), strlen (includeName), out);
-			fputc (';', out);
-			fputc ('\n', out);
-		}
+		typeName = (gchar *)key;
+		fwrite ("typedef struct _", sizeof (gchar), strlen ("typedef struct _"), out);
+		fwrite (typeName, sizeof (gchar), strlen (typeName), out);
+		fputc (' ', out);
+		fwrite (typeName, sizeof (gchar), strlen (typeName), out);
+		fputc (';', out);
+		fputc ('\n', out);
 	}
+	if (typeName != NULL) {
+		fputc ('\n', out);
+	}
+
 	g_hash_table_destroy (includeNames);
 }
 
@@ -1055,9 +1056,7 @@ generate_source (FILE *out, Structure *structure, GHashTable* table)
 	g_return_if_fail (out != NULL && structure != NULL && table != NULL);
 
 	in = open_file (templates_dir, SOURCE_TEMPLATE);
-
 	generate_code_from_template (in, out, structure, table);
-
 	fclose (in);
 }
 
@@ -1069,9 +1068,7 @@ generate_source_structure_boilerplate (FILE *out, Structure *structure, GHashTab
 	g_return_if_fail (out != NULL && structure != NULL && table != NULL);
 
 	in = open_file (templates_dir, SOURCE_STRUCTURE_BOILERPLATE_TEMPLATE);
-
 	generate_code_from_template (in, out, structure, table);
-
 	fclose (in);
 }
 
@@ -1611,88 +1608,6 @@ get_translator_name_for_return (gchar *upperCamel)
 	lowerSnake = get_lower_snake_from_upper_camel (upperCamel);
 	res = g_strconcat (lowerSnake, "_new_full", NULL);
 	g_free (lowerSnake);
-	return res;
-}
-
-gchar *
-get_source_method_checkers (Method *method)
-{	
-	GList *iter;
-	gchar *buffer;
-	gchar *res;
-	gchar *checker;
-	Parameter *para;
-	
-	g_return_val_if_fail (method != NULL, NULL);
-
-	buffer = g_new (gchar, BUFFER_SIZE);	
-	*buffer = '\0';
-	
-	for (iter = g_list_first (method->parameters); iter != NULL; iter = g_list_next (iter)) {
-		para = (Parameter *)iter->data;
-		checker = get_source_method_checker (para, method->ret);
-		g_stpcpy (buffer + strlen (buffer), checker);
-		g_stpcpy (buffer + strlen (buffer), "\n");
-	}
-	res = g_new (gchar, strlen (buffer) + 1);
-	g_stpcpy (res, buffer);
-	g_free (buffer);
-	return res;
-}
-
-/* The checker will generate NULL as a temprary solution.
-   In the future, a map will be built storing all the type info including the defaultValue
-   will be used.*/
-gchar *
-get_source_method_checker (Parameter *para, Ret *ret)
-{
-	gboolean isNullable;
-	gboolean needReturn;
-	gchar *annotation;
-	GList *iter;
-	gchar *trueType;
-	gchar *res;
-	gchar *buffer;
-	gchar *lowerSnake;	
-	gchar *assert;
-	
-	g_return_val_if_fail (para != NULL, NULL);
-	
-	isNullable = FALSE;
-	needReturn = FALSE;
-	buffer = g_new (gchar, BUFFER_SIZE);
-	*buffer = '\0';
-	lowerSnake = get_lower_snake_from_upper_camel (para->type);
-	
-	for (iter = g_list_first (para->annotations); iter != NULL; iter = g_list_next (iter)) {
-		annotation = (gchar *)iter->data;
-		if (g_strcmp0 (annotation, "nullable") == 0)
-			isNullable = TRUE;
-	}
-	
-	if (ret != NULL)
-		needReturn = TRUE;
-	
-	if (needReturn) {
-		assert = g_strdup ("g_return_val_if_fail");
-	} else {
-		assert = g_strdup ("g_return_if_fail");
-	}
-	
-	trueType = get_true_type (para->type);
-	
-	if (!isNullable) {
-		g_stpcpy (buffer + strlen (buffer), "\n");
-		g_stpcpy (buffer + strlen (buffer), assert);
-		g_stpcpy (buffer + strlen (buffer), " (");
-		g_stpcpy (buffer + strlen (buffer), para->name);
-		g_stpcpy (buffer + strlen (buffer), " != NULL);");
-	}
-	
-	res = g_strdup (buffer);
-	g_free (buffer);
-	g_free (lowerSnake);
-	g_free (trueType);
 	return res;
 }
 
