@@ -48,20 +48,17 @@ get_source_method_comment (Method *method)
 	for (iter_list = g_list_first (method->annotations); iter_list != NULL; iter_list = g_list_next (iter_list)) {
 		anno = (gchar *)iter_list->data;
 		buffer = g_strconcat (res, " (", anno, ")", NULL);
-
 		g_free (res);
 		res = buffer;
 	}
-
-	comment_line = g_new (gchar, BUFFER_SIZE);
 	
 	/* Processing the parameters */
 	if (method->parameters != NULL) {
 		for (iter_list = g_list_first (method->parameters); iter_list != NULL; iter_list = g_list_next (iter_list)) {
 			para = (Parameter *)iter_list->data;
 
-			full_flag = g_new (gchar, strlen ("FULL: ") + 1);
-			g_stpcpy (full_flag, "FULL: ");
+			/* Handling the special case in which the parameter's comment is fully specified */
+			full_flag = g_strdup ("FULL:");
 			for (iter = 0; iter < strlen (full_flag) && iter < strlen (para->comment); iter++) {
 				if (full_flag[iter] != para->comment[iter]) {
 					break;
@@ -108,27 +105,23 @@ get_source_method_comment (Method *method)
 	
 	/* Processing general comment */
 	if (method->comment != NULL) {
+		comment_line = g_new (gchar, BUFFER_SIZE);
+		*comment_line = '\0';
 		len = strlen (method->comment);
 		count = 0;
-		cursor = 0;
-		comment_line[cursor++] = '\n';
-		comment_line[cursor++] = ' ';
-		comment_line[cursor++] = '*';
-		comment_line[cursor++] = '\n';
-		comment_line[cursor++] = ' ';
-		comment_line[cursor++] = '*';
-		comment_line[cursor++] = ' ';
+		g_stpcpy (comment_line, "\n *\n * ");
 		for (iter = 0; iter < len; iter++) {
 			if (count >= COMMENT_LINE_LENGTH && method->comment[iter] == ' ') {
-				comment_line[cursor++] = '\n';
-				comment_line[cursor++] = ' ';
-				comment_line[cursor++] = '*';
+				g_stpcpy (comment_line + strlen (comment_line), "\n *");
 				count = -1;
-			} 
-			comment_line[cursor++] = method->comment[iter];
+			}
+
+			cursor = strlen (comment_line);
+			comment_line[cursor] = method->comment[iter];
+			comment_line[cursor+1] = '\0';
+
 			count++;
 		}
-		comment_line[cursor] = '\0';
 		
 		buffer = g_strconcat (res, comment_line, NULL);
 		g_free (res);
@@ -155,7 +148,6 @@ get_source_method_comment (Method *method)
 
 		if (method->ret->comment != NULL) {
 			buffer = g_strconcat (res, ": ", method->ret->comment, NULL);
-
 			g_free (res);
 			res = buffer;
 		}
@@ -338,6 +330,7 @@ generate_header_method_get_type (FILE *out, Structure *structure)
 	generate_header_method_proto (out, get_type);
 	method_free (get_type);
 }
+
 void
 generate_header_method_new_full (FILE *out, Structure *structure)
 {
