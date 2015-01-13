@@ -17,7 +17,6 @@ SUBDIRS = \
 	src \
 	tests \
 	docs \
-	m4 \
 	$(NULL)
 
 EXTRA_DIST =  \
