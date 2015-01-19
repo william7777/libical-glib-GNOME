@@ -10,7 +10,6 @@ src_generator_CPPFLAGS = \
 	$(NULL)
 
 src_generator_SOURCES = \
-	common-header.h \
 	generator.c \
 	generator.h \
 	xml-parser.c \

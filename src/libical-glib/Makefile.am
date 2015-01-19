@@ -173,7 +173,6 @@ endif
 EXTRA_DIST = \
 	i-cal-object.c.in \
 	i-cal-object.h.in \
-	libical-glib.h.in \
 	$(XML_FILES) \
 	$(NULL)
 

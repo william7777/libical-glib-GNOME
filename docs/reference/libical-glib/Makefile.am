@@ -58,7 +58,7 @@ EXTRA_DIST += \
 	$(content_files) \
 	$(DOC_MODULE)-docs.sgml \
 	$(DOC_MODULE)-sections.txt \
-	$(DOC_MODULE).hierachy \
+	$(DOC_MODULE).hierarchy \
 	$(NULL)
 
 #TESTS = $(GTKDOC_CHECK)
