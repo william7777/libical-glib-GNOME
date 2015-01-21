@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 #GI_TYPELIB_PATH=$PREFIX/lib/girepository-1.0/ ./timezone.py
 from gi.repository import ICalGLib
 

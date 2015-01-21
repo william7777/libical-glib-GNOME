@@ -67,7 +67,7 @@ libical_glib_1_0_la_LIBADD = \
 	$(GOBJECT2_LIBS) \
 	$(NULL)
 
-libical_glib_1_0_la_LDFLAGS = -avoid-version $(NO_UNDEFINED) \
+libical_glib_1_0_la_LDFLAGS = $(NO_UNDEFINED) \
 	$(CODE_COVERAGE_LDFLAGS) \
 	$(NULL)
 
