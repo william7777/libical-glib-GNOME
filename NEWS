@@ -1,4 +1,10 @@
-libical-glib 1.0.0 2015-1-19
------------------------------
+=============================
+libical-glib 1.0.0 2015-01-19
+=============================
 First release
 
+=============================
+libical-glib 1.0.1 2015-03-16
+=============================
+*Change the shebang for tests
+*Remove the -avoid-version from libical_glib_1_0_la_LDFLAGS in src/libical-glib/Makefile.am.

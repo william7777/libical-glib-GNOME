@@ -25,3 +25,11 @@ The project will be continued and hosted on
 ========================
 UNSTABLE
 1.00
+=======================
+UNSTABLE
+1.01
+3/16/2015
+1. Change all the shebang in tests to /usr/bin/env python3
+2. Remove the -avoid-version from libical_glib_1_0_la_LDFLAGS in src/libical-glib/Makefile.am.
+   Thanks to @Koop Mast: This causes libtool to not make the libical-glib-1.0.so.0 and libical-glib-1.0.so.0.0.0 symlinks. This will result in ld-elf.so not being able to find the libraries if I understand it correctly.
+
