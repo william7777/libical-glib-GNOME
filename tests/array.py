@@ -7,11 +7,11 @@ from sys import getsizeof
 
 array = ICalGLib.Array.new(100, 100);
 
-element1 = 1;
-element2 = 2 ;
-element3 = 3;
-element4 = 4;
-element5 = 5;
+element1 = "hello";
+element2 = "world";
+element3 = "how";
+element4 = "are";
+element5 = "you";
 
 #TEST APPEND
 array.append (element1);
