@@ -7,11 +7,11 @@ from sys import getsizeof
 
 array = ICalGLib.Array.new(100, 100);
 
-element1 = "hello";
-element2 = "world";
-element3 = "how";
-element4 = "are";
-element5 = "you";
+element1 = 1;
+element2 = 2 ;
+element3 = 3;
+element4 = 4;
+element5 = 5;
 
 #TEST APPEND
 array.append (element1);
@@ -49,11 +49,11 @@ array.remove_element_at (2);
 e3 = array.element_at(2);
 assert (element4 == e3);
 
-attach1 = ICalGLib.Attach.new_from_url (element1);
-attach2 = ICalGLib.Attach.new_from_url (element2);
-attach3 = ICalGLib.Attach.new_from_url (element3);
-attach4 = ICalGLib.Attach.new_from_url (element4);
-attach5 = ICalGLib.Attach.new_from_url (element5);
+attach1 = ICalGLib.Attach.new_from_url ("hello");
+attach2 = ICalGLib.Attach.new_from_url ("world");
+attach3 = ICalGLib.Attach.new_from_url ("how");
+attach4 = ICalGLib.Attach.new_from_url ("are");
+attach5 = ICalGLib.Attach.new_from_url ("you");
 
 def my_cmp(a, b): 
     return cmp(a.get_url(), b.get_url());
