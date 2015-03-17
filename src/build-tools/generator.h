@@ -1,8 +1,18 @@
-/* 
- * File:   generator.h
- * Author: williamyu
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
+/*
+ * Copyright (C) 2015 William Yu <williamyu@gnome.org>
  *
- * Created on June 29, 2014, 4:30 PM
+ * This library is free software: you can redistribute it and/or modify it
+ * under the terms of version 2.1. of the GNU Lesser General Public License
+ * as published by the Free Software Foundation.
+ *
+ * This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef GENERATOR_H
@@ -24,21 +34,6 @@
 #define HEADER_STRUCTURE_BOILERPLATE_TEMPLATE "header-structure-boilerplate-template"
 #define SOURCE_STRUCTURE_BOILERPLATE_TEMPLATE "source-structure-boilerplate-template"
 #define ENUM_HEADER "ICAL"
-#define LICENCE_HEADER \
-	"/* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */\n\
-	/*\n\
-	 * This library is free software: you can redistribute it and/or modify it\n\
-	 * under the terms of the GNU Lesser General Public License as published by\n\
-	 * the Free Software Foundation.\n\
-	 *\n\
-	 * This library is distributed in the hope that it will be useful, but\n\
-	 * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY\n\
-	 * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License\n\
-	 * for more details.\n\
-	 *\n\
-	 * You should have received a copy of the GNU Lesser General Public License\n\
-	 * along with this library. If not, see <http://www.gnu.org/licenses/>.\n\
-	 */\n"
 #define BUFFER_SIZE 2000
 #define TAB_SIZE 8
 #define RET_TAB_COUNT 2
