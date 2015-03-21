@@ -126,7 +126,7 @@
         <parameter type="ICalComponent *" name="component" comment="A #ICalComponent."/>
         <parameter type="ICalComponentKind" name="kind" comment="A #ICalComponentKind."/>
         <returns type="ICalComponent *" annotation="transfer full" translator_argus="(GObject *)component" comment="The first #ICalComponent."/>
-        <comment xml:space="preserve">Get the first #ICalComponent with specific kind in #ICalComponent.></comment>
+        <comment xml:space="preserve">Get the first #ICalComponent with specific kind in #ICalComponent.</comment>
     </method>
     <method name="i_cal_component_get_next_component" corresponds="icalcomponent_get_next_component" since="1.0">
         <parameter type="ICalComponent *" name="component" comment="A #ICalComponent."/>
