@@ -1537,7 +1537,7 @@ get_source_method_body (Method *method, const gchar *nameSpace)
 				}
 				 * */
 			}
-			g_stpcpy (buffer + strlen (buffer), ") ");
+			g_stpcpy (buffer + strlen (buffer), ")");
 			g_free (translator);
 		}
 		g_stpcpy (buffer + strlen (buffer), ";");
