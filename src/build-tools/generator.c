@@ -1455,7 +1455,7 @@ get_source_method_body (Method *method, const gchar *nameSpace)
 	buffer[0] = '\0';
 	translator = NULL;
 	
-	comment = get_source_method_comment (method);	
+	comment = get_source_method_comment (method);
 	g_stpcpy (buffer + strlen (buffer), comment);
 	g_free (comment);
 	
