@@ -4,13 +4,12 @@ AM_DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
 @GNOME_CODE_COVERAGE_RULES@
 
 pkgconfigdir = $(libdir)/pkgconfig
-INTERFACE_VERSION=1.0
 
-%-$(INTERFACE_VERSION).pc: %.pc
+%-$(API_VERSION).pc: %.pc
 	cp $< $@
 
-pkgconfig_in_files = libical-glib-$(INTERFACE_VERSION).pc
-pkgconfig_DATA = $(pkgconfig_in_files:.pc.in=-$(INTERFACE_VERSION).pc)
+pkgconfig_in_files = libical-glib-$(API_VERSION).pc
+pkgconfig_DATA = $(pkgconfig_in_files:.pc.in=-$(API_VERSION).pc)
 
 NULL =
 

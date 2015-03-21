@@ -2,12 +2,12 @@ prefix=@prefix@
 exec_prefix=@exec_prefix@
 libdir=@libdir@
 includedir=@includedir@
-privlibdir=@privlibdir@
 datarootdir=@datarootdir@
 datadir=@datadir@
-privdatadir=@privdatadir@
 
 Name: libical-glib
 Description: A GObject interface of the libical library
 Version: @VERSION@
-Requires: glib-2.0, gobject-2.0
+Requires: glib-2.0, gobject-2.0, libical
+Libs: -L${libdir} -lical-glib-@API_VERSION@
+Cflags: -I${includedir}

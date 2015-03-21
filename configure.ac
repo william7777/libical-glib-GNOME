@@ -4,6 +4,7 @@ m4_define([ical_minor_version], [0])
 m4_define([ical_micro_version], [1])
 
 m4_define([ical_version], [ical_major_version.ical_minor_version.ical_micro_version])
+m4_define([api_version], [1.0])
 
 AC_PREREQ(2.58)
 AC_INIT([libical-glib], [ical_version], [http://bugzilla.gnome.org/browse.cgi?product=TODO])
@@ -21,6 +22,8 @@ m4_define([libxml_minimum_version], [2.7.3])
 dnl Keep these two definitions in agreement.
 m4_define([glib_minimum_version], [2.32])
 m4_define([glib_encoded_version], [GLIB_VERSION_2_32])
+
+AC_SUBST([API_VERSION],[api_version])
 
 dnl ***********************************
 dnl Automake 1.11 - Silent Build Rules
