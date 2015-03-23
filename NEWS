@@ -16,6 +16,8 @@ All commits:
 [0e82a57] Add more comment on the method i_cal_timezone_destroy to differentiate it from i_cal_timezone_free (William Yu)
 [3d74a11] Apply Milan patch to fix the issue with array.py. The error was about array.append(element1) in array.py. The message was ValueError: Pointer arguments are restricted to integers, capsules and None. (William Yu)
 [7285db9] Version bump (William Yu)
+[b87942e] Update NEWS before release 1.0.2 (William Yu)
+[5a64af1] Delete the version-specific details to avoid the overlap with NEWS file (William Yu)
 
 Divided commits:
 
@@ -37,6 +39,8 @@ Miscellaneous:
 	Add more comment on the method i_cal_timezone_destroy to differentiate it from i_cal_timezone_free (William Yu)
 	Apply Milan patch to fix the issue with array.py. The error was about array.append(element1) in array.py. The message was ValueError: Pointer arguments are restricted to integers, capsules and None. (William Yu)
 	Version bump (William Yu)
+	Update NEWS before release 1.0.2 (William Yu)
+	Delete the version-specific details to avoid the overlap with NEWS file (William Yu)
 
 Libical-Glib 1.0.1 2015-03-16
 -----------------------------
