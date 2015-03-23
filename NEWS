@@ -1,10 +1,52 @@
-=============================
-libical-glib 1.0.0 2015-01-19
-=============================
-First release
+Libical-Glib 1.0.2 2015-3-23
+----------------------------
 
-=============================
-libical-glib 1.0.1 2015-03-16
-=============================
+All commits:
+
+[e975eb5] Attempt to fix the issues in tests/array.py for i_cal_array_append. The second argument in Python for void * could only be integers, capsules and None (William Yu)
+[cc394ff] Attempt to fix the issues in tests/timezone.py. The timezones.size() has been commented out due to the unexpected output value until now (William Yu)
+[b7065b0] Attempt to fix the issues with array.py by changing the type second argument of i_cal_array_append from gcontpointer to gpointer (William Yu)
+[11377bb] Attempt to fix the issues in timezone.py for the size of builtin timezones. Different machines may produce different number of builtin timezones. (William Yu)
+[bb6282f] Change and add license information in generated source files, hardcoded source files and xml files in src/api from LGPL to LGPLv2.1 (William Yu)
+[8ea916d] Correct a typo in the comment of the method i_cal_component_get_first_component (William Yu)
+[3b03ee6] Remove the redundant space at the ends of some return statements inside the source files (William Yu)
+[1eb7bea] Add a new line at the end of each XML file if there is not (William Yu)
+[5b2d4eb] Append every source file with a new line (William Yu)
+[442095e] Remove the false header declaration comment for i-cal-object.h/.c (William Yu)
+[0e82a57] Add more comment on the method i_cal_timezone_destroy to differentiate it from i_cal_timezone_free (William Yu)
+[3d74a11] Apply Milan patch to fix the issue with array.py. The error was about array.append(element1) in array.py. The message was ValueError: Pointer arguments are restricted to integers, capsules and None. (William Yu)
+[7285db9] Version bump (William Yu)
+
+Divided commits:
+
+
+Bug Fixes:
+
+
+Miscellaneous:
+	Attempt to fix the issues in tests/array.py for i_cal_array_append. The second argument in Python for void * could only be integers, capsules and None (William Yu)
+	Attempt to fix the issues in tests/timezone.py. The timezones.size() has been commented out due to the unexpected output value until now (William Yu)
+	Attempt to fix the issues with array.py by changing the type second argument of i_cal_array_append from gcontpointer to gpointer (William Yu)
+	Attempt to fix the issues in timezone.py for the size of builtin timezones. Different machines may produce different number of builtin timezones. (William Yu)
+	Change and add license information in generated source files, hardcoded source files and xml files in src/api from LGPL to LGPLv2.1 (William Yu)
+	Correct a typo in the comment of the method i_cal_component_get_first_component (William Yu)
+	Remove the redundant space at the ends of some return statements inside the source files (William Yu)
+	Add a new line at the end of each XML file if there is not (William Yu)
+	Append every source file with a new line (William Yu)
+	Remove the false header declaration comment for i-cal-object.h/.c (William Yu)
+	Add more comment on the method i_cal_timezone_destroy to differentiate it from i_cal_timezone_free (William Yu)
+	Apply Milan patch to fix the issue with array.py. The error was about array.append(element1) in array.py. The message was ValueError: Pointer arguments are restricted to integers, capsules and None. (William Yu)
+	Version bump (William Yu)
+
+Libical-Glib 1.0.1 2015-03-16
+-----------------------------
+
 *Change the shebang for tests
 *Remove the -avoid-version from libical_glib_1_0_la_LDFLAGS in src/libical-glib/Makefile.am.
+
+libical-glib 1.0.0 2015-01-19
+-----------------------------
+
+First release
+
+
