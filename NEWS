@@ -18,6 +18,8 @@ All commits:
 [7285db9] Version bump (William Yu)
 [b87942e] Update NEWS before release 1.0.2 (William Yu)
 [5a64af1] Delete the version-specific details to avoid the overlap with NEWS file (William Yu)
+[fee1902] Update the news with the commit for README (William Yu)
+[1713508] Stop using ChangeLog to avoid overlap with NEWS and git log (William Yu)
 
 Divided commits:
 
@@ -41,6 +43,8 @@ Miscellaneous:
 	Version bump (William Yu)
 	Update NEWS before release 1.0.2 (William Yu)
 	Delete the version-specific details to avoid the overlap with NEWS file (William Yu)
+	Update the news with the commit for README (William Yu)
+	Stop using ChangeLog to avoid overlap with NEWS and git log (William Yu)
 
 Libical-Glib 1.0.1 2015-03-16
 -----------------------------
