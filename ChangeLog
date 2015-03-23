@@ -1,4 +1,8 @@
-2015-01-19  William Yu  <williamyu@gnome.org>
-        * configure.ac: Version 1.0.0.
-2015-03-16  William Yu  <williamyu@gnome.org>
-        * configure.ac: Version 1.0.1.
+2015-03-23  William Yu <williamyu@gnome.org>
+
+	The ChangeLog is no longer auto-generated when releasing.
+	Get a clone of git repository and list changes with 'git log' there,
+	   $ git clone git://git.gnome.org/libical-glib
+	or browse changes online at
+	   http://git.gnome.org/browse/libical-glib/log/?h=master
+
