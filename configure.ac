@@ -1,7 +1,7 @@
 dnl libical-glib version
 m4_define([ical_major_version], [1])
 m4_define([ical_minor_version], [0])
-m4_define([ical_micro_version], [1])
+m4_define([ical_micro_version], [2])
 
 m4_define([ical_version], [ical_major_version.ical_minor_version.ical_micro_version])
 m4_define([api_version], [1.0])
