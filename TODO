@@ -1,6 +1,6 @@
 TODO:
--Convert all translator_args to owner_op or native_op for parameter
--Test i_cal_mime_parse, i_cal_parser_parse
+-Create installed Python tests.
+-Try to move the declarations of methods with libical type arguments into a new file libical-glib-private.h.
 
 Notes:
 -Ignore pvl and sspm since they are too low level.
