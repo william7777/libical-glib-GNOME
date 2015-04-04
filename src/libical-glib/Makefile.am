@@ -110,6 +110,7 @@ libical_glib_1_0_la_SOURCES = \
 
 privinclude_HEADERS = \
 	libical-glib.h \
+	libical-glib-private.h \
 	i-cal-object.h \
 	$(addsuffix .h, $(all_file_names)) \
 	$(NULL)

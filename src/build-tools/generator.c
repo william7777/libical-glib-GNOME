@@ -652,15 +652,58 @@ generate_header_method_protos (FILE *out, Structure *structure)
 {
 	GList *iter;
 	Method *method;
+	gchar *typeName;
+	FILE * privateHeader;
+	gchar *privateHeaderComment;
 	
+	privateHeader = NULL;
+	typeName = g_strconcat (structure->nameSpace, structure->name, NULL);
+	privateHeaderComment = g_strconcat ("/* Private header for ", typeName, " */\n", NULL);
+
 	if (structure->native != NULL) {
-		generate_header_method_new_full (out, structure);
+		/** Open or create the private header file if it does not exist.
+		 * Create the forward declaration.
+		 * Create the new_full method in it.
+		 */
+		privateHeader = fopen (PRIVATE_HEADER, "ab+");
+		fwrite (privateHeaderComment, sizeof (gchar), strlen (privateHeaderComment), privateHeader);
+		fwrite ("typedef struct _", sizeof (gchar), strlen ("typedef struct _"), privateHeader);
+		fwrite (typeName, sizeof (gchar), strlen (typeName), privateHeader);
+		fputc (' ', privateHeader);
+		fwrite (typeName, sizeof (gchar), strlen (typeName), privateHeader);
+		fputc (';', privateHeader);
+		fputc ('\n', privateHeader);
+		generate_header_method_new_full (privateHeader, structure);
+
 		generate_header_method_get_type (out, structure);
 	}
 	
 	for (iter = g_list_first (structure->methods); iter != NULL; iter = g_list_next (iter)) {
 		method = (Method *)iter->data;
-		generate_header_method_proto (out, method);
+
+		if (g_strcmp0 (method->kind, "private") == 0) {
+			/* This checks whether there was method declared in private header already. If not, the forward declaration is needed. */
+			if (privateHeader == NULL) {
+				privateHeader = fopen (PRIVATE_HEADER, "ab+");
+				fwrite ("typedef struct _", sizeof (gchar), strlen ("typedef struct _"), privateHeader);
+				fwrite (typeName, sizeof (gchar), strlen (typeName), privateHeader);
+				fputc (' ', privateHeader);
+				fwrite (typeName, sizeof (gchar), strlen (typeName), privateHeader);
+				fputc (';', privateHeader);
+				fputc ('\n', privateHeader);
+
+			}
+			generate_header_method_proto (privateHeader, method);
+		} else {
+			generate_header_method_proto (out, method);
+		}
+	}
+
+	g_free (typeName);
+
+	if (privateHeader != NULL) {
+		fclose (privateHeader);
+		privateHeader = NULL;
 	}
 }
 
@@ -978,6 +1021,10 @@ generate_source_includes (FILE *out, Structure *structure)
 	fwrite (lowerTrain, sizeof (gchar), strlen (lowerTrain), out);
 	fwrite (".h>\n", sizeof (gchar), strlen (".h>\n"), out);
 	g_free (lowerTrain);
+
+	fwrite ("#include <libical-glib/", sizeof (gchar), strlen ("#include <libical-glib/"), out);
+	fwrite (PRIVATE_HEADER, sizeof (gchar), strlen (PRIVATE_HEADER), out);
+	fwrite (">\n", sizeof (gchar), strlen (">\n"), out);
 		
 	for (g_hash_table_iter_init (&iter_table, structure->dependencies); g_hash_table_iter_next (&iter_table, &key, &value);) {
 		typeName = (gchar *)key;

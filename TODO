@@ -1,6 +1,9 @@
 TODO:
 -Create installed Python tests.
 -Try to move the declarations of methods with libical type arguments into a new file libical-glib-private.h.
+	--Fix the private methods in each structure.
+	--Make it prettier.
+	--Fix the Makefile.am to delete the libical-glib-private.h
 
 Notes:
 -Ignore pvl and sspm since they are too low level.

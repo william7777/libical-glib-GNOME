@@ -24,7 +24,7 @@
         <returns type="gchar *" annotation="transfer full" comment="A string."/>
         <comment xml:space="preserve">Convert #ICalReqstatType to a string representation.</comment>
     </method>
-    <method name="i_cal_reqstat_type_new_default" corresponds="CUSTOM" kind="constructor" since="1.0">
+    <method name="i_cal_reqstat_type_new_default" corresponds="CUSTOM" kind="private" since="1.0">
         <returns type="struct icalreqstattype" annotation="transfer full" comment="The newly created #ICalReqstatType" />
         <comment xml:space="preserve">Create a new default #ICalReqstatType</comment>
         <custom>	struct icalreqstattype reqstattype;

@@ -34,7 +34,7 @@
         <element name="ICAL_FRIDAY_WEEKDAY"/>
         <element name="ICAL_SATURDAY_WEEKDAY"/>
     </enum>
-    <method name="i_cal_recurrence_type_new" corresponds="CUSTOM" annotation="skip" since="1.0">
+    <method name="i_cal_recurrence_type_new" corresponds="CUSTOM" annotation="skip" kind="private" since="1.0">
     	<returns type="struct icalrecurrencetype" comment="The default value."/>
     	<custom>	struct icalrecurrencetype ret;
 	icalrecurrencetype_clear (&amp;ret);

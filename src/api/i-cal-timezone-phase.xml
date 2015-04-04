@@ -14,7 +14,7 @@
   along with this library. If not, see <http://www.gnu.org/licenses/>.
 -->
 <structure namespace="ICal" name="TimezonePhase" native="struct icaltimezonephase" is_bare="true" default_native="i_cal_timezone_phase_new_default ()" includes="libical-glib/i-cal-timetype.h, libical-glib/i-cal-datetimeperiod-type.h">
-	<method name="i_cal_timezone_phase_new_default" corresponds="CUSTOM" kind="constructor" since="1.0">
+	<method name="i_cal_timezone_phase_new_default" corresponds="CUSTOM" kind="private" since="1.0">
         <returns type="struct icaltimezonephase" annotation="transfer full" comment="The newly created #ICalTimezonePhase" />
         <comment xml:space="preserve">Create a new default #ICalTimezonePhase</comment>
         <custom>	struct icaltimezonephase timezonephase;

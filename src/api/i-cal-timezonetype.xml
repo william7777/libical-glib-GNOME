@@ -14,7 +14,7 @@
   along with this library. If not, see <http://www.gnu.org/licenses/>.
 -->
 <structure namespace="ICal" name="Timezonetype" native="struct icaltimezonetype" is_bare="true" default_native="i_cal_timezonetype_new_default ()" includes="libical-glib/i-cal-timetype.h">
-	<method name="i_cal_timezonetype_new_default" corresponds="CUSTOM" kind="constructor" since="1.0">
+	<method name="i_cal_timezonetype_new_default" corresponds="CUSTOM" kind="private" since="1.0">
         <returns type="struct icaltimezonetype" annotation="transfer full" comment="The newly created #ICalTimezonetype" />
         <comment xml:space="preserve">Create a new default #ICalTimezonetype</comment>
         <custom>	struct icaltimezonetype timezonetype;

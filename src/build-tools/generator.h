@@ -39,6 +39,7 @@
 #define RET_TAB_COUNT 2
 #define METHOD_NAME_TAB_COUNT 4
 #define COMMENT_LINE_LENGTH 100
+#define PRIVATE_HEADER "libical-glib-private.h"
 
 /* Store the default value for bare type */
 GHashTable *defaultValues;
